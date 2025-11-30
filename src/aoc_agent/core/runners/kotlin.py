@@ -1,4 +1,5 @@
 import os
+import glob
 import subprocess
 from typing import Any
 from .base import CodeRunner
@@ -21,27 +22,34 @@ class KotlinRunner(CodeRunner):
         with open(file_path, "w", encoding="utf-8") as f:
              f.write(solution_code)
 
-        # Compile
-        compile_cmd = f"kotlinc {code_filename} -include-runtime -d {jar_filename}"
-        compile_result = subprocess.run(
-            compile_cmd,
-            cwd=working_dir,
-            shell=True,
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
+        try:
+            # Compile
+            compile_cmd = f"kotlinc {code_filename} -include-runtime -d {jar_filename}"
+            compile_result = subprocess.run(
+                compile_cmd,
+                cwd=working_dir,
+                shell=True,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
 
-        if compile_result.returncode != 0:
-            # Prepend compilation failure message to stderr so the caller can see it
-            compile_result.stderr = f"Compilation failed:\n{compile_result.stderr}\n{compile_result.stdout}"
-            return compile_result
+            if compile_result.returncode != 0:
+                # Prepend compilation failure message to stderr so the caller can see it
+                compile_result.stderr = f"Compilation failed:\n{compile_result.stderr}\n{compile_result.stdout}"
+                return compile_result
 
-        # Run
-        return subprocess.run(
-            ["java", "-jar", jar_filename],
-            cwd=working_dir,
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
+            # Run
+            return subprocess.run(
+                ["java", "-jar", jar_filename],
+                cwd=working_dir,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+        finally:
+            for jar_file in glob.glob(os.path.join(working_dir, "*.jar")):
+                try:
+                    os.remove(jar_file)
+                except OSError:
+                    pass

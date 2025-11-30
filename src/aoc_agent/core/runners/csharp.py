@@ -1,4 +1,5 @@
 import os
+import shutil
 import subprocess
 from pathlib import Path
 from typing import Any
@@ -38,10 +39,19 @@ class CSharpRunner(CodeRunner):
         with open(project_path, "w", encoding="utf-8") as f:
             f.write(csproj_content)
 
-        return subprocess.run(
-            ["dotnet", "run", "--project", project_filename],
-            cwd=working_dir,
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
+        try:
+            return subprocess.run(
+                ["dotnet", "run", "--project", project_filename],
+                cwd=working_dir,
+                capture_output=True,
+                text=True,
+                timeout=60
+            )
+        finally:
+            bin_dir = os.path.join(working_dir, "bin")
+            if os.path.exists(bin_dir):
+                shutil.rmtree(bin_dir, ignore_errors=True)
+            
+            obj_dir = os.path.join(working_dir, "obj")
+            if os.path.exists(obj_dir):
+                shutil.rmtree(obj_dir, ignore_errors=True)
