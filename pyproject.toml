@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aoc-agent"
+version = "0.1.0"
+description = "Advent of Code Autonomous Agent (initial scaffold)"
+readme = "README.md"
+requires-python = ">=3.10,<4.0.0"
+authors = [
+  { name = "AoC Agent Team", email = "devnull@example.com" }
+]
+license = { text = "MIT" }
+keywords = ["advent-of-code", "agent", "llm", "langchain"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+]
+dependencies = [
+  "requests>=2.32",
+  "pydantic>=2.8",
+  "rich>=13.7",
+  "langchain>=0.1",
+  "langchain-openai>=0.0.1",
+  "langchain-community (>=0.4.1,<0.5.0)",
+  "langchain-google-vertexai (>=3.1.0,<4.0.0)",
+  "langchain-google-genai (>=3.2.0,<4.0.0)"
+]
+
+[project.scripts]
+"aoc-agent" = "aoc_agent.cli:main"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
