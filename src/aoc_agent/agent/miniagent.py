@@ -52,6 +52,9 @@ class MiniAgent:
         toolbox = AocToolbox(client, context)
         tools = toolbox.make_tools()
 
+        if lang != "python":
+            no_report = True
+
         if "gpt" in model_name or "o1" in model_name:
             llm = ChatOpenAI(model=model_name).bind_tools(tools, tool_choice="any")
         else:
@@ -107,8 +110,9 @@ class MiniAgent:
                 "part1_output_tokens": context.part1_output_tokens,
                 "part1_solved": context.part1_finished,
                 "part2_solved": context.part2_finished or day == 25,
-                "part12_output_tokens": context.output_tokens,
+                "part12_output_tokens": context.part2_output_tokens,
                 "part12_duration": context.part2_duration,
+                "report_output_tokens": context.output_tokens - context.part1_output_tokens,
                 "part1_incorrect": context.part1_incorrect,
                 "part2_incorrect": context.part2_incorrect,
                 "part1_run_code_errors": context.part1_run_code_errors,
