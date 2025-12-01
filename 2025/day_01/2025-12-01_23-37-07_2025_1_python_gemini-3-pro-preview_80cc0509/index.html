@@ -847,46 +847,30 @@
 </ul>
 <h2 id="algorithmic-approach">Algorithmic Approach</h2>
 <h3 id="part-1-simulation">Part 1: Simulation</h3>
-<p>The first part is a straightforward simulation. We maintain a <code>current_pos</code> (initialized to 50). For each instruction:</p>
-<ol>
-<li>Parse direction and amount.</li>
-<li>
-<p>Update <code>current_pos</code> using modulo arithmetic (<code>(pos + amount) % 100</code> or <code>(pos - amount) % 100</code>).</p>
-</li>
-<li>
-<p>Check if <code>current_pos == 0</code>.</p>
-</li>
-</ol>
+<p>The first part is a straightforward simulation. We maintain a <code>current_pos</code> (initialized to 50). For each instruction:
+1.  Parse direction and amount.
+2.  Update <code>current_pos</code> using modulo arithmetic (<code>(pos + amount) % 100</code> or <code>(pos - amount) % 100</code>).
+3.  Check if <code>current_pos == 0</code>.</p>
 <h3 id="part-2-interval-counting">Part 2: Interval Counting</h3>
 <p>For the second part, simply simulating tick-by-tick is feasible (since rotation amounts are small), but the "smart" way is to calculate the number of times <code>0</code> is covered by the interval of rotation.</p>
-<p>Given the dial size <span class="arithmatex">\(M=100\)</span>:</p>
-<ul>
-<li><strong>Right Rotation (<code>R</code>)</strong>: Increases the value. The dial sweeps the interval <span class="arithmatex">\((P, P + A]\)</span>. We count how many multiples of 100 exist in this range. The formula is <span class="arithmatex">\(\lfloor \frac{P + A}{100} \rfloor\)</span>.</li>
-<li><strong>Left Rotation (<code>L</code>)</strong>: Decreases the value. The dial sweeps <span class="arithmatex">\([P - A, P - 1]\)</span>. We count multiples of 100 in this range. The formula is <span class="arithmatex">\(\lfloor \frac{P - 1}{100} \rfloor - \lfloor \frac{P - A - 1}{100} \rfloor\)</span>.</li>
-</ul>
+<p>Given the dial size <span class="arithmatex">\(M=100\)</span>:
+-   <strong>Right Rotation (<code>R</code>)</strong>: Increases the value. The dial sweeps the interval <span class="arithmatex">\((P, P + A]\)</span>. We count how many multiples of 100 exist in this range. The formula is <span class="arithmatex">\(\lfloor \frac{P + A}{100} \rfloor\)</span>.
+-   <strong>Left Rotation (<code>L</code>)</strong>: Decreases the value. The dial sweeps <span class="arithmatex">\([P - A, P - 1]\)</span>. We count multiples of 100 in this range. The formula is <span class="arithmatex">\(\lfloor \frac{P - 1}{100} \rfloor - \lfloor \frac{P - A - 1}{100} \rfloor\)</span>.</p>
 <p>This approach is <span class="arithmatex">\(O(N)\)</span> where <span class="arithmatex">\(N\)</span> is the number of instructions, and extremely fast regardless of the rotation magnitude.</p>
 <h2 id="key-insights-gotchas">Key Insights &amp; Gotchas</h2>
 <ul>
 <li><strong>Modulo Arithmetic</strong>: Python's <code>%</code> operator handles negative numbers gracefully (e.g., <code>-18 % 100</code> is <code>82</code>), which simplifies the <code>L</code> rotation logic significantly compared to C-style languages where <code>%</code> might return negative remainders.</li>
-<li>
-<p><strong>Off-by-one errors</strong>: In Part 2, defining the exact interval is crucial. Does the starting point count? (No). Does the end point count? (Yes). Does 0 count if we just touch it? (Yes).</p>
-<ul>
+<li><strong>Off-by-one errors</strong>: In Part 2, defining the exact interval is crucial. Does the starting point count? (No). Does the end point count? (Yes). Does 0 count if we just touch it? (Yes).<ul>
 <li>Carefully mapping <code>L</code> rotations to a range on the number line (going backwards) helped clarify the interval logic.</li>
 </ul>
 </li>
 </ul>
 <h2 id="visualization-the-safe-cracking-spiral">Visualization: The Safe Cracking Spiral</h2>
-<p>I created a visualization that plots the dial's state over time.</p>
-<ul>
-<li><strong>Radius</strong>: Represents time (progression through the instructions).</li>
-<li>
-<p><strong>Angle</strong>: Represents the dial position (0 is Top).</p>
-</li>
-<li>
-<p><strong>Spiral Path</strong>: The green line traces the dial's movement.</p>
-</li>
-<li><strong>Yellow Dots</strong>: Mark every instance where the dial hit <code>0</code> (the password clicks).</li>
-</ul>
+<p>I created a visualization that plots the dial's state over time.
+-   <strong>Radius</strong>: Represents time (progression through the instructions).
+-   <strong>Angle</strong>: Represents the dial position (0 is Top).
+-   <strong>Spiral Path</strong>: The green line traces the dial's movement.
+-   <strong>Yellow Dots</strong>: Mark every instance where the dial hit <code>0</code> (the password clicks).</p>
 <p><img alt="Safe Cracking Visualization" src="visualization.svg" /></p>
 <h2 id="code-solution">Code Solution</h2>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
@@ -1005,9 +989,7 @@
       
         <script src="../../../javascripts/mathjax.js"></script>
       
-        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-      
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
