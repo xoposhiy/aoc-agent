@@ -878,7 +878,7 @@ $$ Count = \lfloor \frac{B}{M} \rfloor - \lfloor \frac{A - 1}{M} \rfloor $$</p>
 <span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">floorDiv</span><span class="p">(</span><span class="n">end</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Math</span><span class="p">.</span><span class="na">floorDiv</span><span class="p">(</span><span class="n">start</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="n">m</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
-Это позволяет решать задачу за $O(1)$ для каждой инструкции, независимо от того, насколько велико число вращений.</p>
+Это позволяет решать задачу за <span class="arithmatex">\(O(1)\)</span> для каждой инструкции, независимо от того, насколько велико число вращений.</p>
 <hr />
 <h2 id="_2">🤣 Минутка юмора</h2>
 <blockquote>
@@ -889,8 +889,12 @@ $$ Count = \lfloor \frac{B}{M} \rfloor - \lfloor \frac{A - 1}{M} \rfloor $$</p>
 <h2 id="_3">🎓 Итоги</h2>
 <ul>
 <li><strong>Модульная арифметика:</strong> Всегда проверяйте, как ваш язык обрабатывает отрицательные числа при делении с остатком.</li>
-<li><strong>Интервалы:</strong> Задачи на подсчет событий в диапазоне часто решаются формулой <code>floor(B/K) - floor((A-1)/K)</code>, что намного быстрее перебора.</li>
-<li><strong>Визуализация:</strong> Представление вращений в виде развертывающейся спирали помогает увидеть паттерн, скрытый за сухими числами.</li>
+<li>
+<p><strong>Интервалы:</strong> Задачи на подсчет событий в диапазоне часто решаются формулой <code>floor(B/K) - floor((A-1)/K)</code>, что намного быстрее перебора.</p>
+</li>
+<li>
+<p><strong>Визуализация:</strong> Представление вращений в виде развертывающейся спирали помогает увидеть паттерн, скрытый за сухими числами.</p>
+</li>
 </ul>
 <p>Счастливого Рождества и удачного кодинга! 🎅✨</p>
 
@@ -952,6 +956,12 @@ $$ Count = \lfloor \frac{B}{M} \rfloor - \lfloor \frac{A - 1}{M} \rfloor $$</p>
     
     
       <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
     
   </body>
