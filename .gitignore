@@ -32,3 +32,4 @@ coverage.xml
 .env
 data/
 data-*/
+report_site/

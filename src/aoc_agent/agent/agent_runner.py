@@ -11,12 +11,13 @@ from rich import print
 import json
 
 class AgentRunner:
-    def __init__(self, year: int, days_region: str, languages: List[str], models: List[str], n_repeats: int):
+    def __init__(self, year: int, days_region: str, languages: List[str], models: List[str], n_repeats: int, no_report: bool = False):
         self.year = year
         self.days = self._parse_days(days_region)
         self.languages = languages
         self.models = models
         self.n_repeats = n_repeats
+        self.no_report = no_report
 
     def _parse_days(self, region: str) -> List[int]:
         days: Set[int] = set()
@@ -50,5 +51,5 @@ class AgentRunner:
                     for i in range(self.n_repeats):
                         current_run += 1
                         print(f"\n[bold cyan]Run {current_run}/{total_runs}[/bold cyan]: Day {day}, {lang}, {model}, Repeat {i+1}")
-                        agent.run_agent(self.year, day, cast(Lang, lang), model_name=model)
+                        agent.run_agent(self.year, day, cast(Lang, lang), model_name=model, no_report=self.no_report)
 

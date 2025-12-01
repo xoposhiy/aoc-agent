@@ -37,7 +37,7 @@ class TokenCollector(BaseCallbackHandler):
 class MiniAgent:
     """A minimal agent with tools."""
 
-    def run_agent(self, year: int, day: int, lang: Lang, model_name: str = "gemini-2.5-flash"):
+    def run_agent(self, year: int, day: int, lang: Lang, model_name: str = "gemini-2.5-flash", no_report: bool = False):
         start_time_friendly = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         run_id = start_time_friendly + "_" + str(year) + "_" + str(day) + "_" + str(lang) + "_" + model_name + "_" + str(uuid.uuid4())[:8]
         run_dir = os.path.join("data", "run", run_id)
@@ -52,7 +52,7 @@ class MiniAgent:
         toolbox = AocToolbox(client, context)
         tools = toolbox.make_tools()
 
-        if "gpt" in model_name.lower() or "o1" in model_name.lower():
+        if "gpt" in model_name or "o1" in model_name:
             llm = ChatOpenAI(model=model_name).bind_tools(tools, tool_choice="any")
         else:
             llm = ChatGoogleGenerativeAI(model=model_name).bind_tools(tools, tool_config={'function_calling_config': {'mode': 'ANY'}})
@@ -60,7 +60,7 @@ class MiniAgent:
         agent = create_agent(
             model=llm,
             tools=tools,
-            system_prompt=system_prompt_template.format_messages()[0].content
+            system_prompt=system_prompt_template.format_messages(model_name=model_name)[0].content
         )
 
         token_collector = TokenCollector(context)
@@ -88,6 +88,10 @@ class MiniAgent:
                 
                 if context.final_report_written:
                     print("[green]Final report written. Stopping agent.[/green]")
+                    break
+
+                if no_report and (context.part2_finished or (day == 25 and context.part1_finished)):
+                    print("[green]All parts solved. Skipping final report and stopping agent.[/green]")
                     break
             print("Writing metadata.json...")
 
