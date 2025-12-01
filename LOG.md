@@ -92,3 +92,17 @@
     * This behavior is interesting and suggests exploring whether agents can learn to fetch statements from other days/years when needed.
     * Additional experiments would be useful to understand these behaviors better.
 
+## 01 December
+
+* Add more direct instructions for the clean code: decompose, meaningful names, ...
+* Instruction to add comment at the beginning of the code-file to put the big picture into the context.
+* Gemini became slow and stopped working...
+* No dependencies for visualization. Need more instructions about available libs or give a way to install them.
+* Unknown flaky problem for gpt-5-mini: 
+   ```
+  Error code: 400 - {'error': {
+      'message': 'Invalid prompt: your prompt was flagged as potentially violating our usage policy. Please try again with a different prompt:https://platform.openai.com/docs/guides/reasoning#advice-on-prompting', 
+      'type': 'invalid_request_error', 
+      'param': None, 
+      'code': 'invalid_prompt'}}
+   ```

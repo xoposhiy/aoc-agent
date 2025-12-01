@@ -20,6 +20,8 @@ from ..core.aoc_client import AocClient
 from .prompts import system_prompt_template, task_prompt_template
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
+from langchain_anthropic import ChatAnthropic
+from langchain_ollama import ChatOllama
 
 class TokenCollector(BaseCallbackHandler):
     def __init__(self, context: AgentContext):
@@ -39,7 +41,7 @@ class MiniAgent:
 
     def run_agent(self, year: int, day: int, lang: Lang, model_name: str = "gemini-2.5-flash", no_report: bool = False):
         start_time_friendly = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        run_id = start_time_friendly + "_" + str(year) + "_" + str(day) + "_" + str(lang) + "_" + model_name + "_" + str(uuid.uuid4())[:8]
+        run_id = start_time_friendly + "_" + str(year) + "_" + str(day) + "_" + str(lang) + "_" + model_name.replace(":","-") + "_" + str(uuid.uuid4())[:8]
         run_dir = os.path.join("data", "run", run_id)
         os.makedirs(run_dir, exist_ok=True)
 
@@ -57,8 +59,12 @@ class MiniAgent:
 
         if "gpt" in model_name or "o1" in model_name:
             llm = ChatOpenAI(model=model_name).bind_tools(tools, tool_choice="any")
-        else:
+        elif "claude" in model_name:
+            llm = ChatAnthropic(model=model_name).bind_tools(tools, tool_choice="any")
+        elif "gemini" in model_name:
             llm = ChatGoogleGenerativeAI(model=model_name).bind_tools(tools, tool_config={'function_calling_config': {'mode': 'ANY'}})
+        else:
+            llm = ChatOllama(model=model_name).bind_tools(tools)
 
         agent = create_agent(
             model=llm,
