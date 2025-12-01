@@ -164,6 +164,27 @@ Overview of all agent operations.
         f.write(index_content)
         
     # 4. Generate mkdocs.yml
+
+    # Create javascripts directory and mathjax config
+    js_dir = docs_dir / "javascripts"
+    js_dir.mkdir(exist_ok=True)
+    
+    with open(js_dir / "mathjax.js", "w", encoding="utf-8") as f:
+        f.write("""
+window.MathJax = {
+  tex: {
+    inlineMath: [["\\\\(", "\\\\)"]],
+    displayMath: [["\\\\[", "\\\\]"]],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    ignoreHtmlClass: ".*|",
+    processHtmlClass: "arithmatex"
+  }
+};
+""")
+
     mkdocs_yml = f"""
 site_name: {SITE_NAME}
 theme:
@@ -189,6 +210,12 @@ markdown_extensions:
       emoji_generator: !!python/name:materialx.emoji.to_svg
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - javascripts/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 plugins:
   - search
