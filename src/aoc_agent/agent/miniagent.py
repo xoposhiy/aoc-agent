@@ -23,6 +23,14 @@ from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langchain_ollama import ChatOllama
 
+MODEL_ALIASES = {
+    "gpt5": "gpt-5",
+    "gpt5m": "gpt-5-mini",
+    "g3": "gemini-3-pro-preview",
+    "g25f": "gemini-2.5-flash",
+    "co45": "claude-opus-4.5",
+}
+
 class TokenCollector(BaseCallbackHandler):
     def __init__(self, context: AgentContext):
         self.context = context
@@ -40,6 +48,7 @@ class MiniAgent:
     """A minimal agent with tools."""
 
     def run_agent(self, year: int, day: int, lang: Lang, model_name: str = "gemini-2.5-flash", no_report: bool = False):
+        model_name = MODEL_ALIASES.get(model_name, model_name)
         start_time_friendly = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         run_id = start_time_friendly + "_" + str(year) + "_" + str(day) + "_" + str(lang) + "_" + model_name.replace(":","-") + "_" + str(uuid.uuid4())[:8]
         run_dir = os.path.join("data", "run", run_id)
@@ -129,6 +138,8 @@ class MiniAgent:
 
             with open(os.path.join(run_dir, "metadata.json"), "w") as f:
                 json.dump(metadata, f, indent=2)
+        except GeneratorExit:
+            return
         except Exception as e:
             print(f"[red]Unexpected error running agent. Ignore metadata!:\n{e}[/red]")
 
