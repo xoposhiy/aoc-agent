@@ -3,6 +3,30 @@ import json
 import shutil
 from pathlib import Path
 import glob
+import re
+
+def preprocess_markdown(content):
+    lines = content.splitlines()
+    processed = []
+    in_code_block = False
+    list_pattern = re.compile(r'^\s*([-*+]|\d+\.)\s+')
+    
+    for i, line in enumerate(lines):
+        if line.lstrip().startswith("```"):
+            in_code_block = not in_code_block
+            
+        if not in_code_block and i > 0:
+            if list_pattern.match(line):
+                prev_line = lines[i-1]
+                # If previous line is not empty, not a list item, and not a header
+                if (prev_line.strip() and 
+                    not list_pattern.match(prev_line) and 
+                    not prev_line.lstrip().startswith('#')):
+                    processed.append("")
+        
+        processed.append(line)
+        
+    return "\n".join(processed)
 
 # Configuration
 # We look for any directory starting with 'data' to include all runs
@@ -114,6 +138,9 @@ def generate_site():
         except Exception as e:
             print(f"Error reading report {run['report_file']}: {e}")
             continue
+            
+        # Preprocess content to fix list rendering
+        content = preprocess_markdown(content)
             
         # Header augmentation
         p1_solved = "✅" if meta.get("part1_solved") else "❌"
