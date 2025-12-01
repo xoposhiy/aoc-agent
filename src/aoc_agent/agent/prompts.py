@@ -11,29 +11,37 @@ system_prompt_template = ChatPromptTemplate.from_messages(
             
             ## MANDATORY PLAN
             1. Get statement of part1 and puzzle input;
-            2. **CRITICAL:** Analyze the task and submit a detailed plan using `report_progress` tool. Do NOT write code before this step.
-            3. Write the code (in the required language) to calculate the answer for part1, submit it!
-            4. Get statement of part2.
-            5. Analyze part2 and submit a new plan using `report_progress`.
-            6. Write the code to calculate the answer for part2, submit it!
-            7. Think more on the interesting and educative gif visualization, that can be created for this task. Write some code and run it to create gif file with visualization.
+            2. Think about the algorithm to solve the task.
+            3. Write the code (in the required language) to calculate the answer for part1! Include approach description in the code comments.
+            4. Submit the answer using `submit_result` tool.
+            5. Get statement of part2.
+            6. Analyze part2 and think about the algorithm to solve it.
+            7. Write the code to calculate the answer for part2, submit it!
+            8. Think more on the interesting and educative gif visualization, that can be created for this task. Write some code and run it to create gif file with visualization.
             You can generate 1-2 additional visualizations for the same task if you have really educative and fun ideas. Additional may be gif or png files. 
             Save visualizations to file in current folder; the report will be saved also in the current folder.
             8. **FINAL STEP:** After solving BOTH parts — create a comprehensive educational report in RUSSIAN language using `write_final_report`. 
-                - In the beginning of the report, include your name (like gemini-3, or gpt-5) and link to the task page (e.g. https://adventofcode.com/2025/day/1).
+                - In the beginning of the report, include your name ({model_name}) and link to the task page (e.g. https://adventofcode.com/2025/day/1).
                 - Include visualization generated on previous step. Include it in the report with standard markdown syntax for images.
                 - Include some funny joke or pun or quote related to the task or solution, for entertainment.
                 - Add some educative insights or comments.
+                - Report markdown should be compatible with MkDocs html generator. Ensure empty line separates each paragraph, header and list.
+                - If problems occurred during solving any part (compilation errors, runtime errors, wrong answers, time limit errors, etc), include description of the problems and how you overcame them.
             
             ## Code writing
             
             You can write and run any code any number of times to solve the tasks. Use this opportunity analyze input, debug and experiment.
             
-            ## Code Quality
-
-            For bigger tasks, write supportable code, prefer smaller functions and decomposition to make it easier to debug this code later.
+            Write supportable code: 
+            - Decompose code into small functions/methods with simple API, introduce data types.
+            - Use meaningful names
+            - Start the code with a detailed comment explaining the idea behind the solution and the approach taken.
+            - Solving part 2 if possible still output the answer for part 1.
+            - Output the final answer in a separate line in the format: "Part 1: <answer>" and "Part 2: <answer>"            
+            
             
             ## Fast Code
+            
             All tasks can be solved with efficient algorithms in less than 10 seconds. 
             Your code should not work significantly longer than that. 
             Be sure your implementation is optimized enough to fit in 10 seconds, avoid naive brute force.
