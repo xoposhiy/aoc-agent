@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e"/>
+      <stop offset="100%" style="stop-color:#16213e"/>
+    </linearGradient>
+    <style>
+      .title { font: bold 28px monospace; fill: #e94560; }
+      .subtitle { font: 16px monospace; fill: #0f3460; }
+      .pattern { font: bold 24px monospace; }
+      .label { font: 14px monospace; fill: #a2d2ff; }
+      .example { font: bold 20px monospace; }
+      .valid { fill: #06d6a0; }
+      .invalid { fill: #ef476f; }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.6; }
+      }
+      
+      @keyframes slideIn {
+        0% { opacity: 0; transform: translateX(-20px); }
+        100% { opacity: 1; transform: translateX(0); }
+      }
+      
+      .animate1 { animation: slideIn 0.5s ease-out forwards; }
+      .animate2 { animation: slideIn 0.5s ease-out 0.2s forwards; opacity: 0; }
+      .animate3 { animation: slideIn 0.5s ease-out 0.4s forwards; opacity: 0; }
+      .animate4 { animation: slideIn 0.5s ease-out 0.6s forwards; opacity: 0; }
+      .animate5 { animation: slideIn 0.5s ease-out 0.8s forwards; opacity: 0; }
+      
+      .pulse { animation: pulse 2s infinite; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="500" fill="url(#bg)"/>
+  
+  <!-- Title -->
+  <text x="400" y="45" text-anchor="middle" class="title">🎁 Gift Shop: Invalid ID Patterns 🎄</text>
+  
+  <!-- Part 1 Section -->
+  <rect x="30" y="70" width="350" height="200" rx="10" fill="#0f3460" stroke="#e94560" stroke-width="2"/>
+  <text x="205" y="100" text-anchor="middle" class="subtitle" fill="#e94560">Part 1: Pattern × 2</text>
+  
+  <!-- Part 1 Examples -->
+  <g class="animate1">
+    <text x="60" y="140" class="example invalid">55</text>
+    <text x="130" y="140" class="label">= "5" × 2</text>
+  </g>
+  <g class="animate2">
+    <text x="60" y="175" class="example invalid">6464</text>
+    <text x="130" y="175" class="label">= "64" × 2</text>
+  </g>
+  <g class="animate3">
+    <text x="60" y="210" class="example invalid">123123</text>
+    <text x="170" y="210" class="label">= "123" × 2</text>
+  </g>
+  <g class="animate4">
+    <text x="60" y="245" class="example valid">101</text>
+    <text x="110" y="245" class="label">✓ odd length = valid</text>
+  </g>
+  
+  <!-- Part 2 Section -->
+  <rect x="420" y="70" width="350" height="200" rx="10" fill="#0f3460" stroke="#06d6a0" stroke-width="2"/>
+  <text x="595" y="100" text-anchor="middle" class="subtitle" fill="#06d6a0">Part 2: Pattern × N (N≥2)</text>
+  
+  <!-- Part 2 Examples -->
+  <g class="animate1">
+    <text x="450" y="140" class="example invalid">111</text>
+    <text x="510" y="140" class="label">= "1" × 3</text>
+  </g>
+  <g class="animate2">
+    <text x="450" y="175" class="example invalid">123123123</text>
+    <text x="600" y="175" class="label">= "123" × 3</text>
+  </g>
+  <g class="animate3">
+    <text x="450" y="210" class="example invalid">1212121212</text>
+    <text x="630" y="210" class="label">= "12" × 5</text>
+  </g>
+  <g class="animate4">
+    <text x="450" y="245" class="example invalid">1111111</text>
+    <text x="580" y="245" class="label">= "1" × 7</text>
+  </g>
+  
+  <!-- Algorithm Insight -->
+  <rect x="30" y="290" width="740" height="180" rx="10" fill="#1a1a2e" stroke="#ffd700" stroke-width="2"/>
+  <text x="400" y="325" text-anchor="middle" class="subtitle" fill="#ffd700">💡 Алгоритм: Генерация вместо перебора</text>
+  
+  <g class="animate3">
+    <text x="60" y="360" class="label" fill="#f8f8f8">❌ Наивно: перебрать все числа в диапазоне → O(10^15) операций!</text>
+  </g>
+  <g class="animate4">
+    <text x="60" y="395" class="label" fill="#f8f8f8">✅ Умно: сгенерировать все "паттерн×N" числа → O(10^8) операций</text>
+  </g>
+  <g class="animate5">
+    <text x="60" y="430" class="label" fill="#a2d2ff">Patterns: 1-9, 10-99, 100-999, ... → каждый повторяем 2,3,4,... раз</text>
+    <text x="60" y="455" class="label" fill="#a2d2ff">Проверяем попадание в диапазоны с помощью множеств!</text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <text x="750" y="40" class="pulse" style="font-size: 24px;">🎅</text>
+  <text x="50" y="40" class="pulse" style="font-size: 24px;">🎄</text>
+</svg>

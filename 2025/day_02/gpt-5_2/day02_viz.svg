@@ -1,0 +1,61 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='320' viewBox='0 0 1200 320'>
+<style> .lbl{font:12px monospace; fill:#333} .bar{fill:#88c;} .mark{fill:#c44;} .grid{stroke:#ccc;stroke-width:1} .axis{stroke:#333;stroke-width:2} .ap{fill:#e67;opacity:0.7} .ap2{fill:#2ca;opacity:0.6} </style>
+<line x1='40' y1='280' x2='1160' y2='280' class='axis' />
+<text x='40' y='300' class='lbl'>min 1</text>
+<text x='1060' y='300' class='lbl'>max 9226692707</text>
+<rect x='40.0' y='60' width='141.08366360776998' height='18' class='bar' />
+<rect x='195.1258852095046' y='60' width='28.464301912396877' height='18' class='bar' />
+<rect x='225.80927823830663' y='60' width='14.849043239741945' height='18' class='bar' />
+<rect x='244.5037419985714' y='60' width='28.772911566890116' height='18' class='bar' />
+<rect x='283.59098804744065' y='60' width='27.268281718301125' height='18' class='bar' />
+<rect x='311.61313181966443' y='60' width='20.717643829561666' height='18' class='bar' />
+<rect x='335.5268579999047' y='60' width='32.79134123978588' height='18' class='bar' />
+<rect x='385.38153605715746' y='60' width='22.5324669923682' height='18' class='bar' />
+<rect x='413.2307421896508' y='60' width='33.24707744127943' height='18' class='bar' />
+<rect x='446.6545240513324' y='60' width='20.86524782515022' height='18' class='bar' />
+<rect x='468.2731344306821' y='60' width='25.803882262228456' height='18' class='bar' />
+<rect x='534.5055118854434' y='60' width='28.269272444269063' height='18' class='bar' />
+<rect x='573.1648026343614' y='60' width='26.923701951333555' height='18' class='bar' />
+<rect x='623.4983439554384' y='60' width='24.348817665544402' height='18' class='bar' />
+<rect x='657.5553339396337' y='60' width='4.406831618769388' height='18' class='bar' />
+<rect x='663.9287917812492' y='60' width='13.779693580097728' height='18' class='bar' />
+<rect x='682.3718202743606' y='60' width='9.763199417412807' height='18' class='bar' />
+<rect x='696.0205922856558' y='60' width='9.627062538476139' height='18' class='bar' />
+<rect x='712.9521353719305' y='60' width='3.2134358032523096' height='18' class='bar' />
+<rect x='753.0265487439559' y='60' width='1' height='18' class='bar' />
+<rect x='791.5810505949979' y='60' width='1.0614028735566308' height='18' class='bar' />
+<rect x='797.4750540098927' y='60' width='1.1613214002295535' height='18' class='bar' />
+<rect x='846.9945537720016' y='60' width='1' height='18' class='bar' />
+<rect x='903.9876272511441' y='60' width='1' height='18' class='bar' />
+<rect x='909.493394283408' y='60' width='1' height='18' class='bar' />
+<rect x='935.0073052514073' y='60' width='1' height='18' class='bar' />
+<rect x='1042.4275325120293' y='60' width='1' height='18' class='bar' />
+<rect x='1102.2831893194618' y='60' width='1' height='18' class='bar' />
+<rect x='1111.7604058506968' y='60' width='1' height='18' class='bar' />
+<rect x='1124.3451279351884' y='60' width='1' height='18' class='bar' />
+<rect x='1159.9988024028387' y='60' width='1' height='18' class='bar' />
+<text x='20' y='55' class='lbl'>Merged intervals</text>
+<g>
+<circle cx='157.05' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='0.0s' repeatCount='indefinite'/></circle>
+<circle cx='157.05' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='0.0s' repeatCount='indefinite'/></circle>
+<circle cx='269.88' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='0.4s' repeatCount='indefinite'/></circle>
+<circle cx='269.88' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='0.4s' repeatCount='indefinite'/></circle>
+<circle cx='416.15' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='0.8s' repeatCount='indefinite'/></circle>
+<circle cx='435.94' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='0.8s' repeatCount='indefinite'/></circle>
+<circle cx='548.34' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='1.2000000000000002s' repeatCount='indefinite'/></circle>
+<circle cx='562.38' cy='120' r='3' fill='#2ca'><animate attributeName='cy' values='120;110;120' dur='6s' begin='1.2000000000000002s' repeatCount='indefinite'/></circle>
+<circle cx='386.56' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='0.0s' repeatCount='indefinite'/></circle>
+<circle cx='406.36' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='0.0s' repeatCount='indefinite'/></circle>
+<circle cx='625.40' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='0.4s' repeatCount='indefinite'/></circle>
+<circle cx='647.18' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='0.4s' repeatCount='indefinite'/></circle>
+<circle cx='847.03' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='0.8s' repeatCount='indefinite'/></circle>
+<circle cx='847.03' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='0.8s' repeatCount='indefinite'/></circle>
+<circle cx='1102.28' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='1.2000000000000002s' repeatCount='indefinite'/></circle>
+<circle cx='1102.28' cy='150' r='3' fill='#f90'><animate attributeName='cy' values='150;140;150' dur='6s' begin='1.2000000000000002s' repeatCount='indefinite'/></circle>
+<circle cx='623.72' cy='180' r='3' fill='#6c6'><animate attributeName='cy' values='180;170;180' dur='6s' begin='0.0s' repeatCount='indefinite'/></circle>
+<circle cx='647.71' cy='180' r='3' fill='#6c6'><animate attributeName='cy' values='180;170;180' dur='6s' begin='0.0s' repeatCount='indefinite'/></circle>
+<circle cx='1042.43' cy='180' r='3' fill='#6c6'><animate attributeName='cy' values='180;170;180' dur='6s' begin='0.4s' repeatCount='indefinite'/></circle>
+<circle cx='1042.43' cy='180' r='3' fill='#6c6'><animate attributeName='cy' values='180;170;180' dur='6s' begin='0.4s' repeatCount='indefinite'/></circle>
+</g>
+<text x='20' y='100' class='lbl'>Animated dots: invalid IDs (varying base length k and repeat count m)</text>
+</svg>

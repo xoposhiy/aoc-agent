@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет по Advent of Code 2025, День 1</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1, h2 { color: #2c3e50; }
+        pre { background: #ecf0f1; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        code { font-family: 'Consolas', 'Monaco', monospace; }
+        .visualization-container { margin-top: 30px; text-align: center; }
+        canvas { border: 1px solid #ccc; background-color: #fdfdfd; }
+        .joke { margin-top: 30px; padding: 15px; background-color: #e8f5e9; border-left: 5px solid #4caf50; border-radius: 5px; }
+        .highlight { background-color: #fff3cd; padding: 2px 5px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Отчет по Advent of Code 2025, День 1</h1>
+        <p><strong>Имя решателя:</strong> gemini-2.5-flash</p>
+        <p><strong>Ссылка на задачу:</strong> <a href="https://adventofcode.com/2025/day/1" target="_blank">https://adventofcode.com/2025/day/1</a></p>
+
+        <h2>Описание задачи</h2>
+        <p>Задача "День 1: Секретный вход" из Advent of Code 2025 представляет собой симуляцию дискового сейфа. Диск имеет числа от 0 до 99. Изначально диск указывает на 50. Нам дается последовательность вращений (например, <code>L68</code> для поворота влево на 68 щелчков или <code>R48</code> для поворота вправо на 48 щелчков).</p>
+        
+        <h3>Часть 1</h3>
+        <p>В первой части необходимо посчитать, сколько раз диск останавливается на числе 0 <em>после завершения каждого вращения</em>. Диск оборачивается: при повороте влево от 0 он переходит на 99, а при повороте вправо от 99 — на 0.</p>
+
+        <h3>Часть 2</h3>
+        <p>Во второй части правила подсчета меняются. Теперь нужно считать, сколько раз диск указывает на 0 <em>во время любого щелчка вращения</em>, включая его конечное положение. Например, если диск вращается от 50 до 10 (R60), он проходит через 0 один раз (с 99 на 0).</p>
+
+        <h2>Алгоритмический подход</h2>
+
+        <h3>Часть 1</h3>
+        <p>Для решения Части 1 используется простая симуляция. Мы поддерживаем переменную <code>current_position</code>, которая хранит текущее положение диска (изначально 50). Для каждого вращения мы обновляем <code>current_position</code>, используя арифметику по модулю 100. Если диск вращается влево на <code>D</code>, новое положение будет <code>(current_position - D) % 100</code>. Если вправо, то <code>(current_position + D) % 100</code>. Важно, что в Python оператор <code>%</code> для отрицательных чисел ведет себя корректно (например, <code>-5 % 100</code> дает <code>95</code>, что соответствует обертыванию). После каждого обновления мы проверяем, равно ли <code>current_position</code> нулю, и если да, увеличиваем счетчик.</p>
+        <p><strong>Ключевой момент:</strong> Использование оператора <code>% 100</code> позволяет легко обрабатывать обертывание диска.</p>
+
+        <h3>Часть 2</h3>
+        <p>Часть 2 требует более детального подсчета. Вместо того чтобы просто проверять конечное положение, мы должны учитывать все прохождения через 0.
+        Алгоритм для Части 2:</p>
+        <ol>
+            <li>Инициализируем <code>current_position</code> (50) и <code>zero_count_part2</code> (0).</li>
+            <li>Для каждого вращения (<code>direction</code>, <code>distance</code>):
+                <ul>
+                    <li>Сохраняем <code>start_pos</code> как текущее <code>current_position</code>.</li>
+                    <li>Определяем количество кликов до первого достижения 0:
+                        <ul>
+                            <li>Если вращение вправо (<code>R</code>):
+                                <ul>
+                                    <li>Если <code>start_pos</code> равно 0, то для первого достижения 0 потребуется 100 кликов (полный оборот).</li>
+                                    <li>В противном случае, потребуется <code>100 - start_pos</code> кликов.</li>
+                                </ul>
+                            </li>
+                            <li>Если вращение влево (<code>L</code>):
+                                <ul>
+                                    <li>Если <code>start_pos</code> равно 0, то для первого достижения 0 потребуется 100 кликов.</li>
+                                    <li>В противном случае, потребуется <code>start_pos</code> кликов.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Если <code>distance</code> больше или равно <code>clicks_to_first_zero</code>:
+                        <ul>
+                            <li>Увеличиваем <code>zero_count_part2</code> на 1 (мы достигли 0 первый раз).</li>
+                            <li>Вычисляем <code>remaining_distance = distance - clicks_to_first_zero</code>.</li>
+                            <li>Добавляем <code>remaining_distance // 100</code> к <code>zero_count_part2</code> (это количество полных оборотов по 100 кликов, каждый из которых проходит через 0).</li>
+                        </ul>
+                    </li>
+                    <li>Обновляем <code>current_position</code> так же, как и в Части 1.</li>
+                </ul>
+            </li>
+        </ol>
+        <p><strong>Ключевой момент:</strong> Аккуратный расчет "кликов до первого нуля" и учет полных циклов по 100 кликов, каждый из которых гарантированно проходит через 0. Особое внимание нужно уделить случаю, когда диск уже находится на 0.</p>
+
+        <h2>Проблемы и их преодоление</h2>
+        <p>Во время решения не возникло серьезных проблем. Основная сложность заключалась в точном определении логики подсчета прохождений через 0 для Части 2, особенно когда начальное положение диска равно 0. Тщательная проверка на примере из условия задачи помогла убедиться в корректности алгоритма.</p>
+
+        <h2>Эффективность решения</h2>
+        <p>Оба решения имеют временную сложность O(N), где N - количество вращений в файле ввода. Для каждого вращения выполняются константные операции. Это очень эффективно и укладывается в требуемые временные рамки.</p>
+
+        <h2>Визуализация</h2>
+        <div class="visualization-container">
+            <h3>Симуляция вращения диска сейфа</h3>
+            <p>Нажмите "Следующий шаг", чтобы увидеть, как диск вращается и проходит через 0.</p>
+            <canvas id="safeDialCanvas" width="400" height="400"></canvas><br>
+            <button id="nextStepBtn">Следующий шаг</button>
+            <p>Текущая позиция: <span id="currentPos">50</span></p>
+            <p>Количество проходов через 0 (Part 2): <span id="zeroCrossingsViz">0</span></p>
+            <p>Текущее вращение: <span id="currentRotation">Начало</span></p>
+        </div>
+
+        <script>
+            const canvas = document.getElementById('safeDialCanvas');
+            const ctx = canvas.getContext('2d');
+            const nextStepBtn = document.getElementById('nextStepBtn');
+            const currentPosSpan = document.getElementById('currentPos');
+            const zeroCrossingsVizSpan = document.getElementById('zeroCrossingsViz');
+            const currentRotationSpan = document.getElementById('currentRotation');
+
+            const rotations = [
+                "L68", "L30", "R48", "L5", "R60", "L55", "L1", "L99", "R14", "L82"
+            ]; // Пример из условия
+            let currentRotationIndex = -1;
+            let currentPosition = 50;
+            let zeroCrossingsViz = 0;
+
+            function drawDial(pos) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = 150;
+
+                // Draw outer circle
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#34495e';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // Draw numbers
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                for (let i = 0; i < 100; i += 5) { // Draw every 5th number
+                    const angle = (i / 100) * 2 * Math.PI - Math.PI / 2;
+                    const x = centerX + Math.cos(angle) * (radius - 20);
+                    const y = centerY + Math.sin(angle) * (radius - 20);
+                    ctx.fillStyle = (i === 0) ? 'red' : '#555';
+                    ctx.fillText(i.toString(), x, y);
+                }
+
+                // Draw pointer
+                const pointerAngle = (pos / 100) * 2 * Math.PI - Math.PI / 2;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(centerX + Math.cos(pointerAngle) * radius, centerY + Math.sin(pointerAngle) * radius);
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+
+                // Draw center dot
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = '#2c3e50';
+                ctx.fill();
+            }
+
+            function animateRotation(startPos, endPos, distance, directionChar, duration = 500) {
+                const startTime = performance.now();
+                let animationFrameId;
+
+                const animate = (currentTime) => {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    let interpolatedPos;
+                    if (directionChar === 'R') {
+                        interpolatedPos = (startPos + distance * progress) % 100;
+                    } else { // 'L'
+                        interpolatedPos = (startPos - distance * progress + 10000) % 100; // Add large number to handle negative modulo
+                    }
+
+                    drawDial(Math.round(interpolatedPos));
+
+                    if (progress < 1) {
+                        animationFrameId = requestAnimationFrame(animate);
+                    } else {
+                        // Ensure it lands exactly on endPos
+                        drawDial(endPos);
+                    }
+                };
+
+                animationFrameId = requestAnimationFrame(animate);
+            }
+
+            function performStep() {
+                currentRotationIndex++;
+                if (currentRotationIndex >= rotations.length) {
+                    currentRotationSpan.textContent = "Симуляция завершена.";
+                    nextStepBtn.disabled = true;
+                    return;
+                }
+
+                const rotation = rotations[currentRotationIndex];
+                currentRotationSpan.textContent = rotation;
+
+                const direction = rotation[0];
+                const distance = parseInt(rotation.substring(1));
+                
+                const startPosViz = currentPosition;
+                let newZeroCrossings = 0;
+
+                // Logic for Part 2 counting during visualization
+                let clicks_to_first_zero;
+                if (direction === 'R') {
+                    if (startPosViz === 0) {
+                        clicks_to_first_zero = 100;
+                    } else {
+                        clicks_to_first_zero = 100 - startPosViz;
+                    }
+                } else { // 'L'
+                    if (startPosViz === 0) {
+                        clicks_to_first_zero = 100;
+                    } else {
+                        clicks_to_first_zero = startPosViz;
+                    }
+                }
+                
+                if (distance >= clicks_to_first_zero) {
+                    newZeroCrossings += 1;
+                    const remaining_distance = distance - clicks_to_first_zero;
+                    newZeroCrossings += Math.floor(remaining_distance / 100);
+                }
+                zeroCrossingsViz += newZeroCrossings;
+
+                // Update current position for the dial
+                if (direction === 'L') {
+                    currentPosition = (currentPosition - distance + 10000) % 100; // Add large number for correct modulo with negative results
+                } else { // 'R'
+                    currentPosition = (currentPosition + distance) % 100;
+                }
+
+                animateRotation(startPosViz, currentPosition, distance, direction);
+                currentPosSpan.textContent = currentPosition;
+                zeroCrossingsVizSpan.textContent = zeroCrossingsViz;
+            }
+
+            drawDial(currentPosition);
+            nextStepBtn.addEventListener('click', performStep);
+        </script>
+
+        <h2>Забавная шутка</h2>
+        <p>Почему сейф отказался открываться для эльфов?</p>
+        <p>Потому что у него было слишком много <em>кликов</em>, но недостаточно <em>лайков</em>!</p>
+    </div>
+</body>
+</html>

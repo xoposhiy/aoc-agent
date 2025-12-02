@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AoC 2025, Day 1: Secret Entrance</title>
+    <script src="input.js"></script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 { color: #569cd6; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        h2 { color: #4ec9b0; margin-top: 30px; }
+        a { color: #9cdcfe; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        code { background-color: #2d2d2d; padding: 2px 4px; border-radius: 4px; font-family: 'Consolas', 'Courier New', monospace; color: #ce9178; }
+        pre { background-color: #1e1e1e; border: 1px solid #333; padding: 15px; overflow-x: auto; border-radius: 5px; }
+        .highlight { color: #dcdcaa; }
+        .comment { color: #6a9955; }
+        .keyword { color: #569cd6; }
+        .string { color: #ce9178; }
+        .number { color: #b5cea8; }
+        
+        /* Visualization styles */
+        #vis-container {
+            text-align: center;
+            background: #252526;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        canvas {
+            background: #1e1e1e;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        .controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+        button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background: #1177bb; }
+        button:disabled { background: #444; cursor: not-allowed; }
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+            background: #333;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        input[type=range] { vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AoC 2025, Day 1: Secret Entrance</h1>
+        <p><strong>Решение:</strong> gemini-3-pro-preview | <a href="https://adventofcode.com/2025/day/1" target="_blank">Ссылка на задачу</a></p>
+
+        <h2>Краткое описание задачи</h2>
+        <p>
+            Мы находимся перед сейфом с диском, пронумерованным от <code>0</code> до <code>99</code>. 
+            У нас есть список инструкций для вращения диска (например, <code>R10</code> — повернуть вправо на 10, <code>L5</code> — повернуть влево на 5).
+            Диск стартует с позиции <code>50</code>.
+        </p>
+        <ul>
+            <li><strong>Часть 1:</strong> Найти, сколько раз диск <em>останавливается</em> на позиции <code>0</code> после завершения вращения.</li>
+            <li><strong>Часть 2:</strong> Найти, сколько раз диск <em>проходит</em> через позицию <code>0</code> (включая остановки) во время вращения.</li>
+        </ul>
+
+        <h2>Алгоритм решения</h2>
+        
+        <h3>Часть 1: Симуляция</h3>
+        <p>
+            Задача решается прямой симуляцией процесса. Мы храним текущую позицию <code>pos</code>.
+            Для каждой инструкции обновляем позицию, используя арифметику по модулю <code>100</code>.
+            Если новая позиция равна <code>0</code>, увеличиваем счётчик.
+        </p>
+        <p>
+            <span class="highlight">Сложность:</span> O(N), где N — количество инструкций.
+        </p>
+
+        <h3>Часть 2: Математика интервалов</h3>
+        <p>
+            Здесь простая симуляция по шагам ("кликам") была бы слишком медленной, если бы значения вращения были огромными (хотя в Puzzle Input они умеренные, но для общего случая лучше оптимизировать).
+            Вместо цикла по каждому клику, мы используем математический подход.
+        </p>
+        <p>
+            При вращении вправо на <code>amount</code>, мы проходим диапазон значений <code>[pos + 1, pos + amount]</code> (в линейном представлении).
+            Количество раз, которое мы пересекаем число, кратное 100 (что соответствует <code>0</code> на диске), можно вычислить как количество чисел, делящихся на 100, в этом интервале.
+        </p>
+        <p>
+            Формула количества чисел, кратных <code>K</code>, в интервале <code>[A, B]</code>:
+            <br>
+            <code>count = floor(B / K) - floor((A - 1) / K)</code>
+        </p>
+        <p>
+            Аналогично для вращения влево (отрицательное направление).
+            Это позволяет вычислить количество "проходов через ноль" за O(1) для каждой инструкции.
+        </p>
+
+        <h2>Интересные моменты</h2>
+        <ul>
+            <li>
+                <strong>Модульная арифметика:</strong> Python оператор <code>%</code> для отрицательных чисел работает "правильно" (математически корректно возвращает положительный остаток), что упрощает вращение влево. 
+                <code>(-5) % 100 == 95</code>. В языках типа C++ это могло бы вернуть <code>-5</code>, что потребовало бы дополнительной обработки.
+            </li>
+            <li>
+                <strong>Gotcha:</strong> Важно не забыть, что диск стартует с 50, а не с 0. Также важно правильно обрабатывать границы интервалов, чтобы не посчитать лишнего или не пропустить.
+            </li>
+        </ul>
+
+        <div id="vis-container">
+            <h3>Визуализация Сейфа</h3>
+            <div class="stats">
+                <div>Pos: <span id="val-pos" style="color:#4ec9b0">50</span></div>
+                <div>Hits: <span id="val-hits" style="color:#dcdcaa">0</span></div>
+                <div>Last: <span id="val-last">None</span></div>
+            </div>
+            <canvas id="dialCanvas" width="400" height="400"></canvas>
+            <div class="controls">
+                <button id="btn-start">Start</button>
+                <button id="btn-reset">Reset</button>
+                <label>Speed: <input type="range" id="speed-range" min="1" max="50" value="5"></label>
+            </div>
+        </div>
+
+        <script>
+            // Visualization Logic
+            const canvas = document.getElementById('dialCanvas');
+            const ctx = canvas.getContext('2d');
+            const centerX = 200;
+            const centerY = 200;
+            const radius = 140;
+            
+            let currentPos = 50;
+            let currentHits = 0;
+            let currentInstructionIndex = 0;
+            let isRunning = false;
+            let animationFrameId;
+            let speed = 5;
+
+            // Ensure puzzleInput is available
+            const instructions = (typeof puzzleInput !== 'undefined') ? puzzleInput : [
+                "L10", "R20", "L50", "R100", "L5" // fallback
+            ];
+
+            function drawDial() {
+                ctx.clearRect(0, 0, 400, 400);
+
+                // Draw Circle
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.strokeStyle = '#569cd6';
+                ctx.lineWidth = 5;
+                ctx.stroke();
+
+                // Draw Ticks and Numbers
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.font = '10px Consolas';
+                
+                for (let i = 0; i < 100; i++) {
+                    const angle = (i * 3.6 - 90) * Math.PI / 180;
+                    const x1 = centerX + (radius - 10) * Math.cos(angle);
+                    const y1 = centerY + (radius - 10) * Math.sin(angle);
+                    const x2 = centerX + (radius - 20) * Math.cos(angle);
+                    const y2 = centerY + (radius - 20) * Math.sin(angle);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.strokeStyle = (i === 0) ? '#dcdcaa' : '#555';
+                    ctx.lineWidth = (i === 0) ? 3 : 1;
+                    ctx.stroke();
+
+                    if (i % 10 === 0) {
+                         const tx = centerX + (radius - 35) * Math.cos(angle);
+                         const ty = centerY + (radius - 35) * Math.sin(angle);
+                         ctx.fillStyle = (i === 0) ? '#dcdcaa' : '#888';
+                         ctx.fillText(i.toString(), tx, ty);
+                    }
+                }
+
+                // Draw Needle
+                const needleAngle = (currentPos * 3.6 - 90) * Math.PI / 180;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(centerX + (radius - 40) * Math.cos(needleAngle), centerY + (radius - 40) * Math.sin(needleAngle));
+                ctx.strokeStyle = '#ce9178';
+                ctx.lineWidth = 4;
+                ctx.stroke();
+
+                // Draw Center Hub
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, 10, 0, 2 * Math.PI);
+                ctx.fillStyle = '#ce9178';
+                ctx.fill();
+            }
+
+            function updateStats(lastInstr) {
+                document.getElementById('val-pos').textContent = currentPos;
+                document.getElementById('val-hits').textContent = currentHits;
+                if(lastInstr) document.getElementById('val-last').textContent = lastInstr;
+            }
+
+            function step() {
+                if (currentInstructionIndex >= instructions.length) {
+                    isRunning = false;
+                    document.getElementById('btn-start').textContent = "Restart";
+                    return;
+                }
+
+                // Process a batch of instructions based on speed
+                let stepsToDo = speed; 
+                
+                // If speed is low, maybe animate partial rotation? 
+                // For simplicity, we just jump steps but render every frame.
+                // Actually, let's process one instruction per frame but skip frames if speed is high?
+                // Better: Process 1 instruction every (60/speed) frames if speed < 60.
+                // If speed is high, process multiple instructions per frame.
+                
+                // Simplified: execute 'speed' instructions per frame if speed > 1.
+                // If speed == 1, just 1.
+                
+                // Let's make speed variable meaningful. 
+                // Range 1-50.
+                // 1 -> 1 instruction per 10 frames (slow).
+                // 10 -> 1 instruction per frame.
+                // 50 -> 5 instructions per frame.
+
+                let instructionsToRun = 0;
+                
+                if (speed >= 10) {
+                    instructionsToRun = Math.floor(speed / 10);
+                } else {
+                    // probabilistic or counter based execution
+                    if (Math.random() < (speed / 10)) {
+                        instructionsToRun = 1;
+                    }
+                }
+
+                if (instructionsToRun === 0) {
+                    animationFrameId = requestAnimationFrame(step);
+                    return;
+                }
+
+                for (let k = 0; k < instructionsToRun; k++) {
+                    if (currentInstructionIndex >= instructions.length) break;
+
+                    const line = instructions[currentInstructionIndex];
+                    const dir = line[0];
+                    const amt = parseInt(line.substring(1));
+                    
+                    let oldPos = currentPos;
+                    let hits = 0;
+
+                    if (dir === 'R') {
+                         hits = Math.floor((currentPos + amt) / 100); 
+                         // Check strictly greater than pos/100? No, standard formula works because pos < 100.
+                         // But wait, Part 2 logic is what we visualize? 
+                         // The problem statement says Part 2 password is the one to use.
+                         // "hits" logic:
+                         // (pos + amt) // 100. 
+                         currentPos = (currentPos + amt) % 100;
+                    } else {
+                         // L
+                         let upper = currentPos - 1;
+                         let lower = currentPos - amt;
+                         hits = Math.floor(upper / 100) - Math.floor((lower - 1) / 100);
+                         currentPos = (currentPos - amt) % 100;
+                         if (currentPos < 0) currentPos += 100;
+                    }
+                    
+                    currentHits += hits;
+                    updateStats(line);
+                    currentInstructionIndex++;
+                }
+
+                drawDial();
+
+                if (isRunning) {
+                    animationFrameId = requestAnimationFrame(step);
+                }
+            }
+
+            document.getElementById('btn-start').addEventListener('click', () => {
+                if (!isRunning) {
+                    if (currentInstructionIndex >= instructions.length) {
+                        currentInstructionIndex = 0;
+                        currentHits = 0;
+                        currentPos = 50;
+                    }
+                    isRunning = true;
+                    document.getElementById('btn-start').textContent = "Pause";
+                    step();
+                } else {
+                    isRunning = false;
+                    document.getElementById('btn-start').textContent = "Resume";
+                    cancelAnimationFrame(animationFrameId);
+                }
+            });
+
+            document.getElementById('btn-reset').addEventListener('click', () => {
+                isRunning = false;
+                cancelAnimationFrame(animationFrameId);
+                currentInstructionIndex = 0;
+                currentHits = 0;
+                currentPos = 50;
+                document.getElementById('btn-start').textContent = "Start";
+                updateStats("-");
+                drawDial();
+            });
+
+            document.getElementById('speed-range').addEventListener('input', (e) => {
+                speed = parseInt(e.target.value);
+            });
+
+            // Initial Draw
+            drawDial();
+
+        </script>
+
+        <h2>Исходный код</h2>
+        <p>Полное решение задачи.</p>
+
+        <h3>Part 1: solve_day1_part1.py</h3>
+        <pre><code><span class="comment"># Day 1: Secret Entrance - Part 1</span>
+<span class="keyword">def</span> <span class="highlight">solve_part1</span>():
+    <span class="keyword">with</span> <span class="highlight">open</span>(<span class="string">'input.txt'</span>) <span class="keyword">as</span> f:
+        lines = f.readlines()
+
+    position = <span class="number">50</span>
+    zero_hits = <span class="number">0</span>
+    dial_size = <span class="number">100</span>
+
+    <span class="keyword">for</span> line <span class="keyword">in</span> lines:
+        line = line.strip()
+        direction = line[<span class="number">0</span>]
+        amount = <span class="highlight">int</span>(line[<span class="number">1</span>:])
+
+        <span class="keyword">if</span> direction == <span class="string">'R'</span>:
+            position = (position + amount) % dial_size
+        <span class="keyword">elif</span> direction == <span class="string">'L'</span>:
+            position = (position - amount) % dial_size
+
+        <span class="keyword">if</span> position == <span class="number">0</span>:
+            zero_hits += <span class="number">1</span>
+
+    <span class="highlight">print</span>(f<span class="string">"Part 1: {zero_hits}"</span>)
+</code></pre>
+
+        <h3>Part 2: solve_day1_part2.py</h3>
+        <pre><code><span class="comment"># Day 1: Secret Entrance - Part 2</span>
+<span class="keyword">def</span> <span class="highlight">solve_part2</span>():
+    <span class="comment"># ... (reading input same as above) ...</span>
+    
+    position = <span class="number">50</span>
+    total_hits = <span class="number">0</span>
+    dial_size = <span class="number">100</span>
+
+    <span class="keyword">for</span> line <span class="keyword">in</span> lines:
+        <span class="comment"># ... parsing ...</span>
+
+        <span class="keyword">if</span> direction == <span class="string">'R'</span>:
+            <span class="comment"># Count multiples of 100 in [pos+1, pos+amount]</span>
+            hits = (position + amount) // dial_size
+            total_hits += hits
+            position = (position + amount) % dial_size
+            
+        <span class="keyword">elif</span> direction == <span class="string">'L'</span>:
+            <span class="comment"># Count multiples of 100 in [pos-amount, pos-1]</span>
+            upper = position - <span class="number">1</span>
+            lower = position - amount
+            hits = (upper // dial_size) - ((lower - <span class="number">1</span>) // dial_size)
+            total_hits += hits
+            position = (position - amount) % dial_size
+
+    <span class="highlight">print</span>(f<span class="string">"Part 2: {total_hits}"</span>)
+</code></pre>
+        
+        <p style="text-align: center; margin-top: 50px; color: #666; font-style: italic;">
+            "This problem really made my head spin!" — Анонимный Эльф
+        </p>
+
+    </div>
+</body>
+</html>

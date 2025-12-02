@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d3436"/>
+      <stop offset="100%" style="stop-color:#636e72"/>
+    </linearGradient>
+    <style>
+      .header { font: bold 22px sans-serif; fill: #ffeaa7; }
+      .cell { font: 14px monospace; fill: #dfe6e9; }
+      .highlight { fill: #fd79a8; }
+      .box { fill: #2d3436; stroke: #74b9ff; stroke-width: 1.5; }
+      
+      @keyframes appear {
+        from { opacity: 0; transform: scale(0.8); }
+        to { opacity: 1; transform: scale(1); }
+      }
+      .row1 { animation: appear 0.3s ease-out 0.1s forwards; opacity: 0; }
+      .row2 { animation: appear 0.3s ease-out 0.3s forwards; opacity: 0; }
+      .row3 { animation: appear 0.3s ease-out 0.5s forwards; opacity: 0; }
+      .row4 { animation: appear 0.3s ease-out 0.7s forwards; opacity: 0; }
+    </style>
+  </defs>
+  
+  <rect width="700" height="400" fill="url(#bg2)"/>
+  
+  <text x="350" y="35" text-anchor="middle" class="header">🔢 Генерация Repeated Patterns Numbers</text>
+  
+  <!-- Table header -->
+  <rect x="20" y="55" width="100" height="30" class="box"/>
+  <text x="70" y="77" text-anchor="middle" class="cell" style="fill:#74b9ff">Pattern</text>
+  
+  <rect x="125" y="55" width="555" height="30" class="box"/>
+  <text x="400" y="77" text-anchor="middle" class="cell" style="fill:#74b9ff">Repeated Numbers (×2, ×3, ×4, ...)</text>
+  
+  <!-- Row 1: single digit patterns -->
+  <g class="row1">
+    <rect x="20" y="90" width="100" height="60" class="box"/>
+    <text x="70" y="115" text-anchor="middle" class="cell">1</text>
+    <text x="70" y="135" text-anchor="middle" class="cell">2...9</text>
+    
+    <rect x="125" y="90" width="555" height="60" class="box"/>
+    <text x="145" y="115" class="cell highlight">11</text>
+    <text x="185" y="115" class="cell highlight">111</text>
+    <text x="235" y="115" class="cell highlight">1111</text>
+    <text x="295" y="115" class="cell highlight">11111</text>
+    <text x="365" y="115" class="cell">...</text>
+    <text x="145" y="138" class="cell">22, 222, 2222, ... | 99, 999, 9999, ...</text>
+  </g>
+  
+  <!-- Row 2: two digit patterns -->
+  <g class="row2">
+    <rect x="20" y="155" width="100" height="60" class="box"/>
+    <text x="70" y="180" text-anchor="middle" class="cell">10</text>
+    <text x="70" y="200" text-anchor="middle" class="cell">11...99</text>
+    
+    <rect x="125" y="155" width="555" height="60" class="box"/>
+    <text x="145" y="180" class="cell highlight">1010</text>
+    <text x="205" y="180" class="cell highlight">101010</text>
+    <text x="285" y="180" class="cell highlight">10101010</text>
+    <text x="385" y="180" class="cell">...</text>
+    <text x="145" y="203" class="cell">1111 = 11×2, 121212 = 12×3, 424242 = 42×3 ...</text>
+  </g>
+  
+  <!-- Row 3: three digit patterns -->
+  <g class="row3">
+    <rect x="20" y="220" width="100" height="60" class="box"/>
+    <text x="70" y="245" text-anchor="middle" class="cell">100</text>
+    <text x="70" y="265" text-anchor="middle" class="cell">...999</text>
+    
+    <rect x="125" y="220" width="555" height="60" class="box"/>
+    <text x="145" y="245" class="cell highlight">100100</text>
+    <text x="225" y="245" class="cell highlight">100100100</text>
+    <text x="345" y="245" class="cell">...</text>
+    <text x="145" y="268" class="cell">123123, 123123123, 456456456456 ...</text>
+  </g>
+  
+  <!-- Row 4: summary -->
+  <g class="row4">
+    <rect x="20" y="290" width="660" height="45" class="box" style="stroke:#00b894"/>
+    <text x="350" y="320" text-anchor="middle" class="cell" style="fill:#00b894; font-size: 16px">
+      Всего ~ O(9 × 10^(k-1) × log(max_val)) чисел для каждой длины паттерна k
+    </text>
+  </g>
+  
+  <!-- Fun fact -->
+  <text x="350" y="375" text-anchor="middle" class="cell" style="fill:#ffeaa7; font-size: 13px">
+    💡 Ключ: генерируем кандидатов вместо проверки триллионов чисел!
+  </text>
+</svg>
