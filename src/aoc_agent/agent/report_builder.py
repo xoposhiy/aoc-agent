@@ -98,6 +98,7 @@ class ReportBuilder:
         pairwise_html = self._generate_pairwise_section(results)
         charts_html = self._generate_charts_section(results)
         model_charts_html = self._generate_model_comparison_charts(results)
+        model_pairwise_html = self._generate_model_pairwise_section(results)
 
         # Group by Year -> Day -> Lang -> Model
         # Structure: grouped[year][(day, lang, model)] = list of runs
@@ -147,9 +148,12 @@ class ReportBuilder:
         
         """ + pairwise_html + """
         
+        """ + model_pairwise_html + """
+
         """ + charts_html + """
         
         """ + model_charts_html + """
+        
         
         """
         
@@ -651,6 +655,121 @@ class ReportBuilder:
                     geo_tok = math.exp(sum(math.log(x) for x in ratios_tok) / len(ratios_tok)) if ratios_tok else 1.0
                     
                     # Arithmetic Mean for Friction Difference
+                    avg_diff_fric = sum(diffs_fric) / len(diffs_fric) if diffs_fric else 0.0
+                    
+                    def fmt_cls(val):
+                        if val < 0.95: return "metric-good"
+                        if val > 1.05: return "metric-bad"
+                        return "metric-neutral"
+
+                    def fmt_fric(val):
+                        if val < -0.1: return "metric-good"
+                        if val > 0.1: return "metric-bad"
+                        return "metric-neutral"
+
+                    html += "<td class='matrix-cell'>"
+                    html += f"<div class='{fmt_cls(geo_dur)}'>Time: {geo_dur:.2f}x</div>"
+                    html += f"<div class='{fmt_cls(geo_tok)}'>Tokens: {geo_tok:.2f}x</div>"
+                    
+                    sign = "+" if avg_diff_fric > 0 else ""
+                    html += f"<div class='{fmt_fric(avg_diff_fric)}'>Friction: {sign}{avg_diff_fric:.1f}</div>"
+                    
+                    html += f"<span class='sub-label'>({common_count} tasks)</span>"
+                    html += "</td>"
+
+            html += "</tr>"
+        
+        html += "</tbody></table></div>"
+        return html
+
+    def _generate_model_pairwise_section(self, results: List[Dict[str, Any]]) -> str:
+        """
+        Generates a pairwise comparison matrix for models based on overlapping tasks (Same Year, Day, Lang).
+        """
+        target_models = ['gpt-5', 'gemini-3-pro-preview', 'claude-opus-4-5']
+        
+        # 1. Aggregate data by (Year, Day, Lang) -> {model: stats}
+        grouped_data = defaultdict(lambda: defaultdict(list))
+        
+        for r in results:
+            if not r.get('part2_solved', False):
+                continue
+            
+            y, d = r.get('year'), r.get('day')
+            l = r.get('lang')
+            m = r.get('model', 'unknown')
+            
+            if y is None or d is None or l is None:
+                continue
+            
+            if m in target_models:
+                grouped_data[(y, d, l)][m].append(r)
+
+        # Compute averages
+        task_map = defaultdict(dict)
+        for key, model_runs in grouped_data.items():
+            for m, runs in model_runs.items():
+                avg_dur = sum(r.get('part12_duration', 0) for r in runs) / len(runs)
+                avg_tok = sum(r.get('part12_output_tokens', 0) for r in runs) / len(runs)
+                
+                friction_sum = sum(
+                    r.get('part1_incorrect', 0) + 
+                    r.get('part2_incorrect', 0) + 
+                    r.get('part1_run_code_errors', 0) + 
+                    r.get('part2_run_code_errors', 0)
+                    for r in runs
+                )
+                avg_fric = friction_sum / len(runs)
+                
+                task_map[key][m] = {'dur': avg_dur, 'tok': avg_tok, 'fric': avg_fric}
+
+        if not task_map:
+            return ""
+
+        # 2. Build Matrix
+        html = "<div class='year-section'><h2>Model Head-to-Head Comparison</h2>"
+        html += "<p class='summary'>Comparison on overlapping tasks (Same Year, Day, Language) where both models solved Part 2.</p>"
+        html += "<table class='pairwise-table'><thead><tr><th class='matrix-header'>Row vs Col</th>"
+        for m in target_models:
+            html += f"<th class='matrix-header'>{m}</th>"
+        html += "</tr></thead><tbody>"
+
+        for m_a in target_models:
+            html += f"<tr><td class='matrix-header'>{m_a}</td>"
+            for m_b in target_models:
+                if m_a == m_b:
+                    html += "<td class='self-cell'>—</td>"
+                    continue
+
+                # Compare A vs B
+                ratios_dur = []
+                ratios_tok = []
+                diffs_fric = []
+                common_count = 0
+
+                for key, models_data in task_map.items():
+                    if m_a in models_data and m_b in models_data:
+                        stat_a = models_data[m_a]
+                        stat_b = models_data[m_b]
+                        
+                        # Ratio: A / B
+                        if stat_b['dur'] > 0:
+                            ratios_dur.append(stat_a['dur'] / stat_b['dur'])
+                        if stat_b['tok'] > 0:
+                            ratios_tok.append(stat_a['tok'] / stat_b['tok'])
+                        
+                        # Friction: A - B
+                        diffs_fric.append(stat_a['fric'] - stat_b['fric'])
+                        common_count += 1
+
+                if common_count == 0:
+                    html += "<td><span class='metric-neutral'>N/A</span></td>"
+                else:
+                    # Geometric Mean for Ratios
+                    geo_dur = math.exp(sum(math.log(x) for x in ratios_dur) / len(ratios_dur)) if ratios_dur else 1.0
+                    geo_tok = math.exp(sum(math.log(x) for x in ratios_tok) / len(ratios_tok)) if ratios_tok else 1.0
+                    
+                    # Arithmetic Mean for Friction
                     avg_diff_fric = sum(diffs_fric) / len(diffs_fric) if diffs_fric else 0.0
                     
                     def fmt_cls(val):

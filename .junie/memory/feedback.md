@@ -30,3 +30,11 @@
     "NEW INSTRUCTION": "WHEN generating Model Comparison XY charts THEN set axes to models, plot days as points using averaged output tokens"
 }
 
+[2025-12-02 21:55] - Updated by Junie
+{
+    "TYPE": "new instructions",
+    "CATEGORY": "report comparisons",
+    "ERROR": "-",
+    "NEW INSTRUCTION": "WHEN building report containing Language Head-to-Head section THEN add Models Head-to-Head pairwise comparison table"
+}
+

@@ -158,3 +158,13 @@
     "NEW INSTRUCTION": "WHEN language selection is determined THEN expose only matching run_* tool in make_tools"
 }
 
+[2025-12-02 22:02] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "normalize model identifiers",
+    "BOTTLENECK": "Inconsistent model IDs can split aggregates and distort head-to-head plots.",
+    "PROJECT NOTE": "Map variants like gpt5/gpt-5 to a canonical ID before aggregation.",
+    "NEW INSTRUCTION": "WHEN aggregating by model THEN normalize model names to a canonical mapping first"
+}
+
