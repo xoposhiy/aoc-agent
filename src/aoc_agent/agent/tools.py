@@ -66,14 +66,18 @@ class AocToolbox:
         self.context = context
 
         # Append environment info to run_code docstring so LLM knows versions
-        if AocToolbox.run_code.__doc__ and "Available language versions" not in AocToolbox.run_code.__doc__:
-            versions = []
-            for lang in ["python", "kotlin", "csharp", "lean4"]:
-                runner = get_runner(lang)
-                if runner:
-                    versions.append(f"            - {lang}: {runner.get_version_info()}")
-            version_info = "\n".join(versions)
-            AocToolbox.run_code.__doc__ += f"\n\n        Available language versions:\n{version_info}"
+        lang_tools = {
+            "python": AocToolbox.run_python,
+            "kotlin": AocToolbox.run_kotlin,
+            "csharp": AocToolbox.run_csharp,
+            "lean4": AocToolbox.run_lean4
+        }
+
+        for lang, tool_method in lang_tools.items():
+            runner = get_runner(lang)
+            if runner and tool_method.__doc__ and "Environment version" not in tool_method.__doc__:
+                 version_info = runner.get_version_info()
+                 tool_method.__doc__ += f"\n\n        Environment version: {version_info}"
 
     def get_task_statement(self, year: int, day: int, part: int) -> str:
         """
@@ -157,7 +161,7 @@ class AocToolbox:
             f.write(text)
         return log_info(f"puzzle input is downloaded to input.txt.")
 
-    def run_code(self, year: int, day: int, language: Lang, code_filename: str, solution_code: str) -> str:
+    def _run_code(self, year: int, day: int, language: Lang, code_filename: str, solution_code: str) -> str:
         """
         Executes the provided solution code.
 
@@ -265,6 +269,102 @@ class AocToolbox:
                 json.dump(run_info, f, indent=2)
             return log_error(f"Exception: {str(e)}")
 
+    def run_python(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
+        """
+        Executes the provided Python solution code.
+
+        The code runs without command-line arguments or stdin input.
+        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
+
+        Constraints:
+            - Execution time limit: 60 seconds.
+            - No network access.
+            - Output (stdout/stderr) is truncated to 3000 characters.
+
+        Args:
+            year: The year of the puzzle.
+            day: The day of the puzzle.
+            code_filename: A descriptive name for the code file (e.g., 'solve_part2_bfs.py'). Avoid generic names.
+            solution_code: The actual source code to execute.
+
+        Returns:
+            The standard output (stdout) if execution is successful (exit code 0).
+            The standard error (stderr) if execution fails (non-zero exit code).
+        """
+        return self._run_code(year, day, "python", code_filename, solution_code)
+
+    def run_kotlin(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
+        """
+        Executes the provided Kotlin solution code.
+
+        The code runs without command-line arguments or stdin input.
+        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
+
+        Constraints:
+            - Execution time limit: 60 seconds.
+            - No network access.
+            - Output (stdout/stderr) is truncated to 3000 characters.
+
+        Args:
+            year: The year of the puzzle.
+            day: The day of the puzzle.
+            code_filename: A descriptive name for the code file (e.g., 'Solution.kt'). Avoid generic names.
+            solution_code: The actual source code to execute.
+
+        Returns:
+            The standard output (stdout) if execution is successful (exit code 0).
+            The standard error (stderr) if execution fails (non-zero exit code).
+        """
+        return self._run_code(year, day, "kotlin", code_filename, solution_code)
+
+    def run_csharp(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
+        """
+        Executes the provided C# solution code.
+
+        The code runs without command-line arguments or stdin input.
+        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
+
+        Constraints:
+            - Execution time limit: 60 seconds.
+            - No network access.
+            - Output (stdout/stderr) is truncated to 3000 characters.
+
+        Args:
+            year: The year of the puzzle.
+            day: The day of the puzzle.
+            code_filename: A descriptive name for the code file (e.g., 'Solution.cs'). Avoid generic names.
+            solution_code: The actual source code to execute.
+
+        Returns:
+            The standard output (stdout) if execution is successful (exit code 0).
+            The standard error (stderr) if execution fails (non-zero exit code).
+        """
+        return self._run_code(year, day, "csharp", code_filename, solution_code)
+
+    def run_lean4(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
+        """
+        Executes the provided Lean 4 solution code.
+
+        The code runs without command-line arguments or stdin input.
+        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
+
+        Constraints:
+            - Execution time limit: 60 seconds.
+            - No network access.
+            - Output (stdout/stderr) is truncated to 3000 characters.
+
+        Args:
+            year: The year of the puzzle.
+            day: The day of the puzzle.
+            code_filename: A descriptive name for the code file (e.g., 'Solution.lean'). Avoid generic names.
+            solution_code: The actual source code to execute.
+
+        Returns:
+            The standard output (stdout) if execution is successful (exit code 0).
+            The standard error (stderr) if execution fails (non-zero exit code).
+        """
+        return self._run_code(year, day, "lean4", code_filename, solution_code)
+
     def complain(self, what_is_wrong: str) -> None:
         """
         Reports a critical issue or an unrecoverable error.
@@ -356,13 +456,27 @@ class AocToolbox:
         self.context.final_report_written = True
         return log_success(f"Final report saved to {report_path}")
 
-    def make_tools(self) -> List[Callable]:
-        return [
+    def make_tools(self, language: Optional[Lang] = None) -> List[Callable]:
+        tools = [
             self.get_task_statement,
             self.download_puzzle_input,
-            self.run_code,
             self.submit_result,
             self.complain,
             self.report_progress,
             self.write_final_report
         ]
+
+        run_tool = None
+        if language == "python":
+            run_tool = self.run_python
+        elif language == "kotlin":
+            run_tool = self.run_kotlin
+        elif language == "csharp":
+            run_tool = self.run_csharp
+        elif language == "lean4":
+            run_tool = self.run_lean4
+        
+        if run_tool:
+            tools.append(run_tool)
+            
+        return tools

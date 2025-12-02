@@ -148,3 +148,13 @@
     "NEW INSTRUCTION": "WHEN search results show only generated report files THEN refine query to source chart code"
 }
 
+[2025-12-02 20:26] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "update tool registration,wire language selection,run build",
+    "BOTTLENECK": "Tool exposure was not updated to restrict by selected language.",
+    "PROJECT NOTE": "Update make_tools to accept language and return only the corresponding run_* tool; update miniagent to pass the language.",
+    "NEW INSTRUCTION": "WHEN language selection is determined THEN expose only matching run_* tool in make_tools"
+}
+

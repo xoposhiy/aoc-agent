@@ -61,7 +61,7 @@ class MiniAgent:
         client = AocClient()
         context = AgentContext(run_id=run_id, start_time=(time.time()))
         toolbox = AocToolbox(client, context)
-        tools = toolbox.make_tools()
+        tools = toolbox.make_tools(language=lang)
 
         if lang != "python":
             no_report = True
