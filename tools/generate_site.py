@@ -80,13 +80,19 @@ def generate_site():
             
         print(f"Scanning {base_path}...")
         
-        # Search for metadata.json one level deep
-        # Assuming structure: data_dir/run_id/metadata.json
-        for meta_file in base_path.glob("*/metadata.json"):
-            run_dir = meta_file.parent
+        # Collect run directories: direct subdirs AND subdirs of 'run' folder
+        run_candidates = list(base_path.glob("*"))
+        if (base_path / "run").exists():
+            run_candidates.extend((base_path / "run").glob("*"))
+
+        for run_dir in run_candidates:
+            if not run_dir.is_dir():
+                continue
+                
+            meta_file = run_dir / "metadata.json"
             report_file = run_dir / "final_report.md"
             
-            if report_file.exists():
+            if meta_file.exists() and report_file.exists():
                 meta = load_metadata(meta_file)
                 if not meta:
                     continue
@@ -156,7 +162,67 @@ def generate_site():
 -   :star: **Stars**: P1: {p1_solved} | P2: {p2_solved}
 
 """     
-        final_content = header + "\n\n" + content
+        # Append code execution info
+        code_report = ""
+        run_infos = list(run["path"].glob("*.run_info.json"))
+        # Sort by filename which contains timestamp
+        run_infos.sort(key=lambda p: p.name)
+        
+        if run_infos:
+            code_report += "\n\n# Code Executions\n"
+            for info_file in run_infos:
+                try:
+                    with open(info_file, "r", encoding="utf-8") as f:
+                        info = json.load(f)
+                    
+                    code_file_name = info_file.name[:-len(".run_info.json")]
+                    code_file = info_file.parent / code_file_name
+                    
+                    if not code_file.exists():
+                        continue
+                        
+                    with open(code_file, "r", encoding="utf-8") as f:
+                        code_content = f.read()
+                        
+                    duration = f"{info.get('duration', 0):.2f}s"
+                    exit_code = info.get('exit_code', 'N/A')
+                    error = info.get('error')
+                    timestamp = info.get('timestamp', '')
+                    
+                    status_icon = "✅" if str(exit_code) == "0" else "❌"
+                    
+                    # Infer language from extension
+                    ext = code_file.suffix.lower()
+                    lang_md = "text"
+                    if ext == ".py": lang_md = "python"
+                    elif ext == ".kt": lang_md = "kotlin"
+                    elif ext == ".cs": lang_md = "csharp"
+                    elif ext == ".js": lang_md = "javascript"
+                    elif ext == ".rs": lang_md = "rust"
+                    elif ext == ".go": lang_md = "go"
+                    
+                    code_report += f"\n## {status_icon} {code_file_name}\n"
+                    code_report += f"- **Timestamp**: {timestamp}\n"
+                    code_report += f"- **Duration**: {duration}\n"
+                    code_report += f"- **Exit Code**: {exit_code}\n"
+                    
+                    if error:
+                        code_report += f"- **Error**: {error}\n"
+                        
+                    stdout = info.get('stdout', '').strip()
+                    stderr = info.get('stderr', '').strip()
+                    
+                    if stdout:
+                        code_report += f"\n### Stdout\n```text\n{stdout}\n```\n"
+                    if stderr:
+                        code_report += f"\n### Stderr\n```text\n{stderr}\n```\n"
+                        
+                    code_report += f"\n### Code\n```{lang_md}\n{code_content}\n```\n"
+                    
+                except Exception as e:
+                    print(f"Error processing run info {info_file}: {e}")
+
+        final_content = header + "\n\n" + content + code_report
         
         with open(target_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(final_content)

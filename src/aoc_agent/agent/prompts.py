@@ -36,8 +36,7 @@ system_prompt_template = ChatPromptTemplate.from_messages(
             - Save visualizations to file in current folder; the report will be saved also in the current folder.
             - Try to create some funny joke or pun or quote related to the task or solution, for entertainment. If no good jokes found, just add some sarcastic smart comment about the task or solution.
             - If problems occurred during solving any part (compilation errors, runtime errors, wrong answers, time limit errors, etc), include description of the problems and how you overcame them. If no problems — skip this part.
-            - Include the content the code files that calculates the final answer.
-            - Do not include the final answers in the report.
+            - DO NOT include full solution code or the final answers in the report.
             - Finish with your impression after this task.
                         
             ## Code writing

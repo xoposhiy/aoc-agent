@@ -108,3 +108,23 @@
     "NEW INSTRUCTION": "WHEN verifying source file existence THEN add try/exists checks in generator instead of listing"
 }
 
+[2025-12-02 13:03] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "scan project, update miniagent Lang, set filename conventions, update docs/help",
+    "BOTTLENECK": "The plan assumed Lang is defined in tools/cli instead of miniagent.",
+    "PROJECT NOTE": "Lang is imported from agent.miniagent; extend it there and propagate.",
+    "NEW INSTRUCTION": "WHEN adding a new language THEN update agent.miniagent Lang and CLI choices accordingly"
+}
+
+[2025-12-02 13:10] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "run git diff,scan miniagent.py",
+    "MISSING STEPS": "update system prompt,update report generator,verify changes",
+    "BOTTLENECK": "Run metadata not yet integrated into report generation and prompt cleanup.",
+    "PROJECT NOTE": "Building the run_info path via f\"{run_code_path}.run_info.json\" risks invalid filenames; resolve beside the actual code file with Path and ensure parent dirs exist.",
+    "NEW INSTRUCTION": "WHEN writing run metadata for run_code result THEN place JSON beside code file and ensure parent directory exists"
+}
+

@@ -38,3 +38,23 @@
     "NEW INSTRUCTION": "WHEN command uses head in PowerShell THEN replace with Select-Object -First N"
 }
 
+[2025-12-02 13:07] - Updated by Junie - Error analysis
+{
+    "TYPE": "code change error",
+    "TOOL": "search_replace",
+    "ERROR": "Introduced unresolved reference 'start_time' in tools.py",
+    "ROOT CAUSE": "The new run_info logic uses start_time without defining it in run_code.",
+    "PROJECT NOTE": "In src/aoc_agent/agent/tools.py run_code, initialize start_time = time.time() before invoking the runner/subprocess to compute duration correctly.",
+    "NEW INSTRUCTION": "WHEN using start_time in run_code THEN set start_time = time.time() before execution"
+}
+
+[2025-12-02 13:07] - Updated by Junie - Error analysis
+{
+    "TYPE": "code change error",
+    "TOOL": "search_replace",
+    "ERROR": "Unresolved references: datetime and json after code edit",
+    "ROOT CAUSE": "The edit introduced datetime/json usage without adding their imports to tools.py.",
+    "PROJECT NOTE": "In src/aoc_agent/agent/tools.py run_code, ensure json and datetime are imported.",
+    "NEW INSTRUCTION": "WHEN adding new module references in code THEN add necessary import statements at file top"
+}
+

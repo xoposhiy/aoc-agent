@@ -6,6 +6,8 @@ import subprocess
 import sys
 import time
 import shutil
+import json
+from datetime import datetime
 from pathlib import Path
 from typing import Literal, Optional, List, Callable, Any
 from langchain_core.runnables import RunnableConfig
@@ -196,22 +198,71 @@ class AocToolbox:
             if not runner:
                 return log_error(f"Error: Unsupported language {language}")
 
+            start_time = time.time()
             result = runner.run(working_dir, run_code_path, solution_code)
 
             if result.returncode != 0:
                 self.context.record_run_code_error()
                 stderr = truncate_output(result.stderr)
                 stdout = truncate_output(result.stdout)
+                
+                run_info = {
+                    "error": "Non-zero exit code",
+                    "stdout": result.stdout,
+                    "stderr": result.stderr,
+                    "duration": time.time() - start_time,
+                    "timestamp": datetime.now().isoformat(),
+                    "exit_code": result.returncode
+                }
+                with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
+                    json.dump(run_info, f, indent=2)
+
                 return log_error(f"stderr:\n{stderr}\nstdout:\n{stdout}\n\nEnvironment:\n{runner.get_version_info()}")
             
             self.context.record_run_code_success()
-            return log_info(f"stdout: {truncate_output(result.stdout)}")
+            log_output = f"stdout: {truncate_output(result.stdout)}"
+            
+            # Save run info
+            run_info = {
+                "error": None,
+                "stdout": result.stdout,
+                "stderr": result.stderr,
+                "duration": time.time() - start_time,
+                "timestamp": datetime.now().isoformat(),
+                "exit_code": result.returncode
+            }
+            with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
+                json.dump(run_info, f, indent=2)
+                
+            return log_info(log_output)
 
         except subprocess.TimeoutExpired as e:
             self.context.record_run_code_error()
             stdout = truncate_output(e.stdout) if e.stdout else ""
+            
+            run_info = {
+                "error": "TimeoutExpired",
+                "stdout": e.stdout if e.stdout else "",
+                "stderr": e.stderr if e.stderr else "",
+                "duration": 60.0, # Timeout limit
+                "timestamp": datetime.now().isoformat(),
+                "exit_code": "timeout"
+            }
+            with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
+                json.dump(run_info, f, indent=2)
+
             return log_error(f"Error: Execution was interrupted because it ran longer than 60 seconds. stdout:\n{stdout}")
         except Exception as e:
+            run_info = {
+                "error": str(e),
+                "stdout": "",
+                "stderr": "",
+                "duration": 0.0,
+                "timestamp": datetime.now().isoformat(),
+                "exit_code": "exception"
+            }
+            with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
+                json.dump(run_info, f, indent=2)
             return log_error(f"Exception: {str(e)}")
 
     def complain(self, what_is_wrong: str) -> None:
