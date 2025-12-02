@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import datetime
 import os
 import sys
+import time
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -53,11 +55,40 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         default=False,
         help="Skip creating final report and exit after successful submission",
     )
+    parser.add_argument(
+        "--start-time",
+        type=str,
+        required=False,
+        help="Time to start the agent, format HH:MM (24h)",
+    )
     return parser.parse_args(argv)
+
+
+def wait_for_start_time(start_time_str: str) -> None:
+    now = datetime.datetime.now()
+    try:
+        target_time = datetime.datetime.strptime(start_time_str, "%H:%M").time()
+    except ValueError:
+        print(f"Invalid time format: {start_time_str}. Expected HH:MM.")
+        sys.exit(1)
+
+    target_datetime = datetime.datetime.combine(now.date(), target_time)
+
+    if target_datetime <= now:
+        target_datetime += datetime.timedelta(days=1)
+
+    wait_seconds = (target_datetime - now).total_seconds()
+    print(f"Current time: {now.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Target time: {target_datetime.strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Waiting {wait_seconds:.2f} seconds...")
+    time.sleep(wait_seconds)
 
 
 def main(argv: list[str] | None = None) -> int:
     ns = parse_args(argv)
+    if ns.start_time:
+        wait_for_start_time(ns.start_time)
+
     if ns.days:
         runner = AgentRunner(
             year=ns.year,

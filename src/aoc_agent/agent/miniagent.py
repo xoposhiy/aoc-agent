@@ -28,7 +28,7 @@ MODEL_ALIASES = {
     "gpt5m": "gpt-5-mini",
     "g3": "gemini-3-pro-preview",
     "g25f": "gemini-2.5-flash",
-    "co45": "claude-opus-4.5",
+    "co45": "claude-opus-4-5",
 }
 
 class TokenCollector(BaseCallbackHandler):
