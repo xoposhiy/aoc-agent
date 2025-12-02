@@ -162,12 +162,28 @@ def generate_site():
             f.write(final_content)
             
     # 3. Generate Dashboard (index.md)
+    
+    # Handle Global Report
+    report_source = Path("data/reports/report.html")
+    report_dest = docs_dir / "report.html"
+    has_report = False
+    
+    if report_source.exists():
+        try:
+            shutil.copy(report_source, report_dest)
+            has_report = True
+            print(f"Included global report: {report_source}")
+        except Exception as e:
+            print(f"Failed to copy global report: {e}")
+
     index_content = f"""
 # Mission Control Center
 
 Overview of all agent operations.
 
 """
+    if has_report:
+        index_content += "- [**Global Analysis Report**](report.html)\n\n"
     for run in runs:
         meta = run["meta"]
         year = meta.get("year", 0)

@@ -8,3 +8,33 @@
     "NEW INSTRUCTION": "WHEN deleting multiple files in PowerShell THEN run Remove-Item -Force file1, file2"
 }
 
+[2025-12-02 00:43] - Updated by Junie - Error analysis
+{
+    "TYPE": "env/setup",
+    "TOOL": "bash",
+    "ERROR": "ls failed: 'tests' directory does not exist",
+    "ROOT CAUSE": "The agent assumed a tests directory existed, but the repository has none.",
+    "PROJECT NOTE": "This repo appears to store code under src/aoc_agent and has no tests directory.",
+    "NEW INSTRUCTION": "WHEN listing project tests directory THEN check existence with Test-Path and skip if missing"
+}
+
+[2025-12-02 00:44] - Updated by Junie - Error analysis
+{
+    "TYPE": "env/setup",
+    "TOOL": "bash",
+    "ERROR": "ImportError: relative import when running cli.py directly",
+    "ROOT CAUSE": "The CLI was executed as a file instead of a package module, breaking relative imports.",
+    "PROJECT NOTE": "This repo uses a src/ layout; run the CLI via `python -m aoc_agent.cli` from the project root or install the package in editable mode.",
+    "NEW INSTRUCTION": "WHEN command uses python src/aoc_agent/cli.py THEN run python -m aoc_agent.cli instead"
+}
+
+[2025-12-02 09:59] - Updated by Junie - Error analysis
+{
+    "TYPE": "env/setup",
+    "TOOL": "bash",
+    "ERROR": "head not recognized in PowerShell",
+    "ROOT CAUSE": "Used Unix 'head' in a PowerShell session that lacks the command.",
+    "PROJECT NOTE": "Execution shell is PowerShell; prefer native cmdlets (Select-Object, Get-Content) over Unix filters.",
+    "NEW INSTRUCTION": "WHEN command uses head in PowerShell THEN replace with Select-Object -First N"
+}
+
