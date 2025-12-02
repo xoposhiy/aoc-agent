@@ -97,6 +97,7 @@ class ReportBuilder:
         # --- New: Pairwise Comparison Section ---
         pairwise_html = self._generate_pairwise_section(results)
         charts_html = self._generate_charts_section(results)
+        model_charts_html = self._generate_model_comparison_charts(results)
 
         # Group by Year -> Day -> Lang -> Model
         # Structure: grouped[year][(day, lang, model)] = list of runs
@@ -126,115 +127,108 @@ class ReportBuilder:
             .summary { font-weight: bold; margin-bottom: 10px; color: #555; }
             .success { color: green; font-weight: bold; }
             .failure { color: red; font-weight: bold; }
-            .partial { color: orange; font-weight: bold; }
-            .year-section { margin-top: 30px; border-top: 2px solid #ccc; padding-top: 10px; }
-            
-            /* Pairwise Matrix Styles */
-            .matrix-cell { font-size: 0.9em; }
-            .metric-good { color: #008000; font-weight: bold; }
-            .metric-bad { color: #cc0000; font-weight: bold; }
-            .metric-neutral { color: #666; }
-            .sub-label { font-size: 0.75em; color: #888; display: block; margin-top: 2px; }
+            .year-section { margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px; }
+            .matrix-header { font-weight: bold; background-color: #e0e0e0; }
             .self-cell { background-color: #eee; color: #aaa; }
-            .matrix-header { background-color: #e0e0e0; font-weight: bold; }
+            .pairwise-table td { text-align: center; }
+            .pairwise-table th { min-width: 80px; }
             .pairwise-table { width: auto; }
+            .better { color: green; font-weight: bold; }
+            .worse { color: red; font-weight: bold; }
+            .metric-good { color: green; font-weight: bold; }
+            .metric-bad { color: red; font-weight: bold; }
+            .metric-neutral { color: #777; }
+            .sub-label { font-size: 0.8em; color: #888; display: block; }
         </style>
         </head>
         <body>
+        <h1>AoC Agent Report</h1>
+        <p>Generated at: """ + timestamp + """</p>
+        
+        """ + pairwise_html + """
+        
+        """ + charts_html + """
+        
+        """ + model_charts_html + """
+        
         """
-        
-        html += f"<h1>Agent Run Report: All Available Data</h1>"
-        html += f"<div class='summary'>Generated: {datetime.now().isoformat()}</div>"
-        html += f"<div class='summary'>Total Runs Found: {len(results)}</div>"
-        
-        # Insert the pairwise section here
-        html += pairwise_html
-        html += charts_html
         
         for year in years:
             html += f"<div class='year-section'><h2>Year {year}</h2>"
+            
+            # Stats for year
+            # ... (we could add yearly aggregation here) ...
+            
             html += "<table><thead><tr>"
-            html += "<th>Day</th><th>Language</th><th>Model</th><th>Runs</th>"
+            html += "<th>Day</th><th>Lang</th><th>Model</th><th>N Runs</th>"
             html += "<th>P1 Solved</th><th>P2 Solved</th>"
-            html += "<th>Avg Duration (s)</th><th>Min Duration (s)</th><th>Avg Tokens</th><th>Min Tokens</th>"
-            html += "<th>Avg Friction</th><th>Min Friction</th>"
+            html += "<th>Avg Dur (s)</th><th>Min Dur (s)</th>"
+            html += "<th>Avg Tok</th><th>Min Tok</th>"
+            html += "<th>Avg Fric</th><th>Min Fric</th>"
             html += "</tr></thead><tbody>"
             
-            year_data = grouped[year]
-            # Sort by day (numeric if possible), then model, then lang
-            sorted_keys = sorted(year_data.keys(), key=lambda x: (int(x[0]) if isinstance(x[0], int) else 999, x[2], x[1]))
-
-            # 1. Calculate stats for all rows
+            # Sort keys by day desc
+            year_keys = sorted(grouped[year].keys(), key=lambda x: (x[0], x[1], x[2]), reverse=True)
+            
+            # Prepare rows for coloring
             rows_stats = []
             vals_min_tokens = []
             vals_avg_friction = []
             vals_min_friction = []
-
-            for key in sorted_keys:
-                day, lang, model = key
-                runs = year_data[key]
+            
+            for day, lang, model in year_keys:
+                runs = grouped[year][(day, lang, model)]
                 n = len(runs)
                 
-                p1_solved_count = sum(1 for r in runs if r.get('part1_solved', False))
-                p2_solved_count = sum(1 for r in runs if r.get('part2_solved', False))
+                p1_solved_count = sum(1 for r in runs if r.get('part1_solved'))
+                p2_solved_count = sum(1 for r in runs if r.get('part2_solved'))
                 
-                if p1_solved_count == n: p1_class = "success"
-                elif p1_solved_count == 0: p1_class = "failure"
-                else: p1_class = "partial"
-
-                if p2_solved_count == n: p2_class = "success"
-                elif p2_solved_count == 0: p2_class = "failure"
-                else: p2_class = "partial"
+                # Calculate stats
+                durs = [r.get('part12_duration', 0) for r in runs]
+                avg_dur = sum(durs) / n
+                min_dur = min(durs)
                 
-                successful_runs = [r for r in runs if r.get('part2_solved', False)]
-                n_success = len(successful_runs)
-
-                total_dur = sum(r.get('part12_duration', 0) for r in successful_runs)
-                avg_dur = total_dur / n_success if n_success > 0 else 0
-                min_dur = min((r.get('part12_duration', 0) for r in successful_runs), default=0)
+                toks = [r.get('part12_output_tokens', 0) for r in runs]
+                avg_tok = sum(toks) / n
+                min_tok = min(toks)
                 
-                total_tokens = sum(r.get('part12_output_tokens', 0) for r in successful_runs)
-                avg_tokens = total_tokens / n_success if n_success > 0 else 0
-                min_tokens = min((r.get('part12_output_tokens', 0) for r in successful_runs), default=0)
-
-                # Friction Calculation
-                frictions = []
-                for r in successful_runs:
-                    c_runs = (r.get('part1_run_code_errors', 0) + 
-                              r.get('part2_run_code_errors', 0) +
-                              r.get('part1_run_code_success', 0) +
-                              r.get('part2_run_code_success', 0))
-                    
-                    errs = (r.get('part1_run_code_errors', 0) + 
-                            r.get('part2_run_code_errors', 0))
-                            
-                    incs = (r.get('part1_incorrect', 0) + 
-                            r.get('part2_incorrect', 0))
-                    
-                    # Friction formula: code_runs - 2 + errors + incorrects
-                    f = c_runs - 2 + errs + incs
-                    frictions.append(f)
+                # Friction: Incorrect attempts + run code errors
+                frictions = [
+                    r.get('part1_incorrect', 0) + 
+                    r.get('part2_incorrect', 0) + 
+                    r.get('part1_run_code_errors', 0) + 
+                    r.get('part2_run_code_errors', 0)
+                    for r in runs
+                ]
+                avg_fric = sum(frictions) / n
+                min_fric = min(frictions)
                 
-                avg_friction = sum(frictions) / n_success if n_success > 0 else 0
-                min_friction = min(frictions, default=0)
-
-                # Collect values for range calculation
-                vals_min_tokens.append(min_tokens)
-                if n_success > 0:
-                    vals_avg_friction.append(avg_friction)
-                    vals_min_friction.append(min_friction)
-
+                n_success = sum(1 for r in runs if r.get('part2_solved'))
+                
                 rows_stats.append({
-                    'day': day, 'lang': lang, 'model': model, 'n': n,
-                    'p1_class': p1_class, 'p1_solved_count': p1_solved_count,
-                    'p2_class': p2_class, 'p2_solved_count': p2_solved_count,
-                    'avg_dur': avg_dur, 'min_dur': min_dur,
-                    'avg_tokens': avg_tokens, 'min_tokens': min_tokens,
-                    'avg_friction': avg_friction, 'min_friction': min_friction,
+                    'day': day,
+                    'lang': lang,
+                    'model': model,
+                    'n': n,
+                    'p1_solved_count': p1_solved_count,
+                    'p2_solved_count': p2_solved_count,
+                    'p1_class': 'success' if p1_solved_count == n else ('failure' if p1_solved_count == 0 else ''),
+                    'p2_class': 'success' if p2_solved_count == n else ('failure' if p2_solved_count == 0 else ''),
+                    'avg_dur': avg_dur,
+                    'min_dur': min_dur,
+                    'avg_tokens': avg_tok,
+                    'min_tokens': min_tok,
+                    'avg_friction': avg_fric,
+                    'min_friction': min_fric,
                     'n_success': n_success
                 })
+                
+                if n_success > 0:
+                    vals_min_tokens.append(min_tok)
+                    vals_avg_friction.append(avg_fric)
+                    vals_min_friction.append(min_fric)
 
-            # 2. Determine ranges
+            # Determine ranges for coloring
             range_min_tokens = (min(vals_min_tokens, default=0), max(vals_min_tokens, default=0))
             range_avg_friction = (min(vals_avg_friction, default=0), max(vals_avg_friction, default=0))
             range_min_friction = (min(vals_min_friction, default=0), max(vals_min_friction, default=0))
@@ -269,7 +263,6 @@ class ReportBuilder:
 
         html += "</body></html>"
         return html
-
 
     def _aggregate_stats(self, results: List[Dict[str, Any]]) -> tuple[Dict[tuple, Dict[str, Dict[str, float]]], set]:
         task_map: Dict[tuple, Dict[str, Dict[str, float]]] = defaultdict(dict)
@@ -438,6 +431,164 @@ class ReportBuilder:
         html += "</div>"
         return html
 
+    def _generate_model_comparison_charts(self, results: List[Dict[str, Any]]) -> str:
+        # 1. Aggregate data by (Year, Day, Lang) -> {model: stats}
+        grouped_data = defaultdict(lambda: defaultdict(list))
+        
+        target_models = ['gpt-5', 'gemini-3-pro-preview', 'claude-opus-4-5']
+        all_langs = set()
+
+        for r in results:
+            if not r.get('part2_solved', False):
+                continue
+            
+            y, d = r.get('year'), r.get('day')
+            l = r.get('lang')
+            m = r.get('model', 'unknown')
+            
+            if y is None or d is None or l is None:
+                continue
+            
+            if m in target_models:
+                grouped_data[(y, d, l)][m].append(r)
+                all_langs.add(l)
+
+        # Compute averages
+        # model_task_map[(year, day, lang)][model] = {tok: float}
+        model_task_map = defaultdict(dict)
+        
+        for key, model_runs in grouped_data.items():
+            for m, runs in model_runs.items():
+                avg_tok = sum(r.get('part12_output_tokens', 0) for r in runs) / len(runs)
+                model_task_map[key][m] = {'tok': avg_tok}
+
+        # 2. Generate Pairs
+        pairs = []
+        for i in range(len(target_models)):
+            for j in range(i + 1, len(target_models)):
+                pairs.append((target_models[i], target_models[j]))
+
+        html = "<div class='year-section'><h2>Model Token Usage Comparison (XY Charts)</h2>"
+        html += "<p class='summary'>X-axis: Model 1 Avg Tokens, Y-axis: Model 2 Avg Tokens. Each point is a task (Year, Day) per Language. Colors represent Languages.</p>"
+        html += "<div style='display: flex; flex-wrap: wrap; gap: 20px;'>"
+
+        chart_js_code = ""
+        
+        sorted_langs = sorted(list(all_langs))
+        base_colors = [
+            'rgba(255, 99, 132, 0.7)',
+            'rgba(54, 162, 235, 0.7)',
+            'rgba(255, 206, 86, 0.7)',
+            'rgba(75, 192, 192, 0.7)',
+            'rgba(153, 102, 255, 0.7)',
+            'rgba(255, 159, 64, 0.7)',
+            'rgba(199, 199, 199, 0.7)',
+            'rgba(83, 102, 255, 0.7)',
+        ]
+        lang_colors = {l: base_colors[i % len(base_colors)] for i, l in enumerate(sorted_langs)}
+
+        has_charts = False
+        
+        for m1, m2 in pairs:
+             datasets = defaultdict(list) # key is Language
+             max_val = 0.0
+             
+             for key, models_data in model_task_map.items():
+                 year, day, lang = key
+                 if m1 in models_data and m2 in models_data:
+                     val1 = models_data[m1]['tok']
+                     val2 = models_data[m2]['tok']
+                     pt = {
+                         'x': val1,
+                         'y': val2,
+                         'year': year,
+                         'day': day
+                     }
+                     datasets[lang].append(pt)
+                     max_val = max(max_val, val1, val2)
+             
+             if not datasets:
+                 continue
+
+             has_charts = True
+             chart_id = f"chart_model_{m1}_{m2}".replace("-", "_").replace(".", "_")
+             
+             html += f"<div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='{chart_id}'></canvas></div>"
+             
+             chart_data_sets = []
+             # Diagonal line
+             chart_data_sets.append({
+                'type': 'line',
+                'label': 'y=x',
+                'data': [{'x': 0, 'y': 0}, {'x': max_val, 'y': max_val}],
+                'borderColor': 'rgba(150, 150, 150, 0.5)',
+                'borderWidth': 2,
+                'borderDash': [5, 5],
+                'pointRadius': 0,
+                'fill': False
+            })
+
+             for lang, points in datasets.items():
+                 color = lang_colors.get(lang, 'rgba(0,0,0,0.5)')
+                 ds = {
+                    'label': lang,
+                    'data': points,
+                    'backgroundColor': color,
+                    'borderColor': color,
+                    'pointRadius': 5,
+                 }
+                 chart_data_sets.append(ds)
+            
+             chart_js_code += f"""
+            new Chart(document.getElementById('{chart_id}'), {{
+                type: 'scatter',
+                data: {{
+                    datasets: {json.dumps(chart_data_sets)}
+                }},
+                options: {{
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {{
+                        title: {{
+                            display: true,
+                            text: '{m1} vs {m2} (Tokens)'
+                        }},
+                        tooltip: {{
+                            callbacks: {{
+                                label: function(context) {{
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }}
+                            }}
+                        }}
+                    }},
+                    scales: {{
+                        x: {{
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {{
+                                display: true,
+                                text: '{m1} Avg Tokens'
+                            }}
+                        }},
+                        y: {{
+                            title: {{
+                                display: true,
+                                text: '{m2} Avg Tokens'
+                            }}
+                        }}
+                    }}
+                }}
+            }});
+            """
+
+        html += "</div>"
+        if has_charts:
+             html += f"<script>{chart_js_code}</script>"
+        else:
+             html += "<p>No overlapping data for selected models.</p>"
+
+        return html
 
     def _generate_pairwise_section(self, results: List[Dict[str, Any]]) -> str:
         """

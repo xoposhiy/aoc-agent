@@ -22,3 +22,11 @@
     "NEW INSTRUCTION": "WHEN rendering Token Usage Comparison XY charts THEN cap canvas size to 500px square"
 }
 
+[2025-12-02 21:37] - Updated by Junie
+{
+    "TYPE": "new instructions",
+    "CATEGORY": "report charts",
+    "ERROR": "-",
+    "NEW INSTRUCTION": "WHEN generating Model Comparison XY charts THEN set axes to models, plot days as points using averaged output tokens"
+}
+
