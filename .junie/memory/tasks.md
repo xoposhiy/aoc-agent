@@ -138,3 +138,13 @@
     "NEW INSTRUCTION": "WHEN adding new language support THEN Search project for language enums and registries; update all occurrences."
 }
 
+[2025-12-02 20:14] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "search generated reports",
+    "MISSING STEPS": "check container CSS, confirm section scope",
+    "BOTTLENECK": "Initial search targeted generated HTML instead of source code.",
+    "PROJECT NOTE": "XY charts are rendered in ReportBuilder._generate_charts_section; reports are built via src/aoc_agent/cli.py.",
+    "NEW INSTRUCTION": "WHEN search results show only generated report files THEN refine query to source chart code"
+}
+

@@ -359,7 +359,7 @@ class ReportBuilder:
                 continue
             
             has_charts = True
-            html += f"<div style='width: 45%; min-width: 400px;'><canvas id='{chart_id}'></canvas></div>"
+            html += f"<div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='{chart_id}'></canvas></div>"
             
             chart_data_sets = []
             
@@ -394,6 +394,7 @@ class ReportBuilder:
                 }},
                 options: {{
                     responsive: true,
+                    aspectRatio: 1,
                     plugins: {{
                         title: {{
                             display: true,
