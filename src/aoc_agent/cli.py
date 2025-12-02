@@ -15,7 +15,7 @@ from .agent.agent_runner import AgentRunner
 print(os.environ.get("AOC_SESSION"))
 load_dotenv()
 print(os.environ.get("AOC_SESSION"))
-Lang = Literal["python", "kotlin", "csharp"]
+Lang = Literal["python", "kotlin", "csharp", "lean4"]
 os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
 os.environ["LANGSMITH_PROJECT"] = "aoc-agent"
@@ -33,7 +33,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         nargs="+",
         required=False,
         default=["python"],
-        choices=["python", "kotlin", "csharp"],
+        choices=["python", "kotlin", "csharp", "lean4"],
         help="Languages to use for generated solutions",
     )
     parser.add_argument(

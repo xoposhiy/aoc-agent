@@ -128,3 +128,13 @@
     "NEW INSTRUCTION": "WHEN writing run metadata for run_code result THEN place JSON beside code file and ensure parent directory exists"
 }
 
+[2025-12-02 13:17] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "scan project, run build",
+    "BOTTLENECK": "Failure to scan codebase for all language enums/choices and registries.",
+    "PROJECT NOTE": "Lang is defined in cli.py and agent/tools.py; also update core.runners registry.",
+    "NEW INSTRUCTION": "WHEN adding new language support THEN Search project for language enums and registries; update all occurrences."
+}
+

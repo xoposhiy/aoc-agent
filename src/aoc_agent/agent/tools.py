@@ -18,7 +18,7 @@ from ..core.aoc_client import AocClient
 from ..core.html_parsing import extract_task_articles, extract_puzzle_answers, parse_submission_message
 from ..core.runners import get_runner
 
-Lang = Literal["python", "kotlin", "csharp"]
+Lang = Literal["python", "kotlin", "csharp", "lean4"]
 
 
 def log_success(text: str):
@@ -68,7 +68,7 @@ class AocToolbox:
         # Append environment info to run_code docstring so LLM knows versions
         if AocToolbox.run_code.__doc__ and "Available language versions" not in AocToolbox.run_code.__doc__:
             versions = []
-            for lang in ["python", "kotlin", "csharp"]:
+            for lang in ["python", "kotlin", "csharp", "lean4"]:
                 runner = get_runner(lang)
                 if runner:
                     versions.append(f"            - {lang}: {runner.get_version_info()}")
@@ -172,7 +172,7 @@ class AocToolbox:
         Args:
             year: The year of the puzzle.
             day: The day of the puzzle.
-            language: The programming language ('python', 'kotlin', 'csharp').
+            language: The programming language ('python', 'kotlin', 'csharp', 'lean4').
             code_filename: A descriptive name for the code file (e.g., 'solve_part2_bfs.py'). Avoid generic names.
             solution_code: The actual source code to execute.
 
