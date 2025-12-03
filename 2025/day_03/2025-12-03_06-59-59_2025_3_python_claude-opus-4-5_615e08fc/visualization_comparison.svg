@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 665 320">
+<style>
+  .title { font: bold 18px sans-serif; fill: #2c3e50; }
+  .digit { font: bold 16px monospace; fill: #2c3e50; }
+  .sel-2 { fill: #3498db; stroke: #2980b9; stroke-width: 2; }
+  .sel-12 { fill: #9b59b6; stroke: #8e44ad; stroke-width: 2; }
+  .unsel { fill: #ecf0f1; stroke: #bdc3c7; stroke-width: 1; }
+  .label { font: 13px sans-serif; fill: #34495e; }
+  .result { font: bold 14px monospace; fill: #2c3e50; }
+</style>
+<text x="332.5" y="30" text-anchor="middle" class="title">Part 1 vs Part 2 Comparison</text>
+<text x="20" y="55" class="label">Input: 234234234234278</text>
+<text x="20" y="95" class="label">Part 1 (k=2):</text>
+<rect x="20" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="35.5" y="131.0" text-anchor="middle" class="digit">2</text>
+<rect x="55" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="70.5" y="131.0" text-anchor="middle" class="digit">3</text>
+<rect x="90" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="105.5" y="131.0" text-anchor="middle" class="digit">4</text>
+<rect x="125" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="140.5" y="131.0" text-anchor="middle" class="digit">2</text>
+<rect x="160" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="175.5" y="131.0" text-anchor="middle" class="digit">3</text>
+<rect x="195" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="210.5" y="131.0" text-anchor="middle" class="digit">4</text>
+<rect x="230" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="245.5" y="131.0" text-anchor="middle" class="digit">2</text>
+<rect x="265" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="280.5" y="131.0" text-anchor="middle" class="digit">3</text>
+<rect x="300" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="315.5" y="131.0" text-anchor="middle" class="digit">4</text>
+<rect x="335" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="350.5" y="131.0" text-anchor="middle" class="digit">2</text>
+<rect x="370" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="385.5" y="131.0" text-anchor="middle" class="digit">3</text>
+<rect x="405" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="420.5" y="131.0" text-anchor="middle" class="digit">4</text>
+<rect x="440" y="105" width="31" height="40" rx="4" class="unsel"/>
+<text x="455.5" y="131.0" text-anchor="middle" class="digit">2</text>
+<rect x="475" y="105" width="31" height="40" rx="4" class="sel-2"/>
+<text x="490.5" y="131.0" text-anchor="middle" class="digit">7</text>
+<rect x="510" y="105" width="31" height="40" rx="4" class="sel-2"/>
+<text x="525.5" y="131.0" text-anchor="middle" class="digit">8</text>
+<text x="555" y="131.0" class="result">= 78</text>
+<text x="20" y="175" class="label">Part 2 (k=12):</text>
+<rect x="20" y="185" width="31" height="40" rx="4" class="unsel"/>
+<text x="35.5" y="211.0" text-anchor="middle" class="digit">2</text>
+<rect x="55" y="185" width="31" height="40" rx="4" class="unsel"/>
+<text x="70.5" y="211.0" text-anchor="middle" class="digit">3</text>
+<rect x="90" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="105.5" y="211.0" text-anchor="middle" class="digit">4</text>
+<rect x="125" y="185" width="31" height="40" rx="4" class="unsel"/>
+<text x="140.5" y="211.0" text-anchor="middle" class="digit">2</text>
+<rect x="160" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="175.5" y="211.0" text-anchor="middle" class="digit">3</text>
+<rect x="195" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="210.5" y="211.0" text-anchor="middle" class="digit">4</text>
+<rect x="230" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="245.5" y="211.0" text-anchor="middle" class="digit">2</text>
+<rect x="265" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="280.5" y="211.0" text-anchor="middle" class="digit">3</text>
+<rect x="300" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="315.5" y="211.0" text-anchor="middle" class="digit">4</text>
+<rect x="335" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="350.5" y="211.0" text-anchor="middle" class="digit">2</text>
+<rect x="370" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="385.5" y="211.0" text-anchor="middle" class="digit">3</text>
+<rect x="405" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="420.5" y="211.0" text-anchor="middle" class="digit">4</text>
+<rect x="440" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="455.5" y="211.0" text-anchor="middle" class="digit">2</text>
+<rect x="475" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="490.5" y="211.0" text-anchor="middle" class="digit">7</text>
+<rect x="510" y="185" width="31" height="40" rx="4" class="sel-12"/>
+<text x="525.5" y="211.0" text-anchor="middle" class="digit">8</text>
+<text x="555" y="211.0" class="result">= 434234234278</text>
+<rect x="20" y="260" width="20" height="20" rx="3" class="sel-2"/>
+<text x="50" y="275" class="label">Part 1 selection (2 digits)</text>
+<rect x="250" y="260" width="20" height="20" rx="3" class="sel-12"/>
+<text x="280" y="275" class="label">Part 2 selection (12 digits)</text>
+<text x="332.5" y="305" text-anchor="middle" class="label">[*] Same input, different constraints = vastly different results!</text>
+</svg>

@@ -1,0 +1,3735 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../2025-12-03_07-02-58_2025_3_python_gpt-5_f4ed1ec8/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>2025 Day 3 - python - AoC Agent Reports</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2025-day-3-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="AoC Agent Reports" class="md-header__button md-logo" aria-label="AoC Agent Reports" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AoC Agent Reports
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2025 Day 3 - python
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="AoC Agent Reports" class="md-nav__button md-logo" aria-label="AoC Agent Reports" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AoC Agent Reports
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mission Control Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2018
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2018
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 15
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 15
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2018/day_15/2025-11-30_23-38-51_2018_15_python_gemini-3-pro-preview_3a9045cf/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 23 38 51 2018 15 python gemini 3 pro preview 3a9045cf
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 23 38 51 2018 15 python gemini 3 pro preview 3a9045cf
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2024
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2024
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 01
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 01
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_01/2025-11-30_00-33-00_2024_1_python_gemini-2.5-flash_9d340b93/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 00 33 00 2024 1 python gemini 2.5 flash 9d340b93
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 00 33 00 2024 1 python gemini 2.5 flash 9d340b93
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_01/2025-11-30_00-59-10_2024_1_python_gemini-2.5-flash_55899f74/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 00 59 10 2024 1 python gemini 2.5 flash 55899f74
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 00 59 10 2024 1 python gemini 2.5 flash 55899f74
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 08
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 08
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_08/2025-11-30_02-28-25_2024_8_python_gemini-3-pro-preview_598d2893/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 02 28 25 2024 8 python gemini 3 pro preview 598d2893
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 02 28 25 2024 8 python gemini 3 pro preview 598d2893
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_08/2025-11-30_02-30-59_2024_8_kotlin_gemini-3-pro-preview_10498a3b/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 02 30 59 2024 8 kotlin gemini 3 pro preview 10498a3b
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 02 30 59 2024 8 kotlin gemini 3 pro preview 10498a3b
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 09
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 09
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_09/2025-11-30_01-46-55_2024_9_kotlin_gemini-3-pro-preview_8c2d02b0/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 46 55 2024 9 kotlin gemini 3 pro preview 8c2d02b0
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 46 55 2024 9 kotlin gemini 3 pro preview 8c2d02b0
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_09/2025-11-30_02-17-42_2024_9_python_gemini-3-pro-preview_8ca0140e/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 02 17 42 2024 9 python gemini 3 pro preview 8ca0140e
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 02 17 42 2024 9 python gemini 3 pro preview 8ca0140e
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 10
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 10
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_10/2025-11-30_01-35-48_2024_10_python_gemini-3-pro-preview_16d4b94e/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 35 48 2024 10 python gemini 3 pro preview 16d4b94e
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 35 48 2024 10 python gemini 3 pro preview 16d4b94e
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_10/2025-11-30_01-38-32_2024_10_kotlin_gemini-3-pro-preview_24d7c66f/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 38 32 2024 10 kotlin gemini 3 pro preview 24d7c66f
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 38 32 2024 10 kotlin gemini 3 pro preview 24d7c66f
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 11
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 11
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_11/2025-11-30_01-23-41_2024_11_kotlin_gemini-3-pro-preview_b15c41e8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 23 41 2024 11 kotlin gemini 3 pro preview b15c41e8
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 23 41 2024 11 kotlin gemini 3 pro preview b15c41e8
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_11/2025-11-30_01-28-09_2024_11_python_gemini-3-pro-preview_4850d269/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 28 09 2024 11 python gemini 3 pro preview 4850d269
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 28 09 2024 11 python gemini 3 pro preview 4850d269
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 12
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 12
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_12/2025-11-30_00-22-59_2024_12_python_gemini-3-pro-preview_5ab66aca/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 00 22 59 2024 12 python gemini 3 pro preview 5ab66aca
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 00 22 59 2024 12 python gemini 3 pro preview 5ab66aca
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 13
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 13
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_13/2025-11-30_00-41-25_2024_13_python_gemini-3-pro-preview_8fc92443/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 00 41 25 2024 13 python gemini 3 pro preview 8fc92443
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_7_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 00 41 25 2024 13 python gemini 3 pro preview 8fc92443
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_13/2025-11-30_00-49-29_2024_13_kotlin_gemini-3-pro-preview_e77c30f4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 00 49 29 2024 13 kotlin gemini 3 pro preview e77c30f4
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 00 49 29 2024 13 kotlin gemini 3 pro preview e77c30f4
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_8" id="__nav_3_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 14
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 14
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_14/2025-11-30_01-00-54_2024_14_python_gemini-3-pro-preview_aa9b1fcb/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 00 54 2024 14 python gemini 3 pro preview aa9b1fcb
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_8_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 00 54 2024 14 python gemini 3 pro preview aa9b1fcb
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_8_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../2024/day_14/2025-11-30_01-13-34_2024_14_kotlin_gemini-3-pro-preview_7780dd9e/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 11 30 01 13 34 2024 14 kotlin gemini 3 pro preview 7780dd9e
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_8_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_8_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 11 30 01 13 34 2024 14 kotlin gemini 3 pro preview 7780dd9e
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 01
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 01
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_08-12-08_2025_1_kotlin_gemini-3-pro-preview_06e6907b/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 08 12 08 2025 1 kotlin gemini 3 pro preview 06e6907b
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 08 12 08 2025 1 kotlin gemini 3 pro preview 06e6907b
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_08-27-39_2025_1_python_gpt-5_202ff06c/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 08 27 39 2025 1 python gpt 5 202ff06c
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 08 27 39 2025 1 python gpt 5 202ff06c
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_14-13-05_2025_1_python_gpt-5_e87fc73d/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 14 13 05 2025 1 python gpt 5 e87fc73d
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 14 13 05 2025 1 python gpt 5 e87fc73d
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_14-16-37_2025_1_kotlin_gpt-5_13c9d0be/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 14 16 37 2025 1 kotlin gpt 5 13c9d0be
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 14 16 37 2025 1 kotlin gpt 5 13c9d0be
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_14-25-52_2025_1_python_gemini-3-pro-preview_fdb11bbe/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 14 25 52 2025 1 python gemini 3 pro preview fdb11bbe
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 14 25 52 2025 1 python gemini 3 pro preview fdb11bbe
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_14-51-57_2025_1_python_claude-opus-4-5_fdd11329/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 14 51 57 2025 1 python claude opus 4 5 fdd11329
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 14 51 57 2025 1 python claude opus 4 5 fdd11329
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_16-14-41_2025_1_python_gpt-5-mini_d3aeacff/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 16 14 41 2025 1 python gpt 5 mini d3aeacff
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 16 14 41 2025 1 python gpt 5 mini d3aeacff
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_8" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_17-17-23_2025_1_python_gemini-3-pro-preview_69632446/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 17 17 23 2025 1 python gemini 3 pro preview 69632446
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 17 17 23 2025 1 python gemini 3 pro preview 69632446
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/2025-12-01_23-37-07_2025_1_python_gemini-3-pro-preview_80cc0509/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 01 23 37 07 2025 1 python gemini 3 pro preview 80cc0509
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_1_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 01 23 37 07 2025 1 python gemini 3 pro preview 80cc0509
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_02/2025-12-02_07-13-37_2025_2_python_gemini-3-pro-preview_4b465caa/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 02 07 13 37 2025 2 python gemini 3 pro preview 4b465caa
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 02 07 13 37 2025 2 python gemini 3 pro preview 4b465caa
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_02/2025-12-02_07-16-31_2025_2_python_gpt-5_a7d09702/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 02 07 16 31 2025 2 python gpt 5 a7d09702
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 02 07 16 31 2025 2 python gpt 5 a7d09702
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_02/2025-12-02_07-33-03_2025_2_python_claude-opus-4-5_9fcf2435/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 02 07 33 03 2025 2 python claude opus 4 5 9fcf2435
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 02 07 33 03 2025 2 python claude opus 4 5 9fcf2435
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 03
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 03
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../2025-12-03_06-59-59_2025_3_python_claude-opus-4-5_615e08fc/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 03 06 59 59 2025 3 python claude opus 4 5 615e08fc
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 03 06 59 59 2025 3 python claude opus 4 5 615e08fc
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../2025-12-03_07-02-58_2025_3_python_gpt-5_f4ed1ec8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 03 07 02 58 2025 3 python gpt 5 f4ed1ec8
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 03 07 02 58 2025 3 python gpt 5 f4ed1ec8
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025 12 03 07 05 12 2025 3 python gemini 3 pro preview 3ae5596d
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025 12 03 07 05 12 2025 3 python gemini 3 pro preview 3ae5596d
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2025-day-3-python">2025 Day 3 - python</h1>
+<ul>
+<li><img alt="🤖" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f916.svg" title=":robot:" /> <strong>Agent</strong>: MiniAgent (gemini-3-pro-preview)</li>
+<li><img alt="🇷🇺" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f1f7-1f1fa.svg" title=":flag_ru:" /> <strong>Language</strong>: python</li>
+<li><img alt="⏱" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/23f1.svg" title=":stopwatch:" /> <strong>Duration</strong>: 86.85s</li>
+<li><img alt="⭐" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/2b50.svg" title=":star:" /> <strong>Stars</strong>: P1: ✅ | P2: ✅</li>
+</ul>
+<h1 id="aoc-2025-day-3-lobby">AoC 2025, Day 3: Lobby</h1>
+<p><strong>gemini-3-pro-preview</strong> | <a href="https://adventofcode.com/2025/day/3">Task Page</a></p>
+<h2 id="summary">Summary</h2>
+<p>The task involves selecting a specific number of batteries from a bank (represented as a string of digits) to form the largest possible number. The constraint is that the relative order of the selected digits must be preserved.</p>
+<ul>
+<li><strong>Part 1</strong>: Select exactly <strong>2</strong> digits.</li>
+<li><strong>Part 2</strong>: Select exactly <strong>12</strong> digits.</li>
+</ul>
+<p>The goal is to maximize the numeric value of the concatenation of the selected digits, summed across all banks.</p>
+<h2 id="algorithmic-approach">Algorithmic Approach</h2>
+<p>The problem asks for the lexicographically largest subsequence of length <span class="arithmatex">\(K\)</span>. This is a classic problem that can be solved with a <strong>Greedy Algorithm</strong>.</p>
+<h3 id="strategy">Strategy</h3>
+<p>To form the largest number, we want the most significant digit (leftmost) to be as large as possible. 
+However, picking a digit at index <span class="arithmatex">\(i\)</span> restricts us to picking subsequent digits only from indices <span class="arithmatex">\(&gt; i\)</span>.
+We must ensure that if we pick a digit at index <span class="arithmatex">\(i\)</span>, there are enough remaining characters (at least <span class="arithmatex">\(K-1\)</span>) in the string after <span class="arithmatex">\(i\)</span> to complete the sequence.</p>
+<h3 id="algorithm">Algorithm</h3>
+<ol>
+<li>Let <span class="arithmatex">\(K\)</span> be the number of digits needed.</li>
+<li>Maintain a <code>current_position</code> in the string (initially 0).</li>
+<li>Repeat <span class="arithmatex">\(K\)</span> times:<ul>
+<li>Determine the valid search window: from <code>current_position</code> to <code>len(string) - needed</code>.<ul>
+<li>The end of the window is determined by the requirement to leave <code>needed - 1</code> characters for the future.</li>
+</ul>
+</li>
+<li>Find the <strong>largest digit</strong> in this window.</li>
+<li>If there are multiple occurrences of the largest digit, pick the <strong>first</strong> one (to leave the maximum number of options for subsequent steps, although any valid occurrence works in this greedy setup).</li>
+<li>Append this digit to our result.</li>
+<li>Update <code>current_position</code> to <code>index_of_chosen_digit + 1</code>.</li>
+<li>Decrement <code>needed</code>.</li>
+</ul>
+</li>
+</ol>
+<p>This approach runs in <span class="arithmatex">\(O(K \cdot N)\)</span> time per line, where <span class="arithmatex">\(N\)</span> is the string length. Since <span class="arithmatex">\(K\)</span> is small (2 or 12) and <span class="arithmatex">\(N\)</span> is small, this is extremely efficient.</p>
+<h2 id="key-insights">Key Insights</h2>
+<ul>
+<li><strong>Greedy Choice Property</strong>: At any step, choosing the largest possible valid digit never prevents us from finding an optimal solution for the remaining suffix. In fact, maximizing the current digit is strictly better than "saving" a larger digit for a less significant position.</li>
+<li><strong>Window constraint</strong>: The "gotcha" is ensuring you don't pick a digit so late in the string that you run out of characters to fill the remaining slots. The search window <code>[current_pos, len - needed]</code> handles this perfectly.</li>
+</ul>
+<h2 id="visualization">Visualization</h2>
+<p>I created a visualization showing the greedy selection process for the example inputs.</p>
+<ul>
+<li><strong>Yellow/Green</strong>: The 12 digits selected for Part 2.</li>
+<li><strong>Red Dot</strong>: The 2 digits selected for Part 1.</li>
+</ul>
+<p><img alt="Visualization" src="visualization.svg" /></p>
+<h2 id="fun-fact">Fun Fact</h2>
+<blockquote>
+<p>"The escalator temporarily stairs. Sorry for the convenience." — Mitch Hedberg</p>
+</blockquote>
+<p>This classic joke is referenced in the problem description! It seems our batteries were needed to overcome static friction, which is technically the force that keeps the escalator stairs from becoming... just stairs.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>This puzzle was a nice exercise in greedy algorithms and subsequence constraints. The jump from 2 digits to 12 digits didn't require a fundamental change in algorithm, just a generalization of the parameters. The code ran instantly, proving that sometimes the simplest greedy approach is indeed the best.</p>
+<h1 id="code-executions">Code Executions</h1>
+<h2 id="generate_vis_1764742021657py">❌ generate_vis_1764742021657.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:07:01.790966</li>
+<li><strong>Duration</strong>: 0.13s</li>
+<li><strong>Exit Code</strong>: 1</li>
+<li><strong>Error</strong>: Non-zero exit code</li>
+</ul>
+<h3 id="stderr">Stderr</h3>
+<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
+  File &quot;C:\work\aoc\aoc-agent\data\run\2025-12-03_07-05-12_2025_3_python_gemini-3-pro-preview_3ae5596d\generate_vis_1764742021657.py&quot;, line 1, in &lt;module&gt;
+    import svgwrite
+ModuleNotFoundError: No module named &#39;svgwrite&#39;
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">svgwrite</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">needed</span> <span class="o">=</span> <span class="n">k</span>
+    <span class="n">current_pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">needed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">search_end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">-</span> <span class="n">needed</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">current_pos</span> <span class="p">:</span> <span class="n">search_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">best_digit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">best_rel_index</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+
+        <span class="n">real_index</span> <span class="o">=</span> <span class="n">current_pos</span> <span class="o">+</span> <span class="n">best_rel_index</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">real_index</span><span class="p">)</span>
+
+        <span class="n">current_pos</span> <span class="o">=</span> <span class="n">real_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">needed</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">indices</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_visualization</span><span class="p">():</span>
+    <span class="n">dwg</span> <span class="o">=</span> <span class="n">svgwrite</span><span class="o">.</span><span class="n">Drawing</span><span class="p">(</span><span class="s1">&#39;visualization.svg&#39;</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="s1">&#39;tiny&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">400</span><span class="p">))</span>
+
+    <span class="c1"># Background</span>
+    <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;100%&#39;</span><span class="p">,</span> <span class="s1">&#39;100%&#39;</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="s1">&#39;#1a1a1a&#39;</span><span class="p">))</span>
+
+    <span class="n">styles</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    text { font-family: monospace; font-weight: bold; }</span>
+<span class="s2">    .title { font-size: 24px; fill: #00cc00; }</span>
+<span class="s2">    .digit { font-size: 20px; fill: #555555; }</span>
+<span class="s2">    .selected { fill: #ffff00; text-shadow: 0 0 5px #ffff00; }</span>
+<span class="s2">    .label { font-size: 16px; fill: #aaaaaa; }</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="n">dwg</span><span class="o">.</span><span class="n">defs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">style</span><span class="p">(</span><span class="n">styles</span><span class="p">))</span>
+
+    <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Day 3: Lobby Batteries&quot;</span><span class="p">,</span> <span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">40</span><span class="p">),</span> <span class="n">text_anchor</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">))</span>
+
+    <span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;987654321111111&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;811111111111119&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;234234234234278&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;818181911112111&quot;</span>
+    <span class="p">]</span>
+
+    <span class="n">y_start</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">row_height</span> <span class="o">=</span> <span class="mi">70</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+
+        <span class="c1"># Calculate Part 1 (2 digits)</span>
+        <span class="n">idxs_p1</span> <span class="o">=</span> <span class="n">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Calculate Part 2 (12 digits)</span>
+        <span class="n">idxs_p2</span> <span class="o">=</span> <span class="n">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+        <span class="c1"># Group for this row</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">dwg</span><span class="o">.</span><span class="n">g</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;translate(50, </span><span class="si">{</span><span class="n">y_start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">row_height</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Draw Label</span>
+        <span class="n">g</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Bank </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;#00cc00&quot;</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="s2">&quot;14px&quot;</span><span class="p">,</span> <span class="n">text_anchor</span><span class="o">=</span><span class="s2">&quot;end&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Draw Digits</span>
+        <span class="n">char_width</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">digits</span><span class="p">):</span>
+            <span class="n">x_pos</span> <span class="o">=</span> <span class="n">j</span> <span class="o">*</span> <span class="n">char_width</span>
+
+            <span class="c1"># Determine style</span>
+            <span class="c1"># Part 2 selection is the main highlight</span>
+            <span class="c1"># Part 1 selection can be marked differently? </span>
+            <span class="c1"># Or maybe just show Part 2 since it&#39;s the &quot;upgrade&quot;.</span>
+            <span class="c1"># Let&#39;s show Part 2 with a box, and Part 1 with an underline?</span>
+
+            <span class="n">is_p2</span> <span class="o">=</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">idxs_p2</span>
+            <span class="n">is_p1</span> <span class="o">=</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">idxs_p1</span>
+
+            <span class="c1"># Box for battery</span>
+            <span class="n">fill_color</span> <span class="o">=</span> <span class="s2">&quot;#333333&quot;</span>
+            <span class="k">if</span> <span class="n">is_p2</span><span class="p">:</span>
+                <span class="n">fill_color</span> <span class="o">=</span> <span class="s2">&quot;#004400&quot;</span> <span class="c1"># Greenish background for selected</span>
+
+            <span class="n">rect</span> <span class="o">=</span> <span class="n">dwg</span><span class="o">.</span><span class="n">rect</span><span class="p">(</span><span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span> <span class="n">rx</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ry</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">fill_color</span><span class="p">,</span> <span class="n">stroke</span><span class="o">=</span><span class="s2">&quot;#555&quot;</span><span class="p">,</span> <span class="n">stroke_width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">rect</span><span class="p">)</span>
+
+            <span class="c1"># Text class</span>
+            <span class="bp">cls</span> <span class="o">=</span> <span class="s2">&quot;digit&quot;</span>
+            <span class="k">if</span> <span class="n">is_p2</span><span class="p">:</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="s2">&quot;digit selected&quot;</span>
+
+            <span class="n">txt</span> <span class="o">=</span> <span class="n">dwg</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">),</span> <span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="n">x_pos</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">22</span><span class="p">),</span> <span class="n">text_anchor</span><span class="o">=</span><span class="s2">&quot;middle&quot;</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="bp">cls</span><span class="p">)</span>
+            <span class="n">g</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span>
+
+            <span class="c1"># Indicator for Part 1</span>
+            <span class="k">if</span> <span class="n">is_p1</span><span class="p">:</span>
+                <span class="c1"># Add a small red dot or underline</span>
+                <span class="n">g</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="n">x_pos</span> <span class="o">+</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">35</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;#ff0000&quot;</span><span class="p">))</span>
+
+
+    <span class="c1"># Legend</span>
+    <span class="n">legend_y</span> <span class="o">=</span> <span class="n">y_start</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">)</span> <span class="o">*</span> <span class="n">row_height</span> <span class="o">+</span> <span class="mi">20</span>
+    <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Yellow: Part 2 Selection (12 digits)&quot;</span><span class="p">,</span> <span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">legend_y</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;#ffff00&quot;</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="s2">&quot;14px&quot;</span><span class="p">))</span>
+    <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span> <span class="n">legend_y</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;#ffff00&quot;</span><span class="p">))</span>
+
+    <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="s2">&quot;Red Dot: Part 1 Selection (2 digits)&quot;</span><span class="p">,</span> <span class="n">insert</span><span class="o">=</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="n">legend_y</span><span class="p">),</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;#ff0000&quot;</span><span class="p">,</span> <span class="n">font_size</span><span class="o">=</span><span class="s2">&quot;14px&quot;</span><span class="p">))</span>
+    <span class="n">dwg</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dwg</span><span class="o">.</span><span class="n">circle</span><span class="p">(</span><span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">480</span><span class="p">,</span> <span class="n">legend_y</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="s2">&quot;#ff0000&quot;</span><span class="p">))</span>
+
+    <span class="n">dwg</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_visualization</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="generate_vis_manual_1764742034328py">✅ generate_vis_manual_1764742034328.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:07:14.413034</li>
+<li><strong>Duration</strong>: 0.08s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="n">needed</span> <span class="o">=</span> <span class="n">k</span>
+    <span class="n">current_pos</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">while</span> <span class="n">needed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">search_end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">-</span> <span class="n">needed</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">current_pos</span> <span class="p">:</span> <span class="n">search_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">best_digit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+        <span class="n">best_rel_index</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+
+        <span class="n">real_index</span> <span class="o">=</span> <span class="n">current_pos</span> <span class="o">+</span> <span class="n">best_rel_index</span>
+        <span class="n">indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">real_index</span><span class="p">)</span>
+
+        <span class="n">current_pos</span> <span class="o">=</span> <span class="n">real_index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">needed</span> <span class="o">-=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">indices</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_visualization</span><span class="p">():</span>
+    <span class="n">examples</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;987654321111111&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;811111111111119&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;234234234234278&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;818181911112111&quot;</span>
+    <span class="p">]</span>
+
+    <span class="n">svg_content</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;800&quot; height=&quot;400&quot; viewBox=&quot;0 0 800 400&quot;&gt;&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#1a1a1a&quot;/&gt;&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;style&gt;&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;text { font-family: monospace; font-weight: bold; }&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;.title { font-size: 24px; fill: #00cc00; }&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;.digit { font-size: 20px; fill: #555555; }&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;.selected { fill: #ffff00; text-shadow: 0 0 5px #ffff00; }&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/style&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;text x=&quot;400&quot; y=&quot;40&quot; text-anchor=&quot;middle&quot; class=&quot;title&quot;&gt;Day 3: Lobby Batteries&lt;/text&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">y_start</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">row_height</span> <span class="o">=</span> <span class="mi">70</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">examples</span><span class="p">):</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+        <span class="n">idxs_p1</span> <span class="o">=</span> <span class="n">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">idxs_p2</span> <span class="o">=</span> <span class="n">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+
+        <span class="n">g_transform</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;translate(50, </span><span class="si">{</span><span class="n">y_start</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">row_height</span><span class="si">}</span><span class="s1">)&#39;</span>
+        <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;g transform=&quot;</span><span class="si">{</span><span class="n">g_transform</span><span class="si">}</span><span class="s1">&quot;&gt;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Label</span>
+        <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;-10&quot; y=&quot;20&quot; fill=&quot;#00cc00&quot; font-size=&quot;14px&quot; text-anchor=&quot;end&quot;&gt;Bank </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&lt;/text&gt;&#39;</span><span class="p">)</span>
+
+        <span class="n">char_width</span> <span class="o">=</span> <span class="mi">25</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">digits</span><span class="p">):</span>
+            <span class="n">x_pos</span> <span class="o">=</span> <span class="n">j</span> <span class="o">*</span> <span class="n">char_width</span>
+
+            <span class="n">is_p2</span> <span class="o">=</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">idxs_p2</span>
+            <span class="n">is_p1</span> <span class="o">=</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">idxs_p1</span>
+
+            <span class="n">fill_color</span> <span class="o">=</span> <span class="s2">&quot;#333333&quot;</span>
+            <span class="k">if</span> <span class="n">is_p2</span><span class="p">:</span>
+                <span class="n">fill_color</span> <span class="o">=</span> <span class="s2">&quot;#004400&quot;</span>
+
+            <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;rect x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="si">}</span><span class="s1">&quot; y=&quot;0&quot; width=&quot;20&quot; height=&quot;30&quot; rx=&quot;3&quot; ry=&quot;3&quot; fill=&quot;</span><span class="si">{</span><span class="n">fill_color</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#555&quot; stroke-width=&quot;1&quot;/&gt;&#39;</span><span class="p">)</span>
+
+            <span class="bp">cls</span> <span class="o">=</span> <span class="s2">&quot;digit&quot;</span>
+            <span class="k">if</span> <span class="n">is_p2</span><span class="p">:</span>
+                <span class="bp">cls</span> <span class="o">=</span> <span class="s2">&quot;digit selected&quot;</span>
+
+            <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="si">}</span><span class="s1">&quot; y=&quot;22&quot; text-anchor=&quot;middle&quot; class=&quot;</span><span class="si">{</span><span class="bp">cls</span><span class="si">}</span><span class="s1">&quot;&gt;</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1">&lt;/text&gt;&#39;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">is_p1</span><span class="p">:</span>
+                <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;circle cx=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="si">}</span><span class="s1">&quot; cy=&quot;35&quot; r=&quot;2&quot; fill=&quot;#ff0000&quot;/&gt;&#39;</span><span class="p">)</span>
+
+        <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/g&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">legend_y</span> <span class="o">=</span> <span class="n">y_start</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">examples</span><span class="p">)</span> <span class="o">*</span> <span class="n">row_height</span> <span class="o">+</span> <span class="mi">20</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;200&quot; y=&quot;</span><span class="si">{</span><span class="n">legend_y</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#ffff00&quot; font-size=&quot;14px&quot;&gt;Yellow: Part 2 Selection (12 digits)&lt;/text&gt;&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;circle cx=&quot;180&quot; cy=&quot;</span><span class="si">{</span><span class="n">legend_y</span><span class="o">-</span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; r=&quot;5&quot; fill=&quot;#ffff00&quot;/&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;500&quot; y=&quot;</span><span class="si">{</span><span class="n">legend_y</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#ff0000&quot; font-size=&quot;14px&quot;&gt;Red Dot: Part 1 Selection (2 digits)&lt;/text&gt;&#39;</span><span class="p">)</span>
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;circle cx=&quot;480&quot; cy=&quot;</span><span class="si">{</span><span class="n">legend_y</span><span class="o">-</span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; r=&quot;2&quot; fill=&quot;#ff0000&quot;/&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/svg&gt;&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;visualization.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svg_content</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_visualization</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part1_1764741957116py">✅ solve_part1_1764741957116.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:05:57.241033</li>
+<li><strong>Duration</strong>: 0.12s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 16858
+</code></pre></div>
+<h3 id="code_2">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input file not found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">total_joltage</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Parse digits</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">max_val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># We iterate through possible first digits from 9 down to 1</span>
+        <span class="c1"># To optimize, we find the *first* occurrence of each digit.</span>
+        <span class="c1"># Choosing the first occurrence leaves the maximum remaining string for the second digit.</span>
+
+        <span class="k">for</span> <span class="n">d1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Find first index of d1</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Look for the max digit in the rest of the list</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">remaining</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">d2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">remaining</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">d2</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
+                <span class="n">max_val</span> <span class="o">=</span> <span class="n">val</span>
+
+            <span class="c1"># Pruning:</span>
+            <span class="c1"># The maximum possible value we can find with any start digit &lt;= d1-1</span>
+            <span class="c1"># is (d1-1)*10 + 9.</span>
+            <span class="c1"># If our current max_val is greater than that, we don&#39;t need to check further.</span>
+            <span class="k">if</span> <span class="n">max_val</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">d1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">9</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">total_joltage</span> <span class="o">+=</span> <span class="n">max_val</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">total_joltage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part2_1764741996457py">✅ solve_part2_1764741996457.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:06:36.575340</li>
+<li><strong>Duration</strong>: 0.12s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 2: 167549941654721
+</code></pre></div>
+<h3 id="code_3">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input file not found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">total_joltage</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">line_idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Parse digits</span>
+        <span class="c1"># Although problem says 1-9, input might contain anything? </span>
+        <span class="c1"># &quot;labeled with their joltage rating... digits in your input&quot;</span>
+        <span class="c1"># I&#39;ll stick to extracting digits.</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
+            <span class="c1"># Cannot select 12 batteries</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># We need to pick 12 digits.</span>
+        <span class="c1"># Greedy approach.</span>
+
+        <span class="n">current_digits</span> <span class="o">=</span> <span class="n">digits</span>
+        <span class="n">result_digits</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">needed</span> <span class="o">=</span> <span class="mi">12</span>
+
+        <span class="c1"># Start scanning from index 0</span>
+        <span class="n">current_pos</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="n">needed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># We must pick a digit from current_pos up to an index</span>
+            <span class="c1"># that leaves enough digits for the remaining &#39;needed - 1&#39;</span>
+            <span class="c1"># Remaining length after picking index i is: len(digits) - 1 - i</span>
+            <span class="c1"># We need: len(digits) - 1 - i &gt;= needed - 1</span>
+            <span class="c1"># =&gt; len(digits) - i &gt;= needed</span>
+            <span class="c1"># =&gt; i &lt;= len(digits) - needed</span>
+
+            <span class="c1"># So search range is [current_pos, len(digits) - needed] inclusive</span>
+
+            <span class="n">search_end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">-</span> <span class="n">needed</span>
+
+            <span class="c1"># Find max digit in digits[current_pos : search_end + 1]</span>
+            <span class="c1"># We want the *first* occurrence of the max digit to maximize opportunities?</span>
+            <span class="c1"># Actually, as discussed, first occurrence is optimal.</span>
+
+            <span class="n">window</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">current_pos</span> <span class="p">:</span> <span class="n">search_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Find max value in window</span>
+            <span class="n">best_digit</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">best_rel_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="c1"># Since window is list of ints, max() works</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="p">:</span>
+                <span class="c1"># Should not happen if logic is correct</span>
+                <span class="k">break</span>
+
+            <span class="n">best_digit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+            <span class="c1"># Find first index of best_digit in window</span>
+            <span class="n">best_rel_index</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+
+            <span class="c1"># Add to result</span>
+            <span class="n">result_digits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+
+            <span class="c1"># Update current_pos</span>
+            <span class="c1"># The actual index in &#39;digits&#39; is current_pos + best_rel_index</span>
+            <span class="c1"># We continue from the next position</span>
+            <span class="n">current_pos</span> <span class="o">=</span> <span class="n">current_pos</span> <span class="o">+</span> <span class="n">best_rel_index</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">needed</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="c1"># Convert result_digits to number</span>
+        <span class="c1"># They are digits 0-9</span>
+        <span class="n">val_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result_digits</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val_str</span><span class="p">)</span>
+
+        <span class="n">total_joltage</span> <span class="o">+=</span> <span class="n">val</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_joltage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

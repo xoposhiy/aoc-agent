@@ -15,22 +15,29 @@
             .summary { font-weight: bold; margin-bottom: 10px; color: #555; }
             .success { color: green; font-weight: bold; }
             .failure { color: red; font-weight: bold; }
-            .partial { color: orange; font-weight: bold; }
-            .year-section { margin-top: 30px; border-top: 2px solid #ccc; padding-top: 10px; }
-            
-            /* Pairwise Matrix Styles */
-            .matrix-cell { font-size: 0.9em; }
-            .metric-good { color: #008000; font-weight: bold; }
-            .metric-bad { color: #cc0000; font-weight: bold; }
-            .metric-neutral { color: #666; }
-            .sub-label { font-size: 0.75em; color: #888; display: block; margin-top: 2px; }
+            .year-section { margin-top: 40px; border-top: 2px solid #eee; padding-top: 20px; }
+            .matrix-header { font-weight: bold; background-color: #e0e0e0; }
             .self-cell { background-color: #eee; color: #aaa; }
-            .matrix-header { background-color: #e0e0e0; font-weight: bold; }
+            .pairwise-table td { text-align: center; }
+            .pairwise-table th { min-width: 80px; }
             .pairwise-table { width: auto; }
+            .better { color: green; font-weight: bold; }
+            .worse { color: red; font-weight: bold; }
+            .metric-good { color: green; font-weight: bold; }
+            .metric-bad { color: red; font-weight: bold; }
+            .metric-neutral { color: #777; }
+            .sub-label { font-size: 0.8em; color: #888; display: block; }
         </style>
         </head>
         <body>
-        <h1>Agent Run Report: All Available Data</h1><div class='summary'>Generated: 2025-12-02T10:50:37.909520</div><div class='summary'>Total Runs Found: 34</div><div class='year-section'><h2>Language Head-to-Head Comparison</h2><p class='summary'>Comparison on overlapping tasks (where both languages solved Part 2).</p><table class='pairwise-table'><thead><tr><th class='matrix-header'>Row vs Col</th><th class='matrix-header'>csharp</th><th class='matrix-header'>kotlin</th><th class='matrix-header'>python</th></tr></thead><tbody><tr><td class='matrix-header'>csharp</td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-neutral'>Time: 1.02x</div><div class='metric-bad'>Tokens: 1.29x</div><div class='metric-bad'>Friction: +0.1</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-bad'>Time: 1.11x</div><div class='metric-bad'>Tokens: 1.21x</div><div class='metric-good'>Friction: -0.2</div><span class='sub-label'>(9 tasks)</span></td></tr><tr><td class='matrix-header'>kotlin</td><td class='matrix-cell'><div class='metric-neutral'>Time: 0.98x</div><div class='metric-good'>Tokens: 0.77x</div><div class='metric-good'>Friction: -0.1</div><span class='sub-label'>(9 tasks)</span></td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-bad'>Time: 1.10x</div><div class='metric-good'>Tokens: 0.93x</div><div class='metric-good'>Friction: -0.3</div><span class='sub-label'>(9 tasks)</span></td></tr><tr><td class='matrix-header'>python</td><td class='matrix-cell'><div class='metric-good'>Time: 0.90x</div><div class='metric-good'>Tokens: 0.83x</div><div class='metric-bad'>Friction: +0.2</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-good'>Time: 0.91x</div><div class='metric-bad'>Tokens: 1.07x</div><div class='metric-bad'>Friction: +0.3</div><span class='sub-label'>(9 tasks)</span></td><td class='self-cell'>—</td></tr></tbody></table></div><div class='year-section'><h2>Token Usage Comparison (XY Charts)</h2><p class='summary'>X-axis: Language 1 Avg Tokens, Y-axis: Language 2 Avg Tokens. Each point is a task (Year, Day). Colors represent models.</p><div style='display: flex; flex-wrap: wrap; gap: 20px;'><div style='width: 45%; min-width: 400px;'><canvas id='chart_csharp_kotlin'></canvas></div><div style='width: 45%; min-width: 400px;'><canvas id='chart_csharp_python'></canvas></div><div style='width: 45%; min-width: 400px;'><canvas id='chart_kotlin_python'></canvas></div></div><script>
+        <h1>AoC Agent Report</h1>
+        <p>Generated at: 20251203_070725</p>
+        
+        <div class='year-section'><h2>Language Head-to-Head Comparison</h2><p class='summary'>Comparison on overlapping tasks (where both languages solved Part 2).</p><table class='pairwise-table'><thead><tr><th class='matrix-header'>Row vs Col</th><th class='matrix-header'>csharp</th><th class='matrix-header'>kotlin</th><th class='matrix-header'>lean4</th><th class='matrix-header'>python</th></tr></thead><tbody><tr><td class='matrix-header'>csharp</td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-neutral'>Time: 1.02x</div><div class='metric-bad'>Tokens: 1.29x</div><div class='metric-bad'>Friction: +0.1</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-good'>Time: 0.38x</div><div class='metric-good'>Tokens: 0.55x</div><div class='metric-good'>Friction: -2.2</div><span class='sub-label'>(6 tasks)</span></td><td class='matrix-cell'><div class='metric-bad'>Time: 1.11x</div><div class='metric-bad'>Tokens: 1.21x</div><div class='metric-good'>Friction: -0.2</div><span class='sub-label'>(9 tasks)</span></td></tr><tr><td class='matrix-header'>kotlin</td><td class='matrix-cell'><div class='metric-neutral'>Time: 0.98x</div><div class='metric-good'>Tokens: 0.77x</div><div class='metric-good'>Friction: -0.1</div><span class='sub-label'>(9 tasks)</span></td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-good'>Time: 0.43x</div><div class='metric-good'>Tokens: 0.60x</div><div class='metric-good'>Friction: -2.2</div><span class='sub-label'>(6 tasks)</span></td><td class='matrix-cell'><div class='metric-bad'>Time: 1.10x</div><div class='metric-good'>Tokens: 0.93x</div><div class='metric-good'>Friction: -0.3</div><span class='sub-label'>(9 tasks)</span></td></tr><tr><td class='matrix-header'>lean4</td><td class='matrix-cell'><div class='metric-bad'>Time: 2.62x</div><div class='metric-bad'>Tokens: 1.82x</div><div class='metric-bad'>Friction: +2.2</div><span class='sub-label'>(6 tasks)</span></td><td class='matrix-cell'><div class='metric-bad'>Time: 2.32x</div><div class='metric-bad'>Tokens: 1.66x</div><div class='metric-bad'>Friction: +2.2</div><span class='sub-label'>(6 tasks)</span></td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-bad'>Time: 2.03x</div><div class='metric-bad'>Tokens: 1.52x</div><div class='metric-bad'>Friction: +1.7</div><span class='sub-label'>(6 tasks)</span></td></tr><tr><td class='matrix-header'>python</td><td class='matrix-cell'><div class='metric-good'>Time: 0.90x</div><div class='metric-good'>Tokens: 0.83x</div><div class='metric-bad'>Friction: +0.2</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-good'>Time: 0.91x</div><div class='metric-bad'>Tokens: 1.07x</div><div class='metric-bad'>Friction: +0.3</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-good'>Time: 0.49x</div><div class='metric-good'>Tokens: 0.66x</div><div class='metric-good'>Friction: -1.7</div><span class='sub-label'>(6 tasks)</span></td><td class='self-cell'>—</td></tr></tbody></table></div>
+        
+        <div class='year-section'><h2>Model Head-to-Head Comparison</h2><p class='summary'>Comparison on overlapping tasks (Same Year, Day, Language) where both models solved Part 2.</p><table class='pairwise-table'><thead><tr><th class='matrix-header'>Row vs Col</th><th class='matrix-header'>gpt-5</th><th class='matrix-header'>gemini-3-pro-preview</th><th class='matrix-header'>claude-opus-4-5</th></tr></thead><tbody><tr><td class='matrix-header'>gpt-5</td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-neutral'>Time: 0.96x</div><div class='metric-bad'>Tokens: 1.08x</div><div class='metric-bad'>Friction: +0.6</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-bad'>Time: 1.62x</div><div class='metric-bad'>Tokens: 2.02x</div><div class='metric-bad'>Friction: +0.3</div><span class='sub-label'>(9 tasks)</span></td></tr><tr><td class='matrix-header'>gemini-3-pro-preview</td><td class='matrix-cell'><div class='metric-neutral'>Time: 1.04x</div><div class='metric-good'>Tokens: 0.92x</div><div class='metric-good'>Friction: -0.6</div><span class='sub-label'>(9 tasks)</span></td><td class='self-cell'>—</td><td class='matrix-cell'><div class='metric-bad'>Time: 1.69x</div><div class='metric-bad'>Tokens: 1.87x</div><div class='metric-good'>Friction: -0.2</div><span class='sub-label'>(9 tasks)</span></td></tr><tr><td class='matrix-header'>claude-opus-4-5</td><td class='matrix-cell'><div class='metric-good'>Time: 0.62x</div><div class='metric-good'>Tokens: 0.49x</div><div class='metric-good'>Friction: -0.3</div><span class='sub-label'>(9 tasks)</span></td><td class='matrix-cell'><div class='metric-good'>Time: 0.59x</div><div class='metric-good'>Tokens: 0.54x</div><div class='metric-bad'>Friction: +0.2</div><span class='sub-label'>(9 tasks)</span></td><td class='self-cell'>—</td></tr></tbody></table></div>
+
+        <div class='year-section'><h2>Token Usage Comparison (XY Charts)</h2><p class='summary'>X-axis: Language 1 Avg Tokens, Y-axis: Language 2 Avg Tokens. Each point is a task (Year, Day). Colors represent models.</p><div style='display: flex; flex-wrap: wrap; gap: 20px;'><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_csharp_kotlin'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_csharp_lean4'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_csharp_python'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_kotlin_lean4'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_kotlin_python'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_lean4_python'></canvas></div></div><script>
             new Chart(document.getElementById('chart_csharp_kotlin'), {
                 type: 'scatter',
                 data: {
@@ -38,6 +45,7 @@
                 },
                 options: {
                     responsive: true,
+                    aspectRatio: 1,
                     plugins: {
                         title: {
                             display: true,
@@ -71,6 +79,47 @@
                 }
             });
             
+            new Chart(document.getElementById('chart_csharp_lean4'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{"type": "line", "label": "y=x", "data": [{"x": 0, "y": 0}, {"x": 24437.0, "y": 24437.0}], "borderColor": "rgba(150, 150, 150, 0.5)", "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 0, "fill": false}, {"label": "gpt-5", "data": [{"x": 2630.0, "y": 9052.0, "year": 2025, "day": 1}, {"x": 8828.0, "y": 24437.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 99, 132, 0.7)", "borderColor": "rgba(255, 99, 132, 0.7)", "pointRadius": 5}, {"label": "gemini-3-pro-preview", "data": [{"x": 5422.0, "y": 6802.0, "year": 2025, "day": 1}, {"x": 13959.0, "y": 13414.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(54, 162, 235, 0.7)", "borderColor": "rgba(54, 162, 235, 0.7)", "pointRadius": 5}, {"label": "claude-opus-4-5", "data": [{"x": 4190.0, "y": 7794.0, "year": 2025, "day": 1}, {"x": 3524.0, "y": 5954.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 206, 86, 0.7)", "borderColor": "rgba(255, 206, 86, 0.7)", "pointRadius": 5}]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'csharp vs lean4 (Tokens)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'csharp Avg Tokens'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'lean4 Avg Tokens'
+                            }
+                        }
+                    }
+                }
+            });
+            
             new Chart(document.getElementById('chart_csharp_python'), {
                 type: 'scatter',
                 data: {
@@ -78,6 +127,7 @@
                 },
                 options: {
                     responsive: true,
+                    aspectRatio: 1,
                     plugins: {
                         title: {
                             display: true,
@@ -111,6 +161,47 @@
                 }
             });
             
+            new Chart(document.getElementById('chart_kotlin_lean4'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{"type": "line", "label": "y=x", "data": [{"x": 0, "y": 0}, {"x": 24437.0, "y": 24437.0}], "borderColor": "rgba(150, 150, 150, 0.5)", "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 0, "fill": false}, {"label": "gpt-5", "data": [{"x": 3416.0, "y": 9052.0, "year": 2025, "day": 1}, {"x": 19282.0, "y": 24437.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 99, 132, 0.7)", "borderColor": "rgba(255, 99, 132, 0.7)", "pointRadius": 5}, {"label": "gemini-3-pro-preview", "data": [{"x": 6419.0, "y": 6802.0, "year": 2025, "day": 1}, {"x": 9332.0, "y": 13414.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(54, 162, 235, 0.7)", "borderColor": "rgba(54, 162, 235, 0.7)", "pointRadius": 5}, {"label": "claude-opus-4-5", "data": [{"x": 3547.0, "y": 7794.0, "year": 2025, "day": 1}, {"x": 3206.0, "y": 5954.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 206, 86, 0.7)", "borderColor": "rgba(255, 206, 86, 0.7)", "pointRadius": 5}]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'kotlin vs lean4 (Tokens)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'kotlin Avg Tokens'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'lean4 Avg Tokens'
+                            }
+                        }
+                    }
+                }
+            });
+            
             new Chart(document.getElementById('chart_kotlin_python'), {
                 type: 'scatter',
                 data: {
@@ -118,6 +209,7 @@
                 },
                 options: {
                     responsive: true,
+                    aspectRatio: 1,
                     plugins: {
                         title: {
                             display: true,
@@ -150,4 +242,173 @@
                     }
                 }
             });
-            </script></div><div class='year-section'><h2>Year 2025</h2><table><thead><tr><th>Day</th><th>Language</th><th>Model</th><th>Runs</th><th>P1 Solved</th><th>P2 Solved</th><th>Avg Duration (s)</th><th>Min Duration (s)</th><th>Avg Tokens</th><th>Min Tokens</th><th>Avg Friction</th><th>Min Friction</th></tr></thead><tbody><tr><td>1</td><td>csharp</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>103.06</td><td>103.06</td><td>4190</td><td style="background-color: rgb(217, 241, 204)">4190</td><td style="background-color: rgb(236, 222, 204)">2.0</td><td style="background-color: rgb(236, 222, 204)">2.0</td></tr><tr><td>1</td><td>kotlin</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>86.26</td><td>86.26</td><td>3547</td><td style="background-color: rgb(214, 244, 204)">3547</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>claude-opus-4-5</td><td>3</td><td class='success'>3/3 (100%)</td><td class='success'>3/3 (100%)</td><td>123.53</td><td>107.10</td><td>6600</td><td style="background-color: rgb(220, 238, 204)">5012</td><td style="background-color: rgb(222, 236, 204)">0.7</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>gemini-2.5-flash</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>59.61</td><td>59.61</td><td>11920</td><td style="background-color: rgb(239, 219, 204)">11920</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>gemini-2.5-flash</td><td>2</td><td class='partial'>1/2 (50%)</td><td class='partial'>1/2 (50%)</td><td>33.16</td><td>33.16</td><td>1551</td><td style="background-color: rgb(204, 254, 204)">1551</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gemini-2.5-flash</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>35.61</td><td>35.61</td><td>6274</td><td style="background-color: rgb(224, 234, 204)">6274</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>109.01</td><td>109.01</td><td>5422</td><td style="background-color: rgb(221, 237, 204)">5422</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>129.23</td><td>129.23</td><td>6419</td><td style="background-color: rgb(225, 233, 204)">6419</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gemini-3-pro-preview</td><td>4</td><td class='success'>4/4 (100%)</td><td class='success'>4/4 (100%)</td><td>156.41</td><td>60.54</td><td>5406</td><td style="background-color: rgb(218, 240, 204)">4449</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>72.17</td><td>72.17</td><td>2630</td><td style="background-color: rgb(210, 248, 204)">2630</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>63.65</td><td>63.65</td><td>3416</td><td style="background-color: rgb(214, 244, 204)">3416</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>147.53</td><td>147.53</td><td>6907</td><td style="background-color: rgb(226, 232, 204)">6907</td><td style="background-color: rgb(236, 222, 204)">2.0</td><td style="background-color: rgb(236, 222, 204)">2.0</td></tr><tr><td>1</td><td>csharp</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>151.54</td><td>151.54</td><td>7589</td><td style="background-color: rgb(228, 230, 204)">7589</td><td style="background-color: rgb(236, 222, 204)">2.0</td><td style="background-color: rgb(236, 222, 204)">2.0</td></tr><tr><td>1</td><td>kotlin</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>63.37</td><td>63.37</td><td>1823</td><td style="background-color: rgb(206, 252, 204)">1823</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gpt-5-mini</td><td>2</td><td class='success'>2/2 (100%)</td><td class='success'>2/2 (100%)</td><td>41.68</td><td>32.12</td><td>1932</td><td style="background-color: rgb(204, 255, 204)">1455</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>csharp</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>62.58</td><td>62.58</td><td>3524</td><td style="background-color: rgb(214, 244, 204)">3524</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>kotlin</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>99.05</td><td>99.05</td><td>3206</td><td style="background-color: rgb(213, 245, 204)">3206</td><td style="background-color: rgb(226, 232, 204)">1.0</td><td style="background-color: rgb(226, 232, 204)">1.0</td></tr><tr><td>2</td><td>python</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>57.90</td><td>57.90</td><td>2707</td><td style="background-color: rgb(211, 247, 204)">2707</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>csharp</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>214.87</td><td>214.87</td><td>13959</td><td style="background-color: rgb(244, 214, 204)">13959</td><td style="background-color: rgb(249, 209, 204)">4.0</td><td style="background-color: rgb(249, 209, 204)">4.0</td></tr><tr><td>2</td><td>kotlin</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>142.94</td><td>142.94</td><td>9332</td><td style="background-color: rgb(233, 225, 204)">9332</td><td style="background-color: rgb(236, 222, 204)">2.0</td><td style="background-color: rgb(236, 222, 204)">2.0</td></tr><tr><td>2</td><td>python</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>99.50</td><td>99.50</td><td>5894</td><td style="background-color: rgb(223, 235, 204)">5894</td><td style="background-color: rgb(226, 232, 204)">1.0</td><td style="background-color: rgb(226, 232, 204)">1.0</td></tr><tr><td>2</td><td>csharp</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>123.62</td><td>123.62</td><td>8828</td><td style="background-color: rgb(232, 226, 204)">8828</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>kotlin</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>281.92</td><td>281.92</td><td>19282</td><td style="background-color: rgb(255, 204, 204)">19282</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>python</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>379.07</td><td>379.07</td><td>19155</td><td style="background-color: rgb(254, 204, 204)">19155</td><td style="background-color: rgb(255, 204, 204)">5.0</td><td style="background-color: rgb(255, 204, 204)">5.0</td></tr><tr><td>2</td><td>csharp</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>82.12</td><td>82.12</td><td>4959</td><td style="background-color: rgb(220, 238, 204)">4959</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>kotlin</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>146.10</td><td>146.10</td><td>9230</td><td style="background-color: rgb(233, 225, 204)">9230</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>python</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>41.15</td><td>41.15</td><td>2367</td><td style="background-color: rgb(209, 249, 204)">2367</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr></tbody></table></div></body></html>
+            
+            new Chart(document.getElementById('chart_lean4_python'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{"type": "line", "label": "y=x", "data": [{"x": 0, "y": 0}, {"x": 24437.0, "y": 24437.0}], "borderColor": "rgba(150, 150, 150, 0.5)", "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 0, "fill": false}, {"label": "gpt-5", "data": [{"x": 9052.0, "y": 6907.0, "year": 2025, "day": 1}, {"x": 24437.0, "y": 19155.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 99, 132, 0.7)", "borderColor": "rgba(255, 99, 132, 0.7)", "pointRadius": 5}, {"label": "gemini-3-pro-preview", "data": [{"x": 6802.0, "y": 5406.25, "year": 2025, "day": 1}, {"x": 13414.0, "y": 5894.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(54, 162, 235, 0.7)", "borderColor": "rgba(54, 162, 235, 0.7)", "pointRadius": 5}, {"label": "claude-opus-4-5", "data": [{"x": 7794.0, "y": 6600.333333333333, "year": 2025, "day": 1}, {"x": 5954.0, "y": 2707.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 206, 86, 0.7)", "borderColor": "rgba(255, 206, 86, 0.7)", "pointRadius": 5}]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'lean4 vs python (Tokens)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'lean4 Avg Tokens'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'python Avg Tokens'
+                            }
+                        }
+                    }
+                }
+            });
+            </script></div>
+        
+        <div class='year-section'><h2>Model Token Usage Comparison (XY Charts)</h2><p class='summary'>X-axis: Model 1 Avg Tokens, Y-axis: Model 2 Avg Tokens. Each point is a task (Year, Day) per Language. Colors represent Languages.</p><div style='display: flex; flex-wrap: wrap; gap: 20px;'><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_model_gpt_5_gemini_3_pro_preview'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_model_gpt_5_claude_opus_4_5'></canvas></div><div style='width: 45%; min-width: 500px; max-width: 500px;'><canvas id='chart_model_gemini_3_pro_preview_claude_opus_4_5'></canvas></div></div><script>
+            new Chart(document.getElementById('chart_model_gpt_5_gemini_3_pro_preview'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{"type": "line", "label": "y=x", "data": [{"x": 0, "y": 0}, {"x": 24437.0, "y": 24437.0}], "borderColor": "rgba(150, 150, 150, 0.5)", "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 0, "fill": false}, {"label": "csharp", "data": [{"x": 2630.0, "y": 5422.0, "year": 2025, "day": 1}, {"x": 8828.0, "y": 13959.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 99, 132, 0.7)", "borderColor": "rgba(255, 99, 132, 0.7)", "pointRadius": 5}, {"label": "python", "data": [{"x": 6907.0, "y": 5406.25, "year": 2025, "day": 1}, {"x": 19155.0, "y": 5894.0, "year": 2025, "day": 2}, {"x": 3917.0, "y": 6411.0, "year": 2025, "day": 3}], "backgroundColor": "rgba(75, 192, 192, 0.7)", "borderColor": "rgba(75, 192, 192, 0.7)", "pointRadius": 5}, {"label": "kotlin", "data": [{"x": 3416.0, "y": 6419.0, "year": 2025, "day": 1}, {"x": 19282.0, "y": 9332.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(54, 162, 235, 0.7)", "borderColor": "rgba(54, 162, 235, 0.7)", "pointRadius": 5}, {"label": "lean4", "data": [{"x": 24437.0, "y": 13414.0, "year": 2025, "day": 2}, {"x": 9052.0, "y": 6802.0, "year": 2025, "day": 1}], "backgroundColor": "rgba(255, 206, 86, 0.7)", "borderColor": "rgba(255, 206, 86, 0.7)", "pointRadius": 5}]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'gpt-5 vs gemini-3-pro-preview (Tokens)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'gpt-5 Avg Tokens'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'gemini-3-pro-preview Avg Tokens'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            new Chart(document.getElementById('chart_model_gpt_5_claude_opus_4_5'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{"type": "line", "label": "y=x", "data": [{"x": 0, "y": 0}, {"x": 24437.0, "y": 24437.0}], "borderColor": "rgba(150, 150, 150, 0.5)", "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 0, "fill": false}, {"label": "csharp", "data": [{"x": 2630.0, "y": 4190.0, "year": 2025, "day": 1}, {"x": 8828.0, "y": 3524.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 99, 132, 0.7)", "borderColor": "rgba(255, 99, 132, 0.7)", "pointRadius": 5}, {"label": "python", "data": [{"x": 6907.0, "y": 6600.333333333333, "year": 2025, "day": 1}, {"x": 19155.0, "y": 2707.0, "year": 2025, "day": 2}, {"x": 3917.0, "y": 2217.0, "year": 2025, "day": 3}], "backgroundColor": "rgba(75, 192, 192, 0.7)", "borderColor": "rgba(75, 192, 192, 0.7)", "pointRadius": 5}, {"label": "kotlin", "data": [{"x": 3416.0, "y": 3547.0, "year": 2025, "day": 1}, {"x": 19282.0, "y": 3206.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(54, 162, 235, 0.7)", "borderColor": "rgba(54, 162, 235, 0.7)", "pointRadius": 5}, {"label": "lean4", "data": [{"x": 24437.0, "y": 5954.0, "year": 2025, "day": 2}, {"x": 9052.0, "y": 7794.0, "year": 2025, "day": 1}], "backgroundColor": "rgba(255, 206, 86, 0.7)", "borderColor": "rgba(255, 206, 86, 0.7)", "pointRadius": 5}]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'gpt-5 vs claude-opus-4-5 (Tokens)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'gpt-5 Avg Tokens'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'claude-opus-4-5 Avg Tokens'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            new Chart(document.getElementById('chart_model_gemini_3_pro_preview_claude_opus_4_5'), {
+                type: 'scatter',
+                data: {
+                    datasets: [{"type": "line", "label": "y=x", "data": [{"x": 0, "y": 0}, {"x": 13959.0, "y": 13959.0}], "borderColor": "rgba(150, 150, 150, 0.5)", "borderWidth": 2, "borderDash": [5, 5], "pointRadius": 0, "fill": false}, {"label": "csharp", "data": [{"x": 5422.0, "y": 4190.0, "year": 2025, "day": 1}, {"x": 13959.0, "y": 3524.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(255, 99, 132, 0.7)", "borderColor": "rgba(255, 99, 132, 0.7)", "pointRadius": 5}, {"label": "python", "data": [{"x": 5406.25, "y": 6600.333333333333, "year": 2025, "day": 1}, {"x": 5894.0, "y": 2707.0, "year": 2025, "day": 2}, {"x": 6411.0, "y": 2217.0, "year": 2025, "day": 3}], "backgroundColor": "rgba(75, 192, 192, 0.7)", "borderColor": "rgba(75, 192, 192, 0.7)", "pointRadius": 5}, {"label": "kotlin", "data": [{"x": 6419.0, "y": 3547.0, "year": 2025, "day": 1}, {"x": 9332.0, "y": 3206.0, "year": 2025, "day": 2}], "backgroundColor": "rgba(54, 162, 235, 0.7)", "borderColor": "rgba(54, 162, 235, 0.7)", "pointRadius": 5}, {"label": "lean4", "data": [{"x": 13414.0, "y": 5954.0, "year": 2025, "day": 2}, {"x": 6802.0, "y": 7794.0, "year": 2025, "day": 1}], "backgroundColor": "rgba(255, 206, 86, 0.7)", "borderColor": "rgba(255, 206, 86, 0.7)", "pointRadius": 5}]
+                },
+                options: {
+                    responsive: true,
+                    aspectRatio: 1,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'gemini-3-pro-preview vs claude-opus-4-5 (Tokens)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let pt = context.raw;
+                                    return context.dataset.label + ': (' + pt.x.toFixed(1) + ', ' + pt.y.toFixed(1) + ') [' + pt.year + ' Day ' + pt.day + ']';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'gemini-3-pro-preview Avg Tokens'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'claude-opus-4-5 Avg Tokens'
+                            }
+                        }
+                    }
+                }
+            });
+            </script>
+        
+        
+        <div class='year-section'><h2>Year 2025</h2><table><thead><tr><th>Day</th><th>Lang</th><th>Model</th><th>N Runs</th><th>P1 Solved</th><th>P2 Solved</th><th>Avg Dur (s)</th><th>Min Dur (s)</th><th>Avg Tok</th><th>Min Tok</th><th>Avg Fric</th><th>Min Fric</th></tr></thead><tbody><tr><td>3</td><td>python</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>94.92</td><td>94.92</td><td>3917</td><td style="background-color: rgb(214, 244, 204)">3917</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>3</td><td>python</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>86.85</td><td>86.85</td><td>6411</td><td style="background-color: rgb(222, 236, 204)">6411</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>3</td><td>python</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>63.82</td><td>63.82</td><td>2217</td><td style="background-color: rgb(207, 251, 204)">2217</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>python</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>41.15</td><td>41.15</td><td>2367</td><td style="background-color: rgb(208, 250, 204)">2367</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>python</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>379.07</td><td>379.07</td><td>19155</td><td style="background-color: rgb(247, 211, 204)">19155</td><td style="background-color: rgb(240, 218, 204)">2.0</td><td style="background-color: rgb(240, 218, 204)">2.0</td></tr><tr><td>2</td><td>python</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>99.50</td><td>99.50</td><td>5894</td><td style="background-color: rgb(220, 238, 204)">5894</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>python</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>57.90</td><td>57.90</td><td>2707</td><td style="background-color: rgb(209, 249, 204)">2707</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>lean4</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>386.05</td><td>386.05</td><td>24437</td><td style="background-color: rgb(255, 204, 204)">24437</td><td style="background-color: rgb(255, 204, 204)">4.0</td><td style="background-color: rgb(255, 204, 204)">4.0</td></tr><tr><td>2</td><td>lean4</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>862.09</td><td>862.09</td><td>13414</td><td style="background-color: rgb(237, 221, 204)">13414</td><td style="background-color: rgb(240, 218, 204)">2.0</td><td style="background-color: rgb(240, 218, 204)">2.0</td></tr><tr><td>2</td><td>lean4</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>196.30</td><td>196.30</td><td>5954</td><td style="background-color: rgb(220, 238, 204)">5954</td><td style="background-color: rgb(248, 210, 204)">3.0</td><td style="background-color: rgb(248, 210, 204)">3.0</td></tr><tr><td>2</td><td>kotlin</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>146.10</td><td>146.10</td><td>9230</td><td style="background-color: rgb(228, 230, 204)">9230</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>kotlin</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>281.92</td><td>281.92</td><td>19282</td><td style="background-color: rgb(247, 211, 204)">19282</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>kotlin</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>142.94</td><td>142.94</td><td>9332</td><td style="background-color: rgb(229, 229, 204)">9332</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>kotlin</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>99.05</td><td>99.05</td><td>3206</td><td style="background-color: rgb(211, 247, 204)">3206</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>csharp</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>82.12</td><td>82.12</td><td>4959</td><td style="background-color: rgb(217, 241, 204)">4959</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>csharp</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>123.62</td><td>123.62</td><td>8828</td><td style="background-color: rgb(228, 230, 204)">8828</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>csharp</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>214.87</td><td>214.87</td><td>13959</td><td style="background-color: rgb(238, 220, 204)">13959</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>2</td><td>csharp</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>62.58</td><td>62.58</td><td>3524</td><td style="background-color: rgb(213, 245, 204)">3524</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gpt-5-mini</td><td>2</td><td class='success'>2/2 (100%)</td><td class='success'>2/2 (100%)</td><td>41.68</td><td>32.12</td><td>1932</td><td style="background-color: rgb(204, 255, 204)">1455</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>147.53</td><td>147.53</td><td>6907</td><td style="background-color: rgb(223, 235, 204)">6907</td><td style="background-color: rgb(229, 229, 204)">1.0</td><td style="background-color: rgb(229, 229, 204)">1.0</td></tr><tr><td>1</td><td>python</td><td>gemini-3-pro-preview</td><td>4</td><td class='success'>4/4 (100%)</td><td class='success'>4/4 (100%)</td><td>156.41</td><td>60.54</td><td>5406</td><td style="background-color: rgb(216, 242, 204)">4449</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>gemini-2.5-flash</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>35.61</td><td>35.61</td><td>6274</td><td style="background-color: rgb(221, 237, 204)">6274</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>claude-sonnet-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>107.42</td><td>107.42</td><td>5021</td><td style="background-color: rgb(218, 240, 204)">5021</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>python</td><td>claude-opus-4-5</td><td>3</td><td class='success'>3/3 (100%)</td><td class='success'>3/3 (100%)</td><td>123.53</td><td>107.10</td><td>6600</td><td style="background-color: rgb(218, 240, 204)">5012</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>lean4</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>206.15</td><td>206.15</td><td>9052</td><td style="background-color: rgb(228, 230, 204)">9052</td><td style="background-color: rgb(229, 229, 204)">1.0</td><td style="background-color: rgb(229, 229, 204)">1.0</td></tr><tr><td>1</td><td>lean4</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>186.59</td><td>186.59</td><td>6802</td><td style="background-color: rgb(223, 235, 204)">6802</td><td style="background-color: rgb(229, 229, 204)">1.0</td><td style="background-color: rgb(229, 229, 204)">1.0</td></tr><tr><td>1</td><td>lean4</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>173.80</td><td>173.80</td><td>7794</td><td style="background-color: rgb(225, 233, 204)">7794</td><td style="background-color: rgb(240, 218, 204)">2.0</td><td style="background-color: rgb(240, 218, 204)">2.0</td></tr><tr><td>1</td><td>kotlin</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>63.37</td><td>63.37</td><td>1823</td><td style="background-color: rgb(205, 253, 204)">1823</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>63.65</td><td>63.65</td><td>3416</td><td style="background-color: rgb(212, 246, 204)">3416</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>129.23</td><td>129.23</td><td>6419</td><td style="background-color: rgb(222, 236, 204)">6419</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>gemini-2.5-flash</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>33.16</td><td>33.16</td><td>1551</td><td style="background-color: rgb(204, 254, 204)">1551</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>kotlin</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>86.26</td><td>86.26</td><td>3547</td><td style="background-color: rgb(213, 245, 204)">3547</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>gpt-5-mini</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>151.54</td><td>151.54</td><td>7589</td><td style="background-color: rgb(225, 233, 204)">7589</td><td style="background-color: rgb(229, 229, 204)">1.0</td><td style="background-color: rgb(229, 229, 204)">1.0</td></tr><tr><td>1</td><td>csharp</td><td>gpt-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>72.17</td><td>72.17</td><td>2630</td><td style="background-color: rgb(209, 249, 204)">2630</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>gemini-3-pro-preview</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>109.01</td><td>109.01</td><td>5422</td><td style="background-color: rgb(219, 239, 204)">5422</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>gemini-2.5-flash</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>59.61</td><td>59.61</td><td>11920</td><td style="background-color: rgb(234, 224, 204)">11920</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr><tr><td>1</td><td>csharp</td><td>claude-opus-4-5</td><td>1</td><td class='success'>1/1 (100%)</td><td class='success'>1/1 (100%)</td><td>103.06</td><td>103.06</td><td>4190</td><td style="background-color: rgb(215, 243, 204)">4190</td><td style="background-color: rgb(204, 255, 204)">0.0</td><td style="background-color: rgb(204, 255, 204)">0.0</td></tr></tbody></table></div></body></html>
