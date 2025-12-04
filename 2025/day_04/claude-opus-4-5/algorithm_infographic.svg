@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="450">
+  <rect width="100%" height="100%" fill="#1e1e2e"/>
+  
+  <!-- Title -->
+  <text x="350" y="35" fill="#cdd6f4" font-size="22" font-family="Arial" text-anchor="middle" font-weight="bold">
+    Cellular Erosion Algorithm
+  </text>
+  <text x="350" y="55" fill="#89b4fa" font-size="12" font-family="Arial" text-anchor="middle">
+    AoC 2025 Day 4: Removing paper rolls with fewer than 4 neighbors
+  </text>
+  
+  <!-- Rule explanation -->
+  <g transform="translate(50, 80)">
+    <text x="0" y="0" fill="#f5c2e7" font-size="14" font-family="Arial" font-weight="bold">Rule:</text>
+    <text x="0" y="20" fill="#cdd6f4" font-size="12" font-family="Arial">A roll (@) can be removed if it has &lt;4 adjacent rolls</text>
+  </g>
+  
+  <!-- Example grid - showing neighbors count -->
+  <g transform="translate(50, 130)">
+    <text x="0" y="-10" fill="#a6e3a1" font-size="12" font-family="Arial" font-weight="bold">Example: Which rolls can be removed?</text>
+    
+    <!-- 5x5 grid -->
+    <rect x="0" y="0" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="40" y="0" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="60" y="25" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">4</text>
+    <rect x="80" y="0" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="100" y="25" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">4</text>
+    <rect x="120" y="0" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="160" y="0" width="38" height="38" fill="#f38ba8" rx="4"/>
+    <text x="180" y="25" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">1</text>
+    <rect x="0" y="40" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="20" y="65" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">4</text>
+    <rect x="40" y="40" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="60" y="65" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">7</text>
+    <rect x="80" y="40" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="100" y="65" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">7</text>
+    <rect x="120" y="40" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="140" y="65" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">6</text>
+    <rect x="160" y="40" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="0" y="80" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="20" y="105" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">4</text>
+    <rect x="40" y="80" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="60" y="105" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">7</text>
+    <rect x="80" y="80" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="100" y="105" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">8</text>
+    <rect x="120" y="80" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="140" y="105" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">6</text>
+    <rect x="160" y="80" width="38" height="38" fill="#f38ba8" rx="4"/>
+    <text x="180" y="105" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">3</text>
+    <rect x="0" y="120" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="40" y="120" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="60" y="145" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">6</text>
+    <rect x="80" y="120" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="100" y="145" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">6</text>
+    <rect x="120" y="120" width="38" height="38" fill="#89b4fa" rx="4"/>
+    <text x="140" y="145" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">6</text>
+    <rect x="160" y="120" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="0" y="160" width="38" height="38" fill="#f38ba8" rx="4"/>
+    <text x="20" y="185" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">1</text>
+    <rect x="40" y="160" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="80" y="160" width="38" height="38" fill="#f38ba8" rx="4"/>
+    <text x="100" y="185" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">3</text>
+    <rect x="120" y="160" width="38" height="38" fill="#45475a" rx="4"/>
+    <rect x="160" y="160" width="38" height="38" fill="#f38ba8" rx="4"/>
+    <text x="180" y="185" fill="#1e1e2e" font-size="14" font-family="Arial" text-anchor="middle" font-weight="bold">1</text>
+    
+    <!-- Legend -->
+    <rect x="220" y="0" width="20" height="20" fill="#f38ba8" rx="3"/>
+    <text x="245" y="15" fill="#cdd6f4" font-size="11" font-family="Arial">Removable (&lt;4 neighbors)</text>
+    
+    <rect x="220" y="30" width="20" height="20" fill="#89b4fa" rx="3"/>
+    <text x="245" y="45" fill="#cdd6f4" font-size="11" font-family="Arial">Stays (4+ neighbors)</text>
+    
+    <rect x="220" y="60" width="20" height="20" fill="#45475a" rx="3"/>
+    <text x="245" y="75" fill="#cdd6f4" font-size="11" font-family="Arial">Empty</text>
+    
+    <text x="220" y="110" fill="#cdd6f4" font-size="10" font-family="Arial" font-style="italic">Numbers show neighbor count</text>
+  </g>
+  
+  <!-- Part 1 vs Part 2 -->
+  <g transform="translate(50, 360)">
+    <rect x="0" y="0" width="280" height="70" fill="#313244" rx="8"/>
+    <text x="140" y="20" fill="#f9e2af" font-size="13" font-family="Arial" text-anchor="middle" font-weight="bold">Part 1</text>
+    <text x="140" y="40" fill="#cdd6f4" font-size="11" font-family="Arial" text-anchor="middle">Count rolls with &lt;4 neighbors</text>
+    <text x="140" y="55" fill="#a6e3a1" font-size="11" font-family="Arial" text-anchor="middle">Answer: 1564</text>
+    
+    <rect x="300" y="0" width="280" height="70" fill="#313244" rx="8"/>
+    <text x="440" y="20" fill="#f9e2af" font-size="13" font-family="Arial" text-anchor="middle" font-weight="bold">Part 2</text>
+    <text x="440" y="40" fill="#cdd6f4" font-size="11" font-family="Arial" text-anchor="middle">Iteratively remove until none left</text>
+    <text x="440" y="55" fill="#a6e3a1" font-size="11" font-family="Arial" text-anchor="middle">Answer: 9401 (65 iterations)</text>
+  </g>
+  
+  <!-- Algorithm flow -->
+  <g transform="translate(400, 130)">
+    <text x="0" y="-10" fill="#a6e3a1" font-size="12" font-family="Arial" font-weight="bold">Part 2 Algorithm:</text>
+    
+    <rect x="0" y="10" width="180" height="35" fill="#45475a" rx="5"/>
+    <text x="90" y="32" fill="#cdd6f4" font-size="11" font-family="Arial" text-anchor="middle">Find all removable rolls</text>
+    
+    <!-- Arrow -->
+    <path d="M90 50 L90 65" stroke="#6c7086" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+    
+    <rect x="0" y="70" width="180" height="35" fill="#45475a" rx="5"/>
+    <text x="90" y="92" fill="#cdd6f4" font-size="11" font-family="Arial" text-anchor="middle">Remove all at once</text>
+    
+    <path d="M90 110 L90 125" stroke="#6c7086" stroke-width="2" fill="none"/>
+    
+    <rect x="0" y="130" width="180" height="35" fill="#45475a" rx="5"/>
+    <text x="90" y="152" fill="#cdd6f4" font-size="11" font-family="Arial" text-anchor="middle">Repeat until done</text>
+    
+    <!-- Loop arrow -->
+    <path d="M180 147 C220 147, 220 47, 180 47" stroke="#f9e2af" stroke-width="2" fill="none" stroke-dasharray="4"/>
+    <text x="230" y="100" fill="#f9e2af" font-size="10" font-family="Arial">loop</text>
+  </g>
+  
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L9,3 z" fill="#6c7086"/>
+    </marker>
+  </defs>
+</svg>
