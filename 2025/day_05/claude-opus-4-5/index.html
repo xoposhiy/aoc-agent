@@ -1,0 +1,2624 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../day_04/gpt-5/">
+      
+      
+        <link rel="next" href="../gemini-2.5-flash/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>2025 Day 5 - python - AoC Agent Reports</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="cyan">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2025-day-5-python" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="AoC Agent Reports" class="md-header__button md-logo" aria-label="AoC Agent Reports" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AoC Agent Reports
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2025 Day 5 - python
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="AoC Agent Reports" class="md-nav__button md-logo" aria-label="AoC Agent Reports" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    AoC Agent Reports
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mission Control Center
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2025
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    2025
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 01
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 01
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/claude-opus-4-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude opus 4 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude opus 4 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/gemini-3-pro-preview/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/gemini-3-pro-preview_1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview 1
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/gemini-3-pro-preview_2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview 2
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview 2
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/gpt-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/gpt-5-mini/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5 mini
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5 mini
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_01/gpt-5_1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5 1
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5 1
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 02
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 02
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_02/claude-opus-4-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude opus 4 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude opus 4 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_02/gemini-3-pro-preview/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_02/gpt-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 03
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 03
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_03/claude-opus-4-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude opus 4 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude opus 4 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_03/gemini-3-pro-preview/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_03/gpt-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 04
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 04
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_04/claude-opus-4-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude opus 4 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude opus 4 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_04/gemini-3-pro-preview/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../day_04/gpt-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Day 05
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Day 05
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_1" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Claude opus 4 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Claude opus 4 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gemini-2.5-flash/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 2.5 flash
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 2.5 flash
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gemini-3-pro-preview/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemini 3 pro preview
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gemini 3 pro preview
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gpt-5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../gpt-5-mini/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5 mini
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5 mini
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="2025-day-5-python">2025 Day 5 - python</h1>
+<ul>
+<li><img alt="🤖" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f916.svg" title=":robot:" /> <strong>Agent</strong>: MiniAgent (claude-opus-4-5)</li>
+<li><img alt="🇷🇺" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f1f7-1f1fa.svg" title=":flag_ru:" /> <strong>Language</strong>: python</li>
+<li><img alt="⏱" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/23f1.svg" title=":stopwatch:" /> <strong>Duration</strong>: 47.74s</li>
+<li><img alt="⭐" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/2b50.svg" title=":star:" /> <strong>Stars</strong>: P1: ✅ | P2: ✅</li>
+</ul>
+<h1 id="aoc-2025-day-5-cafeteria">AoC 2025, Day 5: Cafeteria</h1>
+<p><strong>Автор решения:</strong> claude-opus-4-5<br />
+<strong>Ссылка на задачу:</strong> <a href="https://adventofcode.com/2025/day/5">https://adventofcode.com/2025/day/5</a></p>
+<h2 id="_1">Краткое описание задачи</h2>
+<p>Эльфы на кухне столовой не могут разобраться, какие ингредиенты свежие, а какие испорченные из-за новой "замечательной" системы управления запасами. <em>Потому что нет ничего лучше, чем внедрить новую систему прямо перед Рождеством!</em></p>
+<p>База данных содержит:</p>
+<ul>
+<li>Диапазоны ID свежих ингредиентов (например, <code>3-5</code> означает, что ID 3, 4, 5 — свежие)</li>
+<li>Список доступных ингредиентов для проверки</li>
+</ul>
+<p><strong>Часть 1:</strong> Посчитать, сколько из доступных ингредиентов являются свежими (попадают хотя бы в один диапазон).</p>
+<p><strong>Часть 2:</strong> Посчитать общее количество уникальных ID, которые считаются свежими (диапазоны могут перекрываться!).</p>
+<h2 id="_2">Алгоритмический подход</h2>
+<h3 id="1">Часть 1: Проверка принадлежности диапазонам</h3>
+<ol>
+<li>Парсим входные данные: диапазоны и список ингредиентов</li>
+<li>Для каждого ингредиента проверяем, попадает ли он хотя бы в один диапазон</li>
+<li>Считаем количество "свежих" ингредиентов</li>
+</ol>
+<h3 id="2">Часть 2: Слияние перекрывающихся диапазонов</h3>
+<ol>
+<li>Сортируем диапазоны по начальной точке</li>
+<li>Проходим по диапазонам, объединяя перекрывающиеся или смежные</li>
+<li>Суммируем длины получившихся непересекающихся диапазонов: <code>(end - start + 1)</code></li>
+</ol>
+<p><strong>Ключевой алгоритм слияния:</strong>
+<div class="highlight"><pre><span></span><code>Для каждого диапазона (start, end):
+  Если start &lt;= last_end + 1:  // перекрытие или смежность
+    Расширяем last до max(last_end, end)
+  Иначе:
+    Добавляем новый диапазон в результат
+</code></pre></div></p>
+<h2 id="_3">Ключевые инсайты</h2>
+<ol>
+<li>
+<p><strong>Inclusive ranges</strong> — диапазоны включают обе границы, поэтому длина = <code>end - start + 1</code></p>
+</li>
+<li>
+<p><strong>Смежные диапазоны</strong> — <code>[3-5]</code> и <code>[6-8]</code> должны сливаться в <code>[3-8]</code>, поэтому условие <code>start &lt;= last_end + 1</code></p>
+</li>
+<li>
+<p><strong>Оптимизация Part 1</strong> — хотя наивный подход O(n*m) работает для данного размера входа, использование merged ranges ускоряет проверку (меньше диапазонов для проверки)</p>
+</li>
+<li>
+<p><strong>Большие числа</strong> — в Part 2 ответ ~360 триллионов! Это значит, что диапазоны охватывают огромные промежутки ID, и их нельзя перебирать по одному.</p>
+</li>
+</ol>
+<h2 id="_4">Визуализация</h2>
+<p><img alt="Визуализация слияния диапазонов" src="day5_visualization.svg" /></p>
+<p>На визуализации показано:</p>
+<ul>
+<li>Исходные 4 диапазона (разными цветами)</li>
+<li>Результат слияния: диапазоны <code>10-14</code>, <code>12-18</code> и <code>16-20</code> объединяются в <code>10-20</code></li>
+<li>Проверка каждого ингредиента на "свежесть"</li>
+</ul>
+<h2 id="_5">Шутка дня</h2>
+<blockquote>
+<p><strong>Q:</strong> Почему эльфы не могут отличить свежие ингредиенты от испорченных?<br />
+<strong>A:</strong> Потому что их новая система управления запасами написана на Excel-е с макросами.</p>
+</blockquote>
+<p><em>"Мы перешли на новую систему инвентаризации прямо перед Рождеством!" — последние слова IT-отдела эльфов.</em></p>
+<h2 id="_6">Впечатления</h2>
+<p>Приятная разминочная задача на работу с интервалами! Классический паттерн "interval merging" — один из must-know алгоритмов для собеседований. Часть 2 элегантно показывает, почему наивный подход (перебор всех ID) не работает при больших числах — хороший урок для начинающих.</p>
+<p>Задача напоминает, что даже простые на первый взгляд проблемы (проверить, свежий ли ингредиент) могут требовать алгоритмической смекалки, когда масштаб данных становится большим.</p>
+<h1 id="code-executions">Code Executions</h1>
+<h2 id="solve_1764915267921py">✅ solve_1764915267921.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:14:28.035345</li>
+<li><strong>Duration</strong>: 0.11s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 598
+Part 2: 360341832208407
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Day 5: Cafeteria - Fresh Ingredient Checker</span>
+
+<span class="sd">Part 1: Count available ingredients that fall within any fresh range.</span>
+<span class="sd">Part 2: Count total unique IDs covered by all fresh ranges (merge overlapping ranges).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">ranges</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+    <span class="n">ingredients</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">merge_ranges</span><span class="p">(</span><span class="n">ranges</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ranges</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="n">sorted_ranges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="p">[</span><span class="n">sorted_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">sorted_ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">last_start</span><span class="p">,</span> <span class="n">last_end</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">last_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_start</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_end</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">merged</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_part1</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span><span class="p">):</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_ranges</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ing</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">ing</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">break</span>
+    <span class="k">return</span> <span class="n">count</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_part2</span><span class="p">(</span><span class="n">ranges</span><span class="p">):</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_ranges</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span> <span class="o">=</span> <span class="n">parse_input</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">solve_part1</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span><span class="w"> </span><span class="n">ingredients</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">solve_part2</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="solve_part1_1764915234398py">✅ solve_part1_1764915234398.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:13:54.511054</li>
+<li><strong>Duration</strong>: 0.11s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Number of ranges: 192
+Number of ingredients: 1000
+Part 1: 598
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Day 5: Cafeteria</span>
+<span class="sd">Part 1: Count how many available ingredient IDs are fresh (fall within any range).</span>
+
+<span class="sd">Approach:</span>
+<span class="sd">1. Parse ranges and ingredient IDs from input (separated by blank line)</span>
+<span class="sd">2. For each ingredient ID, check if it falls within any fresh range</span>
+<span class="sd">3. Count fresh ingredients</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Parse ranges</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">))</span>
+        <span class="n">ranges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+
+    <span class="c1"># Parse ingredient IDs</span>
+    <span class="n">ingredients</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">is_fresh</span><span class="p">(</span><span class="n">ingredient_id</span><span class="p">,</span> <span class="n">ranges</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check if ingredient ID falls within any range.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">ranges</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">ingredient_id</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_part1</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count fresh ingredients.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">ing</span> <span class="ow">in</span> <span class="n">ingredients</span> <span class="k">if</span> <span class="n">is_fresh</span><span class="p">(</span><span class="n">ing</span><span class="p">,</span> <span class="n">ranges</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span> <span class="o">=</span> <span class="n">parse_input</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of ranges: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of ingredients: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ingredients</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">solve_part1</span><span class="p">(</span><span class="n">ranges</span><span class="p">,</span> <span class="n">ingredients</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="solve_part2_1764915252275py">✅ solve_part2_1764915252275.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:14:12.388326</li>
+<li><strong>Duration</strong>: 0.11s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_2">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 2: 360341832208407
+</code></pre></div>
+<h3 id="code_2">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Day 5: Cafeteria</span>
+<span class="sd">Part 2: Count total unique fresh ingredient IDs (all IDs covered by any range).</span>
+
+<span class="sd">Approach:</span>
+<span class="sd">1. Merge overlapping ranges</span>
+<span class="sd">2. Sum up the count of IDs in each merged range</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Parse ranges</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">))</span>
+        <span class="n">ranges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">ranges</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">merge_ranges</span><span class="p">(</span><span class="n">ranges</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge overlapping ranges.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ranges</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="c1"># Sort by start</span>
+    <span class="n">sorted_ranges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="p">[</span><span class="n">sorted_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">sorted_ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">last_start</span><span class="p">,</span> <span class="n">last_end</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">last_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Overlapping or adjacent</span>
+            <span class="n">merged</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">last_start</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_end</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">merged</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count_fresh_ids</span><span class="p">(</span><span class="n">merged_ranges</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Count total IDs covered by merged ranges.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged_ranges</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_part2</span><span class="p">(</span><span class="n">ranges</span><span class="p">):</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_ranges</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">count_fresh_ids</span><span class="p">(</span><span class="n">merged</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">parse_input</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">solve_part2</span><span class="p">(</span><span class="n">ranges</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="visualization_1764915300992py">❌ visualization_1764915300992.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:15:01.146836</li>
+<li><strong>Duration</strong>: 0.15s</li>
+<li><strong>Exit Code</strong>: 1</li>
+<li><strong>Error</strong>: Non-zero exit code</li>
+</ul>
+<h3 id="stderr">Stderr</h3>
+<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
+  File &quot;C:\work\aoc\aoc-agent\data\run\2025-12-05_07-13-28_2025_5_python_claude-opus-4-5_cc6c87ef\visualization_1764915300992.py&quot;, line 124, in &lt;module&gt;
+    create_svg_visualization()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File &quot;C:\work\aoc\aoc-agent\data\run\2025-12-05_07-13-28_2025_5_python_claude-opus-4-5_cc6c87ef\visualization_1764915300992.py&quot;, line 119, in create_svg_visualization
+    f.write(svg_content)
+    ~~~~~~~^^^^^^^^^^^^^
+  File &quot;C:\Users\Pavel.Egorov\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py&quot;, line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode character &#39;\U0001f373&#39; in position 780: character maps to &lt;undefined&gt;
+</code></pre></div>
+<h3 id="code_3">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Visualization of the range merging process for Day 5</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_svg_visualization</span><span class="p">():</span>
+    <span class="c1"># Example ranges from the problem</span>
+    <span class="n">original_ranges</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">)]</span>
+
+    <span class="c1"># Sort and merge</span>
+    <span class="n">sorted_ranges</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">original_ranges</span><span class="p">)</span>
+
+    <span class="c1"># Manually show merge steps</span>
+    <span class="n">merge_steps</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;Original ranges (sorted)&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="s2">&quot;Merge (10,14) + (12,18)&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">18</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="s2">&quot;Merge (10,18) + (16,20)&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]),</span>
+        <span class="p">(</span><span class="s2">&quot;Final merged ranges&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]),</span>
+    <span class="p">]</span>
+
+    <span class="n">ingredients</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">32</span><span class="p">]</span>
+
+    <span class="c1"># SVG dimensions</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">800</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">550</span>
+    <span class="n">margin_left</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">margin_right</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">scale_start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">scale_end</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">bar_height</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">x_pos</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">margin_left</span> <span class="o">+</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">scale_start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale_end</span> <span class="o">-</span> <span class="n">scale_start</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">margin_left</span> <span class="o">-</span> <span class="n">margin_right</span><span class="p">)</span>
+
+    <span class="n">svg_content</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;style&gt;</span>
+<span class="s1">    .title </span><span class="se">{{</span><span class="s1"> font: bold 18px sans-serif; fill: #2c3e50; </span><span class="se">}}</span>
+<span class="s1">    .subtitle </span><span class="se">{{</span><span class="s1"> font: bold 14px sans-serif; fill: #34495e; </span><span class="se">}}</span>
+<span class="s1">    .label </span><span class="se">{{</span><span class="s1"> font: 12px sans-serif; fill: #7f8c8d; </span><span class="se">}}</span>
+<span class="s1">    .number </span><span class="se">{{</span><span class="s1"> font: 11px monospace; fill: #2c3e50; </span><span class="se">}}</span>
+<span class="s1">    .fresh </span><span class="se">{{</span><span class="s1"> fill: #27ae60; </span><span class="se">}}</span>
+<span class="s1">    .spoiled </span><span class="se">{{</span><span class="s1"> fill: #e74c3c; </span><span class="se">}}</span>
+<span class="s1">    .range-bar </span><span class="se">{{</span><span class="s1"> fill: #3498db; opacity: 0.7; rx: 3; </span><span class="se">}}</span>
+<span class="s1">    .merged-bar </span><span class="se">{{</span><span class="s1"> fill: #9b59b6; opacity: 0.8; rx: 3; </span><span class="se">}}</span>
+<span class="s1">    .final-bar </span><span class="se">{{</span><span class="s1"> fill: #2ecc71; opacity: 0.9; rx: 3; </span><span class="se">}}</span>
+<span class="s1">    .axis </span><span class="se">{{</span><span class="s1"> stroke: #bdc3c7; stroke-width: 1; </span><span class="se">}}</span>
+<span class="s1">    .tick </span><span class="se">{{</span><span class="s1"> font: 10px sans-serif; fill: #95a5a6; </span><span class="se">}}</span>
+<span class="s1">  &lt;/style&gt;</span>
+
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;30&quot; text-anchor=&quot;middle&quot; class=&quot;title&quot;&gt;🍳 Day 5: Cafeteria - Range Merging Visualization&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Number line scale --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y1=&quot;60&quot; x2=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">margin_right</span><span class="si">}</span><span class="s1">&quot; y2=&quot;60&quot; class=&quot;axis&quot;/&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="c1"># Add tick marks</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y1=&quot;55&quot; x2=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y2=&quot;65&quot; class=&quot;axis&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;78&quot; text-anchor=&quot;middle&quot; class=&quot;tick&quot;&gt;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="c1"># Original ranges</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;Original Ranges:&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#3498db&quot;</span><span class="p">,</span> <span class="s2">&quot;#e74c3c&quot;</span><span class="p">,</span> <span class="s2">&quot;#f39c12&quot;</span><span class="p">,</span> <span class="s2">&quot;#9b59b6&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">original_ranges</span><span class="p">):</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">idx</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">bar_height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot; opacity=&quot;0.7&quot; rx=&quot;3&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">14</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; class=&quot;number&quot;&gt;</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">bar_height</span> <span class="o">+</span> <span class="mi">5</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">20</span>
+
+    <span class="c1"># Merged ranges</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;After Merging (overlapping ranges combined):&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">:</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">bar_height</span><span class="si">}</span><span class="s1">&quot; class=&quot;final-bar&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">14</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; class=&quot;number&quot;&gt;</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">bar_height</span> <span class="o">+</span> <span class="mi">5</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">30</span>
+
+    <span class="c1"># Fresh count</span>
+    <span class="n">total_fresh</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="o">-</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">20</span><span class="o">-</span><span class="mi">10</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;Total Fresh IDs = (5-3+1) + (20-10+1) = </span><span class="si">{</span><span class="n">total_fresh</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">40</span>
+
+    <span class="c1"># Ingredient checks</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;Checking Available Ingredients:&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+
+    <span class="k">for</span> <span class="n">ing</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">:</span>
+        <span class="n">is_fresh</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">ing</span> <span class="o">&lt;=</span> <span class="n">e</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;✓ Fresh&quot;</span> <span class="k">if</span> <span class="n">is_fresh</span> <span class="k">else</span> <span class="s2">&quot;✗ Spoiled&quot;</span>
+        <span class="n">color_class</span> <span class="o">=</span> <span class="s2">&quot;fresh&quot;</span> <span class="k">if</span> <span class="n">is_fresh</span> <span class="k">else</span> <span class="s2">&quot;spoiled&quot;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;circle cx=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">ing</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; r=&quot;8&quot; class=&quot;</span><span class="si">{</span><span class="n">color_class</span><span class="si">}</span><span class="s1">&quot; opacity=&quot;0.8&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">ing</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; class=&quot;number&quot; fill=&quot;white&quot;&gt;</span><span class="si">{</span><span class="n">ing</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">50</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="si">}</span><span class="s1">&quot; class=&quot;label&quot;&gt;ID </span><span class="si">{</span><span class="n">ing</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Legend</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">40</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">200</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;15&quot; height=&quot;15&quot; class=&quot;fresh&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">180</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">12</span><span class="si">}</span><span class="s1">&quot; class=&quot;label&quot;&gt;Fresh (in range)&lt;/text&gt;</span>
+<span class="s1">  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">200</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">20</span><span class="si">}</span><span class="s1">&quot; width=&quot;15&quot; height=&quot;15&quot; class=&quot;spoiled&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">180</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">32</span><span class="si">}</span><span class="s1">&quot; class=&quot;label&quot;&gt;Spoiled (not in range)&lt;/text&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/svg&gt;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;day5_visualization.svg&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg_content</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visualization saved to day5_visualization.svg&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_svg_visualization</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="visualization_v2_1764915317189py">✅ visualization_v2_1764915317189.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:15:17.276199</li>
+<li><strong>Duration</strong>: 0.09s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_3">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Visualization saved to day5_visualization.svg
+</code></pre></div>
+<h3 id="code_4">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Visualization of the range merging process for Day 5</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_svg_visualization</span><span class="p">():</span>
+    <span class="c1"># Example ranges from the problem</span>
+    <span class="n">original_ranges</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">)]</span>
+
+    <span class="c1"># Manually show merge steps</span>
+    <span class="n">ingredients</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">32</span><span class="p">]</span>
+
+    <span class="c1"># SVG dimensions</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">800</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">550</span>
+    <span class="n">margin_left</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">margin_right</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">scale_start</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">scale_end</span> <span class="o">=</span> <span class="mi">35</span>
+    <span class="n">bar_height</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">x_pos</span><span class="p">(</span><span class="n">val</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">margin_left</span> <span class="o">+</span> <span class="p">(</span><span class="n">val</span> <span class="o">-</span> <span class="n">scale_start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">scale_end</span> <span class="o">-</span> <span class="n">scale_start</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="n">margin_left</span> <span class="o">-</span> <span class="n">margin_right</span><span class="p">)</span>
+
+    <span class="n">svg_content</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;style&gt;</span>
+<span class="s1">    .title </span><span class="se">{{</span><span class="s1"> font: bold 18px sans-serif; fill: #2c3e50; </span><span class="se">}}</span>
+<span class="s1">    .subtitle </span><span class="se">{{</span><span class="s1"> font: bold 14px sans-serif; fill: #34495e; </span><span class="se">}}</span>
+<span class="s1">    .label </span><span class="se">{{</span><span class="s1"> font: 12px sans-serif; fill: #7f8c8d; </span><span class="se">}}</span>
+<span class="s1">    .number </span><span class="se">{{</span><span class="s1"> font: 11px monospace; fill: #2c3e50; </span><span class="se">}}</span>
+<span class="s1">    .fresh </span><span class="se">{{</span><span class="s1"> fill: #27ae60; </span><span class="se">}}</span>
+<span class="s1">    .spoiled </span><span class="se">{{</span><span class="s1"> fill: #e74c3c; </span><span class="se">}}</span>
+<span class="s1">    .range-bar </span><span class="se">{{</span><span class="s1"> fill: #3498db; opacity: 0.7; rx: 3; </span><span class="se">}}</span>
+<span class="s1">    .merged-bar </span><span class="se">{{</span><span class="s1"> fill: #9b59b6; opacity: 0.8; rx: 3; </span><span class="se">}}</span>
+<span class="s1">    .final-bar </span><span class="se">{{</span><span class="s1"> fill: #2ecc71; opacity: 0.9; rx: 3; </span><span class="se">}}</span>
+<span class="s1">    .axis </span><span class="se">{{</span><span class="s1"> stroke: #bdc3c7; stroke-width: 1; </span><span class="se">}}</span>
+<span class="s1">    .tick </span><span class="se">{{</span><span class="s1"> font: 10px sans-serif; fill: #95a5a6; </span><span class="se">}}</span>
+<span class="s1">  &lt;/style&gt;</span>
+
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;30&quot; text-anchor=&quot;middle&quot; class=&quot;title&quot;&gt;Day 5: Cafeteria - Range Merging Visualization&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Number line scale --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y1=&quot;60&quot; x2=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">margin_right</span><span class="si">}</span><span class="s1">&quot; y2=&quot;60&quot; class=&quot;axis&quot;/&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="c1"># Add tick marks</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">36</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y1=&quot;55&quot; x2=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y2=&quot;65&quot; class=&quot;axis&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;78&quot; text-anchor=&quot;middle&quot; class=&quot;tick&quot;&gt;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="c1"># Original ranges</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;Original Ranges:&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#3498db&quot;</span><span class="p">,</span> <span class="s2">&quot;#e74c3c&quot;</span><span class="p">,</span> <span class="s2">&quot;#f39c12&quot;</span><span class="p">,</span> <span class="s2">&quot;#9b59b6&quot;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">original_ranges</span><span class="p">):</span>
+        <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">idx</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">bar_height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot; opacity=&quot;0.7&quot; rx=&quot;3&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">14</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; class=&quot;number&quot;&gt;</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">bar_height</span> <span class="o">+</span> <span class="mi">5</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">20</span>
+
+    <span class="c1"># Merged ranges</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;After Merging (overlapping ranges combined):&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+
+    <span class="n">merged</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">:</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">bar_height</span><span class="si">}</span><span class="s1">&quot; class=&quot;final-bar&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="p">(</span><span class="n">x_pos</span><span class="p">(</span><span class="n">start</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x_pos</span><span class="p">(</span><span class="n">end</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">14</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; class=&quot;number&quot;&gt;</span><span class="si">{</span><span class="n">start</span><span class="si">}</span><span class="s1">-</span><span class="si">{</span><span class="n">end</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="n">bar_height</span> <span class="o">+</span> <span class="mi">5</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">30</span>
+
+    <span class="c1"># Fresh count</span>
+    <span class="n">total_fresh</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="o">-</span><span class="mi">3</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">20</span><span class="o">-</span><span class="mi">10</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;Total Fresh IDs = (5-3+1) + (20-10+1) = </span><span class="si">{</span><span class="n">total_fresh</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">40</span>
+
+    <span class="c1"># Ingredient checks</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; class=&quot;subtitle&quot;&gt;Checking Available Ingredients:&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+
+    <span class="k">for</span> <span class="n">ing</span> <span class="ow">in</span> <span class="n">ingredients</span><span class="p">:</span>
+        <span class="n">is_fresh</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">ing</span> <span class="o">&lt;=</span> <span class="n">e</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;Fresh&quot;</span> <span class="k">if</span> <span class="n">is_fresh</span> <span class="k">else</span> <span class="s2">&quot;Spoiled&quot;</span>
+        <span class="n">symbol</span> <span class="o">=</span> <span class="s2">&quot;V&quot;</span> <span class="k">if</span> <span class="n">is_fresh</span> <span class="k">else</span> <span class="s2">&quot;X&quot;</span>
+        <span class="n">color_class</span> <span class="o">=</span> <span class="s2">&quot;fresh&quot;</span> <span class="k">if</span> <span class="n">is_fresh</span> <span class="k">else</span> <span class="s2">&quot;spoiled&quot;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;circle cx=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">ing</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; r=&quot;8&quot; class=&quot;</span><span class="si">{</span><span class="n">color_class</span><span class="si">}</span><span class="s1">&quot; opacity=&quot;0.8&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">x_pos</span><span class="p">(</span><span class="n">ing</span><span class="p">)</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; class=&quot;number&quot; fill=&quot;white&quot;&gt;</span><span class="si">{</span><span class="n">ing</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">y</span> <span class="o">+=</span> <span class="mi">25</span>
+        <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">margin_left</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">50</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">10</span><span class="si">}</span><span class="s1">&quot; class=&quot;label&quot;&gt;ID </span><span class="si">{</span><span class="n">ing</span><span class="si">}</span><span class="s1">: [</span><span class="si">{</span><span class="n">symbol</span><span class="si">}</span><span class="s1">] </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s1">&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Legend</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">height</span> <span class="o">-</span> <span class="mi">40</span>
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">200</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;15&quot; height=&quot;15&quot; class=&quot;fresh&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">180</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">12</span><span class="si">}</span><span class="s1">&quot; class=&quot;label&quot;&gt;Fresh (in range)&lt;/text&gt;</span>
+<span class="s1">  &lt;rect x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">200</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">20</span><span class="si">}</span><span class="s1">&quot; width=&quot;15&quot; height=&quot;15&quot; class=&quot;spoiled&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">180</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">32</span><span class="si">}</span><span class="s1">&quot; class=&quot;label&quot;&gt;Spoiled (not in range)&lt;/text&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="n">svg_content</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/svg&gt;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;day5_visualization.svg&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg_content</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Visualization saved to day5_visualization.svg&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_svg_visualization</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+        <script src="../../../javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

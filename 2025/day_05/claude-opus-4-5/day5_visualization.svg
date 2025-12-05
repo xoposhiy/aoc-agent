@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="550" viewBox="0 0 800 550">
+  <style>
+    .title { font: bold 18px sans-serif; fill: #2c3e50; }
+    .subtitle { font: bold 14px sans-serif; fill: #34495e; }
+    .label { font: 12px sans-serif; fill: #7f8c8d; }
+    .number { font: 11px monospace; fill: #2c3e50; }
+    .fresh { fill: #27ae60; }
+    .spoiled { fill: #e74c3c; }
+    .range-bar { fill: #3498db; opacity: 0.7; rx: 3; }
+    .merged-bar { fill: #9b59b6; opacity: 0.8; rx: 3; }
+    .final-bar { fill: #2ecc71; opacity: 0.9; rx: 3; }
+    .axis { stroke: #bdc3c7; stroke-width: 1; }
+    .tick { font: 10px sans-serif; fill: #95a5a6; }
+  </style>
+  
+  <text x="400.0" y="30" text-anchor="middle" class="title">Day 5: Cafeteria - Range Merging Visualization</text>
+  
+  <!-- Number line scale -->
+  <line x1="30" y1="60" x2="770" y2="60" class="axis"/>
+  <line x1="30.0" y1="55" x2="30.0" y2="65" class="axis"/>
+  <text x="30.0" y="78" text-anchor="middle" class="tick">0</text>
+  <line x1="135.71428571428572" y1="55" x2="135.71428571428572" y2="65" class="axis"/>
+  <text x="135.71428571428572" y="78" text-anchor="middle" class="tick">5</text>
+  <line x1="241.42857142857142" y1="55" x2="241.42857142857142" y2="65" class="axis"/>
+  <text x="241.42857142857142" y="78" text-anchor="middle" class="tick">10</text>
+  <line x1="347.1428571428571" y1="55" x2="347.1428571428571" y2="65" class="axis"/>
+  <text x="347.1428571428571" y="78" text-anchor="middle" class="tick">15</text>
+  <line x1="452.85714285714283" y1="55" x2="452.85714285714283" y2="65" class="axis"/>
+  <text x="452.85714285714283" y="78" text-anchor="middle" class="tick">20</text>
+  <line x1="558.5714285714286" y1="55" x2="558.5714285714286" y2="65" class="axis"/>
+  <text x="558.5714285714286" y="78" text-anchor="middle" class="tick">25</text>
+  <line x1="664.2857142857142" y1="55" x2="664.2857142857142" y2="65" class="axis"/>
+  <text x="664.2857142857142" y="78" text-anchor="middle" class="tick">30</text>
+  <line x1="770.0" y1="55" x2="770.0" y2="65" class="axis"/>
+  <text x="770.0" y="78" text-anchor="middle" class="tick">35</text>
+  <text x="30" y="100" class="subtitle">Original Ranges:</text>
+  <rect x="93.42857142857143" y="125" width="42.28571428571429" height="20" fill="#3498db" opacity="0.7" rx="3"/>
+  <text x="114.57142857142858" y="139" text-anchor="middle" class="number">3-5</text>
+  <rect x="241.42857142857142" y="150" width="84.57142857142858" height="20" fill="#e74c3c" opacity="0.7" rx="3"/>
+  <text x="283.7142857142857" y="164" text-anchor="middle" class="number">10-14</text>
+  <rect x="368.2857142857143" y="175" width="84.57142857142856" height="20" fill="#f39c12" opacity="0.7" rx="3"/>
+  <text x="410.57142857142856" y="189" text-anchor="middle" class="number">16-20</text>
+  <rect x="283.7142857142857" y="200" width="126.85714285714283" height="20" fill="#9b59b6" opacity="0.7" rx="3"/>
+  <text x="347.1428571428571" y="214" text-anchor="middle" class="number">12-18</text>
+  <text x="30" y="245" class="subtitle">After Merging (overlapping ranges combined):</text>
+  <rect x="93.42857142857143" y="270" width="42.28571428571429" height="20" class="final-bar"/>
+  <text x="114.57142857142858" y="284" text-anchor="middle" class="number">3-5</text>
+  <rect x="241.42857142857142" y="295" width="211.42857142857142" height="20" class="final-bar"/>
+  <text x="347.1428571428571" y="309" text-anchor="middle" class="number">10-20</text>
+  <text x="30" y="350" class="subtitle">Total Fresh IDs = (5-3+1) + (20-10+1) = 14</text>
+  <text x="30" y="390" class="subtitle">Checking Available Ingredients:</text>
+  <circle cx="51.14285714285714" cy="415" r="8" class="spoiled" opacity="0.8"/>
+  <text x="51.14285714285714" y="419" text-anchor="middle" class="number" fill="white">1</text>
+  <text x="80" y="430" class="label">ID 1: [X] Spoiled</text>
+  <circle cx="135.71428571428572" cy="440" r="8" class="fresh" opacity="0.8"/>
+  <text x="135.71428571428572" y="444" text-anchor="middle" class="number" fill="white">5</text>
+  <text x="80" y="455" class="label">ID 5: [V] Fresh</text>
+  <circle cx="199.14285714285714" cy="465" r="8" class="spoiled" opacity="0.8"/>
+  <text x="199.14285714285714" y="469" text-anchor="middle" class="number" fill="white">8</text>
+  <text x="80" y="480" class="label">ID 8: [X] Spoiled</text>
+  <circle cx="262.57142857142856" cy="490" r="8" class="fresh" opacity="0.8"/>
+  <text x="262.57142857142856" y="494" text-anchor="middle" class="number" fill="white">11</text>
+  <text x="80" y="505" class="label">ID 11: [V] Fresh</text>
+  <circle cx="389.42857142857144" cy="515" r="8" class="fresh" opacity="0.8"/>
+  <text x="389.42857142857144" y="519" text-anchor="middle" class="number" fill="white">17</text>
+  <text x="80" y="530" class="label">ID 17: [V] Fresh</text>
+  <circle cx="706.5714285714286" cy="540" r="8" class="spoiled" opacity="0.8"/>
+  <text x="706.5714285714286" y="544" text-anchor="middle" class="number" fill="white">32</text>
+  <text x="80" y="555" class="label">ID 32: [X] Spoiled</text>
+
+  <rect x="600" y="510" width="15" height="15" class="fresh"/>
+  <text x="620" y="522" class="label">Fresh (in range)</text>
+  <rect x="600" y="530" width="15" height="15" class="spoiled"/>
+  <text x="620" y="542" class="label">Spoiled (not in range)</text>
+</svg>
