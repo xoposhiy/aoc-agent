@@ -2085,6 +2085,171 @@ We must ensure that if we pick a digit at index <span class="arithmatex">\(i\)</
 <h2 id="conclusion">Conclusion</h2>
 <p>This puzzle was a nice exercise in greedy algorithms and subsequence constraints. The jump from 2 digits to 12 digits didn't require a fundamental change in algorithm, just a generalization of the parameters. The code ran instantly, proving that sometimes the simplest greedy approach is indeed the best.</p>
 <h1 id="code-executions">Code Executions</h1>
+<h2 id="solve_part1_1764741957116py">✅ solve_part1_1764741957116.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:05:57.241033</li>
+<li><strong>Duration</strong>: 0.12s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 16858
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input file not found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">total_joltage</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Parse digits</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">max_val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># We iterate through possible first digits from 9 down to 1</span>
+        <span class="c1"># To optimize, we find the *first* occurrence of each digit.</span>
+        <span class="c1"># Choosing the first occurrence leaves the maximum remaining string for the second digit.</span>
+
+        <span class="k">for</span> <span class="n">d1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Find first index of d1</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Look for the max digit in the rest of the list</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">remaining</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">d2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">remaining</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">d2</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
+                <span class="n">max_val</span> <span class="o">=</span> <span class="n">val</span>
+
+            <span class="c1"># Pruning:</span>
+            <span class="c1"># The maximum possible value we can find with any start digit &lt;= d1-1</span>
+            <span class="c1"># is (d1-1)*10 + 9.</span>
+            <span class="c1"># If our current max_val is greater than that, we don&#39;t need to check further.</span>
+            <span class="k">if</span> <span class="n">max_val</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">d1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">9</span><span class="p">:</span>
+                <span class="k">break</span>
+
+        <span class="n">total_joltage</span> <span class="o">+=</span> <span class="n">max_val</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">total_joltage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part2_1764741996457py">✅ solve_part2_1764741996457.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:06:36.575340</li>
+<li><strong>Duration</strong>: 0.12s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 2: 167549941654721
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input file not found.&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">total_joltage</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">line_idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Parse digits</span>
+        <span class="c1"># Although problem says 1-9, input might contain anything? </span>
+        <span class="c1"># &quot;labeled with their joltage rating... digits in your input&quot;</span>
+        <span class="c1"># I&#39;ll stick to extracting digits.</span>
+        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
+            <span class="c1"># Cannot select 12 batteries</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># We need to pick 12 digits.</span>
+        <span class="c1"># Greedy approach.</span>
+
+        <span class="n">current_digits</span> <span class="o">=</span> <span class="n">digits</span>
+        <span class="n">result_digits</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">needed</span> <span class="o">=</span> <span class="mi">12</span>
+
+        <span class="c1"># Start scanning from index 0</span>
+        <span class="n">current_pos</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">while</span> <span class="n">needed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># We must pick a digit from current_pos up to an index</span>
+            <span class="c1"># that leaves enough digits for the remaining &#39;needed - 1&#39;</span>
+            <span class="c1"># Remaining length after picking index i is: len(digits) - 1 - i</span>
+            <span class="c1"># We need: len(digits) - 1 - i &gt;= needed - 1</span>
+            <span class="c1"># =&gt; len(digits) - i &gt;= needed</span>
+            <span class="c1"># =&gt; i &lt;= len(digits) - needed</span>
+
+            <span class="c1"># So search range is [current_pos, len(digits) - needed] inclusive</span>
+
+            <span class="n">search_end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">-</span> <span class="n">needed</span>
+
+            <span class="c1"># Find max digit in digits[current_pos : search_end + 1]</span>
+            <span class="c1"># We want the *first* occurrence of the max digit to maximize opportunities?</span>
+            <span class="c1"># Actually, as discussed, first occurrence is optimal.</span>
+
+            <span class="n">window</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">current_pos</span> <span class="p">:</span> <span class="n">search_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># Find max value in window</span>
+            <span class="n">best_digit</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">best_rel_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+
+            <span class="c1"># Since window is list of ints, max() works</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="p">:</span>
+                <span class="c1"># Should not happen if logic is correct</span>
+                <span class="k">break</span>
+
+            <span class="n">best_digit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+
+            <span class="c1"># Find first index of best_digit in window</span>
+            <span class="n">best_rel_index</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+
+            <span class="c1"># Add to result</span>
+            <span class="n">result_digits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+
+            <span class="c1"># Update current_pos</span>
+            <span class="c1"># The actual index in &#39;digits&#39; is current_pos + best_rel_index</span>
+            <span class="c1"># We continue from the next position</span>
+            <span class="n">current_pos</span> <span class="o">=</span> <span class="n">current_pos</span> <span class="o">+</span> <span class="n">best_rel_index</span> <span class="o">+</span> <span class="mi">1</span>
+
+            <span class="n">needed</span> <span class="o">-=</span> <span class="mi">1</span>
+
+        <span class="c1"># Convert result_digits to number</span>
+        <span class="c1"># They are digits 0-9</span>
+        <span class="n">val_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result_digits</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val_str</span><span class="p">)</span>
+
+        <span class="n">total_joltage</span> <span class="o">+=</span> <span class="n">val</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_joltage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
 <h2 id="generate_vis_1764742021657py">❌ generate_vis_1764742021657.py</h2>
 <ul>
 <li><strong>Timestamp</strong>: 2025-12-03T07:07:01.790966</li>
@@ -2098,7 +2263,7 @@ We must ensure that if we pick a digit at index <span class="arithmatex">\(i\)</
     import svgwrite
 ModuleNotFoundError: No module named &#39;svgwrite&#39;
 </code></pre></div>
-<h3 id="code">Code</h3>
+<h3 id="code_2">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">svgwrite</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
@@ -2216,7 +2381,7 @@ ModuleNotFoundError: No module named &#39;svgwrite&#39;
 <li><strong>Duration</strong>: 0.08s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="code_1">Code</h3>
+<h3 id="code_3">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve_greedy</span><span class="p">(</span><span class="n">digits</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="n">needed</span> <span class="o">=</span> <span class="n">k</span>
     <span class="n">current_pos</span> <span class="o">=</span> <span class="mi">0</span>
@@ -2307,171 +2472,6 @@ ModuleNotFoundError: No module named &#39;svgwrite&#39;
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">create_visualization</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="solve_part1_1764741957116py">✅ solve_part1_1764741957116.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-03T07:05:57.241033</li>
-<li><strong>Duration</strong>: 0.12s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 16858
-</code></pre></div>
-<h3 id="code_2">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input file not found.&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">total_joltage</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="c1"># Parse digits</span>
-        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="n">max_val</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-
-        <span class="c1"># We iterate through possible first digits from 9 down to 1</span>
-        <span class="c1"># To optimize, we find the *first* occurrence of each digit.</span>
-        <span class="c1"># Choosing the first occurrence leaves the maximum remaining string for the second digit.</span>
-
-        <span class="k">for</span> <span class="n">d1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="c1"># Find first index of d1</span>
-                <span class="n">idx</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d1</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="c1"># Look for the max digit in the rest of the list</span>
-            <span class="n">remaining</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">remaining</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="n">d2</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">remaining</span><span class="p">)</span>
-            <span class="n">val</span> <span class="o">=</span> <span class="n">d1</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">d2</span>
-            <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">max_val</span><span class="p">:</span>
-                <span class="n">max_val</span> <span class="o">=</span> <span class="n">val</span>
-
-            <span class="c1"># Pruning:</span>
-            <span class="c1"># The maximum possible value we can find with any start digit &lt;= d1-1</span>
-            <span class="c1"># is (d1-1)*10 + 9.</span>
-            <span class="c1"># If our current max_val is greater than that, we don&#39;t need to check further.</span>
-            <span class="k">if</span> <span class="n">max_val</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">d1</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="mi">9</span><span class="p">:</span>
-                <span class="k">break</span>
-
-        <span class="n">total_joltage</span> <span class="o">+=</span> <span class="n">max_val</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">total_joltage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">solve</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="solve_part2_1764741996457py">✅ solve_part2_1764741996457.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-03T07:06:36.575340</li>
-<li><strong>Duration</strong>: 0.12s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_1">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 2: 167549941654721
-</code></pre></div>
-<h3 id="code_3">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
-    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Input file not found.&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">total_joltage</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">for</span> <span class="n">line_idx</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
-            <span class="k">continue</span>
-
-        <span class="c1"># Parse digits</span>
-        <span class="c1"># Although problem says 1-9, input might contain anything? </span>
-        <span class="c1"># &quot;labeled with their joltage rating... digits in your input&quot;</span>
-        <span class="c1"># I&#39;ll stick to extracting digits.</span>
-        <span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isdigit</span><span class="p">()]</span>
-
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">12</span><span class="p">:</span>
-            <span class="c1"># Cannot select 12 batteries</span>
-            <span class="k">continue</span>
-
-        <span class="c1"># We need to pick 12 digits.</span>
-        <span class="c1"># Greedy approach.</span>
-
-        <span class="n">current_digits</span> <span class="o">=</span> <span class="n">digits</span>
-        <span class="n">result_digits</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">needed</span> <span class="o">=</span> <span class="mi">12</span>
-
-        <span class="c1"># Start scanning from index 0</span>
-        <span class="n">current_pos</span> <span class="o">=</span> <span class="mi">0</span>
-
-        <span class="k">while</span> <span class="n">needed</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="c1"># We must pick a digit from current_pos up to an index</span>
-            <span class="c1"># that leaves enough digits for the remaining &#39;needed - 1&#39;</span>
-            <span class="c1"># Remaining length after picking index i is: len(digits) - 1 - i</span>
-            <span class="c1"># We need: len(digits) - 1 - i &gt;= needed - 1</span>
-            <span class="c1"># =&gt; len(digits) - i &gt;= needed</span>
-            <span class="c1"># =&gt; i &lt;= len(digits) - needed</span>
-
-            <span class="c1"># So search range is [current_pos, len(digits) - needed] inclusive</span>
-
-            <span class="n">search_end</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span> <span class="o">-</span> <span class="n">needed</span>
-
-            <span class="c1"># Find max digit in digits[current_pos : search_end + 1]</span>
-            <span class="c1"># We want the *first* occurrence of the max digit to maximize opportunities?</span>
-            <span class="c1"># Actually, as discussed, first occurrence is optimal.</span>
-
-            <span class="n">window</span> <span class="o">=</span> <span class="n">digits</span><span class="p">[</span><span class="n">current_pos</span> <span class="p">:</span> <span class="n">search_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
-
-            <span class="c1"># Find max value in window</span>
-            <span class="n">best_digit</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-            <span class="n">best_rel_index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-
-            <span class="c1"># Since window is list of ints, max() works</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">window</span><span class="p">:</span>
-                <span class="c1"># Should not happen if logic is correct</span>
-                <span class="k">break</span>
-
-            <span class="n">best_digit</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
-
-            <span class="c1"># Find first index of best_digit in window</span>
-            <span class="n">best_rel_index</span> <span class="o">=</span> <span class="n">window</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
-
-            <span class="c1"># Add to result</span>
-            <span class="n">result_digits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
-
-            <span class="c1"># Update current_pos</span>
-            <span class="c1"># The actual index in &#39;digits&#39; is current_pos + best_rel_index</span>
-            <span class="c1"># We continue from the next position</span>
-            <span class="n">current_pos</span> <span class="o">=</span> <span class="n">current_pos</span> <span class="o">+</span> <span class="n">best_rel_index</span> <span class="o">+</span> <span class="mi">1</span>
-
-            <span class="n">needed</span> <span class="o">-=</span> <span class="mi">1</span>
-
-        <span class="c1"># Convert result_digits to number</span>
-        <span class="c1"># They are digits 0-9</span>
-        <span class="n">val_str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">result_digits</span><span class="p">)</span>
-        <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">val_str</span><span class="p">)</span>
-
-        <span class="n">total_joltage</span> <span class="o">+=</span> <span class="n">val</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_joltage</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">solve</span><span class="p">()</span>
 </code></pre></div>
 
 

@@ -2073,93 +2073,16 @@
 <p>Впечатления</p>
 <p>Задача типична для подготовки: аккуратная работа с интервалами и аккуратный парсинг. Ничего запредельного по сложности, но полезно как напоминание про объединение соседних интервалов и использование бинарного поиска для проверки вхождения.</p>
 <h1 id="code-executions">Code Executions</h1>
-<h2 id="aoc2025_day5_both_1764915399945py">✅ aoc2025_day5_both_1764915399945.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-05T07:16:40.043602</li>
-<li><strong>Duration</strong>: 0.10s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 598
-Part 2: 360341832208407
-</code></pre></div>
-<h3 id="code">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Combined clean solution for AoC 2025 Day 5.</span>
-<span class="sd">Reads input.txt, where first section are ranges (a-b) and second section (optional) are available ids.</span>
-<span class="sd">Merges intervals and provides answers:</span>
-<span class="sd">- Part 1: count of available ids that fall into any merged interval.</span>
-<span class="sd">- Part 2: total count of integers covered by merged intervals.</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">bisect</span><span class="w"> </span><span class="kn">import</span> <span class="n">bisect_right</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">read_sections</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;input.txt&#39;</span><span class="p">):</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">parts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">ranges</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">parts</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
-    <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">ids</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
-    <span class="k">return</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">ids</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">parse_ranges</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
-    <span class="n">intervals</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="n">ln</span><span class="o">=</span><span class="n">ln</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ln</span><span class="p">:</span> <span class="k">continue</span>
-        <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
-        <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
-    <span class="k">return</span> <span class="n">intervals</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">merge_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">):</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">intervals</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
-    <span class="n">intervals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-    <span class="n">merged</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">ns</span><span class="p">,</span><span class="n">ne</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="k">if</span> <span class="n">ns</span> <span class="o">&lt;=</span> <span class="n">e</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">e</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ne</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
-            <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">ns</span><span class="p">,</span><span class="n">ne</span>
-    <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">merged</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">count_available_in_merged</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">ids</span><span class="p">):</span>
-    <span class="n">starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">]</span>
-    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">ln</span><span class="p">:</span> <span class="k">continue</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ln</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="n">bisect_right</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">merged</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">merged</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
-            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">cnt</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">ranges_lines</span><span class="p">,</span> <span class="n">ids_lines</span> <span class="o">=</span> <span class="n">read_sections</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span>
-    <span class="n">intervals</span> <span class="o">=</span> <span class="n">parse_ranges</span><span class="p">(</span><span class="n">ranges_lines</span><span class="p">)</span>
-    <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
-    <span class="n">part1</span> <span class="o">=</span> <span class="n">count_available_in_merged</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">ids_lines</span><span class="p">)</span>
-    <span class="n">part2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">part1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">part2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
 <h2 id="aoc2025_day5_part1_1764915371783py">✅ aoc2025_day5_part1_1764915371783.py</h2>
 <ul>
 <li><strong>Timestamp</strong>: 2025-12-05T07:16:11.899497</li>
 <li><strong>Duration</strong>: 0.12s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout_1">Stdout</h3>
+<h3 id="stdout">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Part 1: 598
 </code></pre></div>
-<h3 id="code_1">Code</h3>
+<h3 id="code">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Approach:</span>
 <span class="sd">- Read input.txt, split into range lines and available id lines by blank line.</span>
@@ -2243,10 +2166,10 @@ Part 2: 360341832208407
 <li><strong>Duration</strong>: 0.13s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout_2">Stdout</h3>
+<h3 id="stdout_1">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Part 2: 360341832208407
 </code></pre></div>
-<h3 id="code_2">Code</h3>
+<h3 id="code_1">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Approach:</span>
 <span class="sd">- Reuse parsing and merging from part1, then compute total count as sum(e - s + 1) for merged intervals.</span>
@@ -2290,6 +2213,83 @@ Part 2: 360341832208407
     <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
     <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="aoc2025_day5_both_1764915399945py">✅ aoc2025_day5_both_1764915399945.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:16:40.043602</li>
+<li><strong>Duration</strong>: 0.10s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_2">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 598
+Part 2: 360341832208407
+</code></pre></div>
+<h3 id="code_2">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Combined clean solution for AoC 2025 Day 5.</span>
+<span class="sd">Reads input.txt, where first section are ranges (a-b) and second section (optional) are available ids.</span>
+<span class="sd">Merges intervals and provides answers:</span>
+<span class="sd">- Part 1: count of available ids that fall into any merged interval.</span>
+<span class="sd">- Part 2: total count of integers covered by merged intervals.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">bisect</span><span class="w"> </span><span class="kn">import</span> <span class="n">bisect_right</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_sections</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">&#39;input.txt&#39;</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">parts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">parts</span> <span class="ow">and</span> <span class="n">parts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="k">return</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">ids</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">parse_ranges</span><span class="p">(</span><span class="n">lines</span><span class="p">):</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">ln</span><span class="o">=</span><span class="n">ln</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ln</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="n">a</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">ln</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">intervals</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">a</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">intervals</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">merge_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">intervals</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">intervals</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">intervals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">ns</span><span class="p">,</span><span class="n">ne</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">if</span> <span class="n">ns</span> <span class="o">&lt;=</span> <span class="n">e</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">ne</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+            <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="n">ns</span><span class="p">,</span><span class="n">ne</span>
+    <span class="n">merged</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">s</span><span class="p">,</span><span class="n">e</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">merged</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count_available_in_merged</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">ids</span><span class="p">):</span>
+    <span class="n">starts</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">]</span>
+    <span class="n">cnt</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ln</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ln</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">bisect_right</span><span class="p">(</span><span class="n">starts</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">merged</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">x</span> <span class="o">&lt;=</span> <span class="n">merged</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="n">cnt</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">cnt</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">ranges_lines</span><span class="p">,</span> <span class="n">ids_lines</span> <span class="o">=</span> <span class="n">read_sections</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span>
+    <span class="n">intervals</span> <span class="o">=</span> <span class="n">parse_ranges</span><span class="p">(</span><span class="n">ranges_lines</span><span class="p">)</span>
+    <span class="n">merged</span> <span class="o">=</span> <span class="n">merge_intervals</span><span class="p">(</span><span class="n">intervals</span><span class="p">)</span>
+    <span class="n">part1</span> <span class="o">=</span> <span class="n">count_available_in_merged</span><span class="p">(</span><span class="n">merged</span><span class="p">,</span> <span class="n">ids_lines</span><span class="p">)</span>
+    <span class="n">part2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">e</span> <span class="o">-</span> <span class="n">s</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">part1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">part2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 

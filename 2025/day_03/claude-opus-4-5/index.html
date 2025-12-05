@@ -2089,6 +2089,132 @@
 <h2 id="_6">Впечатление</h2>
 <p>Отличная задача для начала марафона! Часть 1 — разминка, а часть 2 заставляет задуматься о правильном подходе. Жадный алгоритм здесь интуитивно понятен и математически обоснован. Приятно, что задача имеет реалистичную "историю" с батарейками и эскалатором, а отсылка к Mitch Hedberg добавляет шарма.</p>
 <h1 id="code-executions">Code Executions</h1>
+<h2 id="solve_part1_1764741628627py">✅ solve_part1_1764741628627.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:00:28.977927</li>
+<li><strong>Duration</strong>: 0.32s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 16858
+Example: 357 (expected 357)
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Day 3, Part 1: Find maximum 2-digit number from each bank by selecting exactly 2 batteries.</span>
+
+<span class="sd">Approach:</span>
+<span class="sd">- For each line, find the maximum digit that has at least one digit after it (tens digit)</span>
+<span class="sd">- Then find the maximum digit after that position (units digit)</span>
+<span class="sd">- Sum up all the 2-digit numbers</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">max_joltage</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find maximum 2-digit number by selecting 2 digits in order.&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># Try each position for the first digit (tens)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">tens</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="c1"># Find max digit after position i</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="n">joltage</span> <span class="o">=</span> <span class="n">tens</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">units</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">joltage</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">best</span>
+
+<span class="c1"># Read input</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+
+<span class="c1"># Calculate total</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Test with example</span>
+<span class="n">example</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;987654321111111&quot;</span><span class="p">,</span> <span class="s2">&quot;811111111111119&quot;</span><span class="p">,</span> <span class="s2">&quot;234234234234278&quot;</span><span class="p">,</span> <span class="s2">&quot;818181911112111&quot;</span><span class="p">]</span>
+<span class="n">example_total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Example: </span><span class="si">{</span><span class="n">example_total</span><span class="si">}</span><span class="s2"> (expected 357)&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="solve_part2_1764741658046py">✅ solve_part2_1764741658046.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-03T07:00:58.304700</li>
+<li><strong>Duration</strong>: 0.26s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 16858
+Part 2: 167549941654721
+Example Part 2: 3121910778619 (expected 3121910778619)
+  987654321111111 -&gt; 987654321111
+  811111111111119 -&gt; 811111111119
+  234234234234278 -&gt; 434234234278
+  818181911112111 -&gt; 888911112111
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Day 3, Part 2: Find maximum 12-digit number from each bank by selecting exactly 12 batteries.</span>
+
+<span class="sd">Approach (greedy):</span>
+<span class="sd">- We need to pick 12 digits in order from left to right</span>
+<span class="sd">- At each step, pick the maximum digit that still allows selecting 12 digits total</span>
+<span class="sd">- If we need to pick (12-k) more digits starting from position &#39;start&#39;,</span>
+<span class="sd">  we can choose from positions [start, n-(12-k)] to ensure enough digits remain</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find maximum k-digit number by selecting k digits in order (greedy).&quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">remaining</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># We need &#39;remaining&#39; more digits</span>
+        <span class="c1"># Can pick from start to n-remaining (inclusive)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">remaining</span>
+
+        <span class="c1"># Find max digit in range [start, end]</span>
+        <span class="n">best_pos</span> <span class="o">=</span> <span class="n">start</span>
+        <span class="n">best_digit</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">start</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">best_digit</span><span class="p">:</span>
+                <span class="n">best_digit</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
+                <span class="n">best_pos</span> <span class="o">=</span> <span class="n">pos</span>
+
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">best_pos</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Next digit must be after this position</span>
+
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+
+<span class="c1"># Read input</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
+
+<span class="c1"># Part 1 (for completeness)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">max_joltage_2</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">best</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">tens</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">units</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">tens</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">units</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">best</span>
+
+<span class="n">part1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage_2</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">part1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Part 2</span>
+<span class="n">part2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">part2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Test with example</span>
+<span class="n">example</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;987654321111111&quot;</span><span class="p">,</span> <span class="s2">&quot;811111111111119&quot;</span><span class="p">,</span> <span class="s2">&quot;234234234234278&quot;</span><span class="p">,</span> <span class="s2">&quot;818181911112111&quot;</span><span class="p">]</span>
+<span class="n">example_total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Example Part 2: </span><span class="si">{</span><span class="n">example_total</span><span class="si">}</span><span class="s2"> (expected 3121910778619)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Show individual results for verification</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="create_visualization_1764741706200py">❌ create_visualization_1764741706200.py</h2>
 <ul>
 <li><strong>Timestamp</strong>: 2025-12-03T07:01:46.373734</li>
@@ -2106,7 +2232,7 @@
            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode character &#39;\u26a1&#39; in position 6133: character maps to &lt;undefined&gt;
 </code></pre></div>
-<h3 id="code">Code</h3>
+<h3 id="code_2">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Create SVG visualization for Day 3: Lobby (Battery Selection)</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -2326,11 +2452,11 @@ UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode character &#39;\u26
 <li><strong>Duration</strong>: 0.10s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout">Stdout</h3>
+<h3 id="stdout_2">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Created visualization_greedy.svg
 Created visualization_comparison.svg
 </code></pre></div>
-<h3 id="code_1">Code</h3>
+<h3 id="code_3">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Create SVG visualization for Day 3: Lobby (Battery Selection)</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -2543,132 +2669,6 @@ Created visualization_comparison.svg
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;visualization_comparison.svg&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created visualization_comparison.svg&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="solve_part1_1764741628627py">✅ solve_part1_1764741628627.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-03T07:00:28.977927</li>
-<li><strong>Duration</strong>: 0.32s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_1">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 16858
-Example: 357 (expected 357)
-</code></pre></div>
-<h3 id="code_2">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Day 3, Part 1: Find maximum 2-digit number from each bank by selecting exactly 2 batteries.</span>
-
-<span class="sd">Approach:</span>
-<span class="sd">- For each line, find the maximum digit that has at least one digit after it (tens digit)</span>
-<span class="sd">- Then find the maximum digit after that position (units digit)</span>
-<span class="sd">- Sum up all the 2-digit numbers</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">max_joltage</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find maximum 2-digit number by selecting 2 digits in order.&quot;&quot;&quot;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="n">best</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="c1"># Try each position for the first digit (tens)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">tens</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="c1"># Find max digit after position i</span>
-        <span class="n">units</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
-        <span class="n">joltage</span> <span class="o">=</span> <span class="n">tens</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">units</span>
-        <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">joltage</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">best</span>
-
-<span class="c1"># Read input</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-
-<span class="c1"># Calculate total</span>
-<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Test with example</span>
-<span class="n">example</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;987654321111111&quot;</span><span class="p">,</span> <span class="s2">&quot;811111111111119&quot;</span><span class="p">,</span> <span class="s2">&quot;234234234234278&quot;</span><span class="p">,</span> <span class="s2">&quot;818181911112111&quot;</span><span class="p">]</span>
-<span class="n">example_total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Example: </span><span class="si">{</span><span class="n">example_total</span><span class="si">}</span><span class="s2"> (expected 357)&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="solve_part2_1764741658046py">✅ solve_part2_1764741658046.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-03T07:00:58.304700</li>
-<li><strong>Duration</strong>: 0.26s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_2">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 16858
-Part 2: 167549941654721
-Example Part 2: 3121910778619 (expected 3121910778619)
-  987654321111111 -&gt; 987654321111
-  811111111111119 -&gt; 811111111119
-  234234234234278 -&gt; 434234234278
-  818181911112111 -&gt; 888911112111
-</code></pre></div>
-<h3 id="code_3">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Day 3, Part 2: Find maximum 12-digit number from each bank by selecting exactly 12 batteries.</span>
-
-<span class="sd">Approach (greedy):</span>
-<span class="sd">- We need to pick 12 digits in order from left to right</span>
-<span class="sd">- At each step, pick the maximum digit that still allows selecting 12 digits total</span>
-<span class="sd">- If we need to pick (12-k) more digits starting from position &#39;start&#39;,</span>
-<span class="sd">  we can choose from positions [start, n-(12-k)] to ensure enough digits remain</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">12</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find maximum k-digit number by selecting k digits in order (greedy).&quot;&quot;&quot;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">for</span> <span class="n">remaining</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
-        <span class="c1"># We need &#39;remaining&#39; more digits</span>
-        <span class="c1"># Can pick from start to n-remaining (inclusive)</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">remaining</span>
-
-        <span class="c1"># Find max digit in range [start, end]</span>
-        <span class="n">best_pos</span> <span class="o">=</span> <span class="n">start</span>
-        <span class="n">best_digit</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">start</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">best_digit</span><span class="p">:</span>
-                <span class="n">best_digit</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="n">pos</span><span class="p">]</span>
-                <span class="n">best_pos</span> <span class="o">=</span> <span class="n">pos</span>
-
-        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">best_digit</span><span class="p">)</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">best_pos</span> <span class="o">+</span> <span class="mi">1</span>  <span class="c1"># Next digit must be after this position</span>
-
-    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-
-<span class="c1"># Read input</span>
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-
-<span class="c1"># Part 1 (for completeness)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">max_joltage_2</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-    <span class="n">best</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="n">tens</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">units</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
-        <span class="n">best</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">best</span><span class="p">,</span> <span class="n">tens</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">units</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">best</span>
-
-<span class="n">part1</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage_2</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">part1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Part 2</span>
-<span class="n">part2</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">part2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Test with example</span>
-<span class="n">example</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;987654321111111&quot;</span><span class="p">,</span> <span class="s2">&quot;811111111111119&quot;</span><span class="p">,</span> <span class="s2">&quot;234234234234278&quot;</span><span class="p">,</span> <span class="s2">&quot;818181911112111&quot;</span><span class="p">]</span>
-<span class="n">example_total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Example Part 2: </span><span class="si">{</span><span class="n">example_total</span><span class="si">}</span><span class="s2"> (expected 3121910778619)&quot;</span><span class="p">)</span>
-
-<span class="c1"># Show individual results for verification</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">line</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">max_joltage_k</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="mi">12</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 

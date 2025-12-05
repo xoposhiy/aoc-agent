@@ -2088,17 +2088,261 @@
 <h2 id="_9">Мои впечатления</h2>
 <p>Приятная разминочная задача на работу с сеткой. Элегантность решения в том, что Part 2 — естественное продолжение Part 1: достаточно обернуть логику в цикл. Визуализация процесса эрозии получилась красивой — видно, как "съедаются" края структуры волна за волной, оставляя плотное ядро нетронутым.</p>
 <h1 id="code-executions">Code Executions</h1>
+<h2 id="solve_part1_1764835867376py">✅ solve_part1_1764835867376.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-04T09:11:07.561072</li>
+<li><strong>Duration</strong>: 0.18s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 1564
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Approach: For each cell with &#39;@&#39;, count adjacent &#39;@&#39; cells in 8 directions.</span>
+<span class="c1"># If count &lt; 4, the roll is accessible by a forklift.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># 8 directions: N, NE, E, SE, S, SW, W, NW</span>
+    <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
+            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count</span>
+
+    <span class="n">accessible</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="n">accessible</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">accessible</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part2_1764835889500py">✅ solve_part2_1764835889500.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-04T09:11:30.463592</li>
+<li><strong>Duration</strong>: 0.96s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 2: 9401
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Approach: Iteratively remove rolls with &lt;4 adjacent rolls until no more can be removed.</span>
+<span class="c1"># Use a mutable grid and repeat the process.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
+            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
+            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">count</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">find_accessible</span><span class="p">():</span>
+        <span class="n">accessible</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span> <span class="ow">and</span> <span class="n">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                    <span class="n">accessible</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">accessible</span>
+
+    <span class="n">total_removed</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">accessible</span> <span class="o">=</span> <span class="n">find_accessible</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">accessible</span><span class="p">:</span>
+            <span class="k">break</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">accessible</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+        <span class="n">total_removed</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_removed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solution_1764835906888py">✅ solution_1764835906888.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-04T09:11:48.345775</li>
+<li><strong>Duration</strong>: 1.46s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_2">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 1564
+Part 2: 9401
+</code></pre></div>
+<h3 id="code_2">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># AoC 2025 Day 4: Printing Department</span>
+<span class="c1"># Count paper rolls (@) accessible by forklifts (fewer than 4 adjacent rolls).</span>
+<span class="c1"># Part 1: Single count. Part 2: Iteratively remove accessible rolls until none remain.</span>
+
+<span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_grid</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">DIRECTIONS</span>
+               <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">+</span><span class="n">dr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="o">+</span><span class="n">dc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="o">+</span><span class="n">dr</span><span class="p">][</span><span class="n">c</span><span class="o">+</span><span class="n">dc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span> <span class="ow">and</span> <span class="n">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_part1</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_part2</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">accessible</span> <span class="o">:=</span> <span class="n">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">accessible</span><span class="p">:</span>
+            <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">read_grid</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">solve_part1</span><span class="p">([</span><span class="n">row</span><span class="p">[:]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">grid</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">solve_part2</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="visualization_1764835925807py">✅ visualization_1764835925807.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-04T09:12:07.629711</li>
+<li><strong>Duration</strong>: 1.82s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_3">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Grid size: 139x139
+Total rolls: 12540
+Total removed: 9401
+Iterations: 65
+Saved removal_process.svg
+</code></pre></div>
+<h3 id="code_3">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Create visualization showing the removal process</span>
+
+<span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">read_grid</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">DIRECTIONS</span>
+               <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">+</span><span class="n">dr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="o">+</span><span class="n">dc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="o">+</span><span class="n">dr</span><span class="p">][</span><span class="n">c</span><span class="o">+</span><span class="n">dc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span> <span class="ow">and</span> <span class="n">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">read_grid</span><span class="p">()</span>
+<span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Record removal iterations</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">total_rolls</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)</span>
+<span class="n">iterations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;Initial&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">],</span> <span class="nb">set</span><span class="p">()))</span>
+
+<span class="n">removed_total</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">accessible</span> <span class="o">:=</span> <span class="n">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">)):</span>
+    <span class="n">acc_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">accessible</span><span class="p">:</span>
+        <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
+    <span class="n">removed_total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
+    <span class="n">iterations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;After removing </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">],</span> <span class="n">acc_set</span><span class="p">))</span>
+
+<span class="c1"># Create SVG visualization showing first few iterations</span>
+<span class="n">cell_size</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">margin</span> <span class="o">=</span> <span class="mi">10</span>
+
+<span class="c1"># Show a subset of iterations for clarity</span>
+<span class="n">show_iters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">show_iters</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">show_iters</span><span class="p">))</span>
+
+<span class="n">svg_width</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">margin</span>
+<span class="n">svg_height</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">show_iters</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="mi">40</span><span class="p">)</span> <span class="o">+</span> <span class="n">margin</span>
+
+<span class="n">svg</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">svg_width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">svg_height</span><span class="si">}</span><span class="s1">&quot;&gt;&#39;</span><span class="p">]</span>
+<span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#1a1a2e&quot;/&gt;&#39;</span><span class="p">)</span>
+
+<span class="n">y_offset</span> <span class="o">=</span> <span class="n">margin</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">show_iters</span><span class="p">):</span>
+    <span class="n">title</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">just_removed</span> <span class="o">=</span> <span class="n">iterations</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+    <span class="c1"># Title</span>
+    <span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;</span><span class="si">{</span><span class="n">margin</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">12</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#eee&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot;&gt;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s1">&lt;/text&gt;&#39;</span><span class="p">)</span>
+    <span class="n">y_offset</span> <span class="o">+=</span> <span class="mi">18</span>
+
+    <span class="c1"># Grid</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">margin</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cell_size</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y_offset</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cell_size</span>
+
+            <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="c1"># Check if will be removed next</span>
+                    <span class="n">next_accessible</span> <span class="o">=</span> <span class="n">iterations</span><span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)][</span><span class="mi">2</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="n">next_accessible</span><span class="p">:</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#ff6b6b&quot;</span>  <span class="c1"># About to be removed</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#4ecdc4&quot;</span>  <span class="c1"># Roll</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#4ecdc4&quot;</span>
+            <span class="k">elif</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">iterations</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#ffeb3b&quot;</span>  <span class="c1"># Just removed</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#2d2d44&quot;</span>  <span class="c1"># Empty</span>
+
+            <span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;rect x=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s1">&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot;/&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="mi">20</span>
+
+<span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/svg&gt;&#39;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;removal_process.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svg</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Grid size: </span><span class="si">{</span><span class="n">rows</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">cols</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total rolls: </span><span class="si">{</span><span class="n">total_rolls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total removed: </span><span class="si">{</span><span class="n">removed_total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iterations: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved removal_process.svg&quot;</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="create_better_visualization_1764835953882py">✅ create_better_visualization_1764835953882.py</h2>
 <ul>
 <li><strong>Timestamp</strong>: 2025-12-04T09:12:35.647602</li>
 <li><strong>Duration</strong>: 1.76s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout">Stdout</h3>
+<h3 id="stdout_4">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Saved erosion_map.svg
 Removed 9401 rolls over 65 iterations
 </code></pre></div>
-<h3 id="code">Code</h3>
+<h3 id="code_4">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create a more interesting visualization showing the &quot;erosion&quot; effect</span>
 
 <span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
@@ -2240,11 +2484,11 @@ Removed 9401 rolls over 65 iterations
 <li><strong>Duration</strong>: 16.66s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout_1">Stdout</h3>
+<h3 id="stdout_5">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Saved erosion_animation.gif with 66 frames
 Total iterations: 65
 </code></pre></div>
-<h3 id="code_1">Code</h3>
+<h3 id="code_5">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create animated GIF showing the erosion process</span>
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span>
@@ -2344,7 +2588,7 @@ Total iterations: 65
            ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode character &#39;\u2265&#39; in position 5493: character maps to &lt;undefined&gt;
 </code></pre></div>
-<h3 id="code_2">Code</h3>
+<h3 id="code_6">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create an educational infographic showing the algorithm concept</span>
 
 <span class="n">svg_width</span> <span class="o">=</span> <span class="mi">700</span>
@@ -2476,10 +2720,10 @@ UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode character &#39;\u22
 <li><strong>Duration</strong>: 0.08s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout_2">Stdout</h3>
+<h3 id="stdout_6">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Saved algorithm_infographic.svg
 </code></pre></div>
-<h3 id="code_3">Code</h3>
+<h3 id="code_7">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Create an educational infographic showing the algorithm concept</span>
 
 <span class="n">svg_width</span> <span class="o">=</span> <span class="mi">700</span>
@@ -2604,250 +2848,6 @@ UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode character &#39;\u22
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved algorithm_infographic.svg&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="solution_1764835906888py">✅ solution_1764835906888.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-04T09:11:48.345775</li>
-<li><strong>Duration</strong>: 1.46s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_3">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 1564
-Part 2: 9401
-</code></pre></div>
-<h3 id="code_4">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># AoC 2025 Day 4: Printing Department</span>
-<span class="c1"># Count paper rolls (@) accessible by forklifts (fewer than 4 adjacent rolls).</span>
-<span class="c1"># Part 1: Single count. Part 2: Iteratively remove accessible rolls until none remain.</span>
-
-<span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">read_grid</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">DIRECTIONS</span>
-               <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">+</span><span class="n">dr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="o">+</span><span class="n">dc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="o">+</span><span class="n">dr</span><span class="p">][</span><span class="n">c</span><span class="o">+</span><span class="n">dc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span> <span class="ow">and</span> <span class="n">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">solve_part1</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">solve_part2</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="p">(</span><span class="n">accessible</span> <span class="o">:=</span> <span class="n">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">)):</span>
-        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">accessible</span><span class="p">:</span>
-            <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
-        <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">total</span>
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">read_grid</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">solve_part1</span><span class="p">([</span><span class="n">row</span><span class="p">[:]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">row</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">grid</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">solve_part2</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</code></pre></div>
-<h2 id="solve_part1_1764835867376py">✅ solve_part1_1764835867376.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-04T09:11:07.561072</li>
-<li><strong>Duration</strong>: 0.18s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_4">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 1564
-</code></pre></div>
-<h3 id="code_5">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Approach: For each cell with &#39;@&#39;, count adjacent &#39;@&#39; cells in 8 directions.</span>
-<span class="c1"># If count &lt; 4, the roll is accessible by a forklift.</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-
-    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
-
-    <span class="c1"># 8 directions: N, NE, E, SE, S, SW, W, NW</span>
-    <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
-            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
-            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
-                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">count</span>
-
-    <span class="n">accessible</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-                    <span class="n">accessible</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">accessible</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">solve</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="solve_part2_1764835889500py">✅ solve_part2_1764835889500.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-04T09:11:30.463592</li>
-<li><strong>Duration</strong>: 0.96s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_5">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 2: 9401
-</code></pre></div>
-<h3 id="code_6">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Approach: Iteratively remove rolls with &lt;4 adjacent rolls until no more can be removed.</span>
-<span class="c1"># Use a mutable grid and repeat the process.</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-
-    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
-    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
-
-    <span class="n">directions</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">directions</span><span class="p">:</span>
-            <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
-            <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
-                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">return</span> <span class="n">count</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">find_accessible</span><span class="p">():</span>
-        <span class="n">accessible</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
-            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
-                <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span> <span class="ow">and</span> <span class="n">count_adjacent_rolls</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
-                    <span class="n">accessible</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">accessible</span>
-
-    <span class="n">total_removed</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-        <span class="n">accessible</span> <span class="o">=</span> <span class="n">find_accessible</span><span class="p">()</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">accessible</span><span class="p">:</span>
-            <span class="k">break</span>
-        <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">accessible</span><span class="p">:</span>
-            <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
-        <span class="n">total_removed</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_removed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">solve</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="visualization_1764835925807py">✅ visualization_1764835925807.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-04T09:12:07.629711</li>
-<li><strong>Duration</strong>: 1.82s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_6">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Grid size: 139x139
-Total rolls: 12540
-Total removed: 9401
-Iterations: 65
-Saved removal_process.svg
-</code></pre></div>
-<h3 id="code_7">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Create visualization showing the removal process</span>
-
-<span class="n">DIRECTIONS</span> <span class="o">=</span> <span class="p">[(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">read_grid</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">return</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
-    <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">dr</span><span class="p">,</span> <span class="n">dc</span> <span class="ow">in</span> <span class="n">DIRECTIONS</span>
-               <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">r</span><span class="o">+</span><span class="n">dr</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">c</span><span class="o">+</span><span class="n">dc</span> <span class="o">&lt;</span> <span class="n">cols</span> <span class="ow">and</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="o">+</span><span class="n">dr</span><span class="p">][</span><span class="n">c</span><span class="o">+</span><span class="n">dc</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">)</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">):</span>
-    <span class="k">return</span> <span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">))</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span> <span class="ow">and</span> <span class="n">count_neighbors</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">]</span>
-
-<span class="n">grid</span> <span class="o">=</span> <span class="n">read_grid</span><span class="p">()</span>
-<span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="c1"># Record removal iterations</span>
-<span class="n">iterations</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">total_rolls</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">row</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;@&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">)</span>
-<span class="n">iterations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="s1">&#39;Initial&#39;</span><span class="p">,</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">],</span> <span class="nb">set</span><span class="p">()))</span>
-
-<span class="n">removed_total</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">while</span> <span class="p">(</span><span class="n">accessible</span> <span class="o">:=</span> <span class="n">find_accessible</span><span class="p">(</span><span class="n">grid</span><span class="p">)):</span>
-    <span class="n">acc_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">accessible</span><span class="p">:</span>
-        <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span>
-    <span class="n">removed_total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span>
-    <span class="n">iterations</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;After removing </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">accessible</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">row</span><span class="p">[:]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">grid</span><span class="p">],</span> <span class="n">acc_set</span><span class="p">))</span>
-
-<span class="c1"># Create SVG visualization showing first few iterations</span>
-<span class="n">cell_size</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">margin</span> <span class="o">=</span> <span class="mi">10</span>
-
-<span class="c1"># Show a subset of iterations for clarity</span>
-<span class="n">show_iters</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">show_iters</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">show_iters</span><span class="p">))</span>
-
-<span class="n">svg_width</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">margin</span>
-<span class="n">svg_height</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">show_iters</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="mi">40</span><span class="p">)</span> <span class="o">+</span> <span class="n">margin</span>
-
-<span class="n">svg</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">svg_width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">svg_height</span><span class="si">}</span><span class="s1">&quot;&gt;&#39;</span><span class="p">]</span>
-<span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#1a1a2e&quot;/&gt;&#39;</span><span class="p">)</span>
-
-<span class="n">y_offset</span> <span class="o">=</span> <span class="n">margin</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">show_iters</span><span class="p">):</span>
-    <span class="n">title</span><span class="p">,</span> <span class="n">state</span><span class="p">,</span> <span class="n">just_removed</span> <span class="o">=</span> <span class="n">iterations</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-
-    <span class="c1"># Title</span>
-    <span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;</span><span class="si">{</span><span class="n">margin</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y_offset</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">12</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#eee&quot; font-size=&quot;10&quot; font-family=&quot;monospace&quot;&gt;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s1">&lt;/text&gt;&#39;</span><span class="p">)</span>
-    <span class="n">y_offset</span> <span class="o">+=</span> <span class="mi">18</span>
-
-    <span class="c1"># Grid</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
-            <span class="n">x</span> <span class="o">=</span> <span class="n">margin</span> <span class="o">+</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cell_size</span>
-            <span class="n">y</span> <span class="o">=</span> <span class="n">y_offset</span> <span class="o">+</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cell_size</span>
-
-            <span class="k">if</span> <span class="n">state</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="c1"># Check if will be removed next</span>
-                    <span class="n">next_accessible</span> <span class="o">=</span> <span class="n">iterations</span><span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)][</span><span class="mi">2</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span> <span class="ow">in</span> <span class="n">next_accessible</span><span class="p">:</span>
-                        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#ff6b6b&quot;</span>  <span class="c1"># About to be removed</span>
-                    <span class="k">else</span><span class="p">:</span>
-                        <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#4ecdc4&quot;</span>  <span class="c1"># Roll</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#4ecdc4&quot;</span>
-            <span class="k">elif</span> <span class="n">idx</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">iterations</span><span class="p">[</span><span class="n">idx</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;@&#39;</span><span class="p">:</span>
-                <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#ffeb3b&quot;</span>  <span class="c1"># Just removed</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#2d2d44&quot;</span>  <span class="c1"># Empty</span>
-
-            <span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;rect x=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">-</span><span class="mi">1</span><span class="si">}</span><span class="s1">&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot;/&gt;&#39;</span><span class="p">)</span>
-
-    <span class="n">y_offset</span> <span class="o">+=</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="mi">20</span>
-
-<span class="n">svg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/svg&gt;&#39;</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;removal_process.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svg</span><span class="p">))</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Grid size: </span><span class="si">{</span><span class="n">rows</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">cols</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total rolls: </span><span class="si">{</span><span class="n">total_rolls</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total removed: </span><span class="si">{</span><span class="n">removed_total</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Iterations: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">iterations</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saved removal_process.svg&quot;</span><span class="p">)</span>
 </code></pre></div>
 
 

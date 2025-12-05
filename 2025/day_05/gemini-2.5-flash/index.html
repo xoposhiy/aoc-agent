@@ -2163,17 +2163,115 @@
 <h2 id="_6">Впечатления от задачи</h2>
 <p>Задача была интересной и хорошо структурированной, особенно Часть 2, которая требовала применения стандартного алгоритма слияния интервалов. Это отличный пример того, как правильный выбор алгоритма может значительно упростить и оптимизировать решение. Приятно видеть задачи, которые подталкивают к использованию классических алгоритмических подходов.</p>
 <h1 id="code-executions">Code Executions</h1>
+<h2 id="solve_part1_1764915426225py">✅ solve_part1_1764915426225.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:17:06.337416</li>
+<li><strong>Duration</strong>: 0.11s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 1: 598
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Approach: Parse fresh ingredient ID ranges and available ingredient IDs.</span>
+<span class="c1"># For each available ID, check if it falls within any of the fresh ranges.</span>
+<span class="c1"># Count the number of fresh available IDs.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">sections</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">range_lines</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">id_lines</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">fresh_ranges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">range_lines</span><span class="p">:</span>
+        <span class="n">start_str</span><span class="p">,</span> <span class="n">end_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">fresh_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">start_str</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_str</span><span class="p">)))</span>
+
+    <span class="n">available_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">id_lines</span><span class="p">]</span>
+
+    <span class="n">fresh_count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">available_id</span> <span class="ow">in</span> <span class="n">available_ids</span><span class="p">:</span>
+        <span class="n">is_fresh</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">fresh_ranges</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">available_id</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="p">:</span>
+                <span class="n">is_fresh</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">is_fresh</span><span class="p">:</span>
+            <span class="n">fresh_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">fresh_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part2_1764915436644py">✅ solve_part2_1764915436644.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-05T07:17:16.738407</li>
+<li><strong>Duration</strong>: 0.09s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Part 2: 360341832208407
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="c1"># Approach: Parse fresh ingredient ID ranges. Merge overlapping ranges to get a set of non-overlapping ranges.</span>
+<span class="c1"># Then, sum the lengths of these merged ranges to find the total count of unique fresh IDs.</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">sections</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">range_lines</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">fresh_ranges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">range_lines</span><span class="p">:</span>
+        <span class="n">start_str</span><span class="p">,</span> <span class="n">end_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
+        <span class="n">fresh_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">start_str</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_str</span><span class="p">)))</span>
+
+    <span class="c1"># Sort ranges by their start points</span>
+    <span class="n">fresh_ranges</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+    <span class="n">merged_ranges</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">fresh_ranges</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: 0&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">merged_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">fresh_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c1"># Convert tuple to list to allow modification</span>
+
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">fresh_ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">last_merged_start</span><span class="p">,</span> <span class="n">last_merged_end</span> <span class="o">=</span> <span class="n">merged_ranges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># If current range overlaps with the last merged range</span>
+        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">last_merged_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># +1 because ranges are inclusive, e.g., 3-5 and 6-7 merge to 3-7</span>
+            <span class="n">merged_ranges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_merged_end</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="c1"># Extend the end of the last merged range</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># No overlap, add the current range as a new merged range</span>
+            <span class="n">merged_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">])</span>
+
+    <span class="n">total_fresh_ids</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged_ranges</span><span class="p">:</span>
+        <span class="n">total_fresh_ids</span> <span class="o">+=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_fresh_ids</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
 <h2 id="solve_day5_1764915449608py">✅ solve_day5_1764915449608.py</h2>
 <ul>
 <li><strong>Timestamp</strong>: 2025-12-05T07:17:29.717291</li>
 <li><strong>Duration</strong>: 0.11s</li>
 <li><strong>Exit Code</strong>: 0</li>
 </ul>
-<h3 id="stdout">Stdout</h3>
+<h3 id="stdout_2">Stdout</h3>
 <div class="highlight"><pre><span></span><code>Part 1: 598
 Part 2: 360341832208407
 </code></pre></div>
-<h3 id="code">Code</h3>
+<h3 id="code_2">Code</h3>
 <div class="highlight"><pre><span></span><code><span class="c1"># Solution for Advent of Code 2025, Day 5</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_input</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -2238,104 +2336,6 @@ Part 2: 360341832208407
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="solve_part1_1764915426225py">✅ solve_part1_1764915426225.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-05T07:17:06.337416</li>
-<li><strong>Duration</strong>: 0.11s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_1">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1: 598
-</code></pre></div>
-<h3 id="code_1">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Approach: Parse fresh ingredient ID ranges and available ingredient IDs.</span>
-<span class="c1"># For each available ID, check if it falls within any of the fresh ranges.</span>
-<span class="c1"># Count the number of fresh available IDs.</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-    <span class="n">sections</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-    <span class="n">range_lines</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="n">id_lines</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-    <span class="n">fresh_ranges</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">range_lines</span><span class="p">:</span>
-        <span class="n">start_str</span><span class="p">,</span> <span class="n">end_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
-        <span class="n">fresh_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">start_str</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_str</span><span class="p">)))</span>
-
-    <span class="n">available_ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">id_lines</span><span class="p">]</span>
-
-    <span class="n">fresh_count</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">available_id</span> <span class="ow">in</span> <span class="n">available_ids</span><span class="p">:</span>
-        <span class="n">is_fresh</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">fresh_ranges</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">available_id</span> <span class="o">&lt;=</span> <span class="n">end</span><span class="p">:</span>
-                <span class="n">is_fresh</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">break</span>
-        <span class="k">if</span> <span class="n">is_fresh</span><span class="p">:</span>
-            <span class="n">fresh_count</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1: </span><span class="si">{</span><span class="n">fresh_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">solve</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="solve_part2_1764915436644py">✅ solve_part2_1764915436644.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-05T07:17:16.738407</li>
-<li><strong>Duration</strong>: 0.09s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_2">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 2: 360341832208407
-</code></pre></div>
-<h3 id="code_2">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="c1"># Approach: Parse fresh ingredient ID ranges. Merge overlapping ranges to get a set of non-overlapping ranges.</span>
-<span class="c1"># Then, sum the lengths of these merged ranges to find the total count of unique fresh IDs.</span>
-
-<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-
-    <span class="n">sections</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-    <span class="n">range_lines</span> <span class="o">=</span> <span class="n">sections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
-
-    <span class="n">fresh_ranges</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">range_lines</span><span class="p">:</span>
-        <span class="n">start_str</span><span class="p">,</span> <span class="n">end_str</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>
-        <span class="n">fresh_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">start_str</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">end_str</span><span class="p">)))</span>
-
-    <span class="c1"># Sort ranges by their start points</span>
-    <span class="n">fresh_ranges</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-
-    <span class="n">merged_ranges</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">fresh_ranges</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: 0&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-
-    <span class="n">merged_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">fresh_ranges</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c1"># Convert tuple to list to allow modification</span>
-
-    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">fresh_ranges</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
-        <span class="n">last_merged_start</span><span class="p">,</span> <span class="n">last_merged_end</span> <span class="o">=</span> <span class="n">merged_ranges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-        <span class="c1"># If current range overlaps with the last merged range</span>
-        <span class="k">if</span> <span class="n">start</span> <span class="o">&lt;=</span> <span class="n">last_merged_end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># +1 because ranges are inclusive, e.g., 3-5 and 6-7 merge to 3-7</span>
-            <span class="n">merged_ranges</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">last_merged_end</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span> <span class="c1"># Extend the end of the last merged range</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># No overlap, add the current range as a new merged range</span>
-            <span class="n">merged_ranges</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">])</span>
-
-    <span class="n">total_fresh_ids</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">merged_ranges</span><span class="p">:</span>
-        <span class="n">total_fresh_ids</span> <span class="o">+=</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2: </span><span class="si">{</span><span class="n">total_fresh_ids</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">solve</span><span class="p">()</span>
 </code></pre></div>
 
 
