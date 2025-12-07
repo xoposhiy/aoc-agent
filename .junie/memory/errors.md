@@ -68,3 +68,23 @@
     "NEW INSTRUCTION": "WHEN verifying CLI option behavior THEN run python -m aoc_agent.cli --help instead of pytest"
 }
 
+[2025-12-07 11:48] - Updated by Junie - Error analysis
+{
+    "TYPE": "code change error",
+    "TOOL": "AocToolbox._run_code",
+    "ERROR": "NameError: run_code_path is not defined",
+    "ROOT CAUSE": "The code writes run_info JSON using run_code_path which is never defined.",
+    "PROJECT NOTE": "In src/aoc_agent/agent/tools.py, define run_code_path from code_filename (e.g., Path(code_filename).stem) before writing *.run_info.json at lines ~211, 228, 245, 258.",
+    "NEW INSTRUCTION": "WHEN writing run_info in _run_code THEN set run_code_path = Path(code_filename).stem"
+}
+
+[2025-12-07 19:06] - Updated by Junie - Error analysis
+{
+    "TYPE": "content validation",
+    "TOOL": "create",
+    "ERROR": "Semantic errors detected in markdown code block",
+    "ROOT CAUSE": "The design doc contains a fenced Python snippet with invalid syntax and unresolved names, which the content checker validated and flagged.",
+    "PROJECT NOTE": "The file creation tool semantically validates fenced code; Python blocks must be syntactically valid or marked as non-code (e.g., ```text).",
+    "NEW INSTRUCTION": "WHEN adding pseudo-code in markdown THEN use a text fence instead of python"
+}
+

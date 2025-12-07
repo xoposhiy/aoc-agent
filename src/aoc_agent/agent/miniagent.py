@@ -14,14 +14,15 @@ from langchain_core.callbacks import BaseCallbackHandler
 from langchain_core.outputs import LLMResult
 from langchain.agents.middleware import ModelRetryMiddleware
 
-from .tools import Lang, AocToolbox
+from .tools import Lang, AocToolbox, data_path
 from .context import AgentContext
 from ..core.aoc_client import AocClient
-from .prompts import system_prompt_template, task_prompt_template
+from .prompts import task_prompt_template, system_nano_prompt_template
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langchain_ollama import ChatOllama
+from langchain_community.agent_toolkits import FileManagementToolkit
 
 MODEL_ALIASES = {
     "gpt5": "gpt-5",
@@ -59,26 +60,41 @@ class MiniAgent:
         )
 
         client = AocClient()
-        context = AgentContext(run_id=run_id, start_time=(time.time()))
+        context = AgentContext(
+            run_id=run_id, 
+            start_time=(time.time()), 
+            year=year, 
+            day=day, 
+            language=lang, 
+            model_name=model_name,
+            working_dir=run_dir
+        )
         toolbox = AocToolbox(client, context)
-        tools = toolbox.make_tools(language=lang)
+        
+        run_dir = os.path.join("data", "run", run_id)
+
+        fs_toolkit = FileManagementToolkit(
+            root_dir=run_dir
+        )
+        # Combine filesystem tools with AoC tools
+        fstools = fs_toolkit.get_tools() + toolbox.make_tools()
 
         if lang != "python":
             no_report = True
 
         if "gpt" in model_name or "o1" in model_name:
-            llm = ChatOpenAI(model=model_name).bind_tools(tools, tool_choice="any")
+            llm = ChatOpenAI(model=model_name).bind_tools(fstools, tool_choice="any")
         elif "claude" in model_name:
-            llm = ChatAnthropic(model=model_name).bind_tools(tools, tool_choice="any")
+            llm = ChatAnthropic(model=model_name).bind_tools(fstools, tool_choice="any")
         elif "gemini" in model_name:
-            llm = ChatGoogleGenerativeAI(model=model_name).bind_tools(tools, tool_config={'function_calling_config': {'mode': 'ANY'}})
+            llm = ChatGoogleGenerativeAI(model=model_name).bind_tools(fstools, tool_config={'function_calling_config': {'mode': 'ANY'}})
         else:
-            llm = ChatOllama(model=model_name).bind_tools(tools)
+            llm = ChatOllama(model=model_name).bind_tools(fstools)
 
         agent = create_agent(
             model=llm,
-            tools=tools,
-            system_prompt=system_prompt_template.format_messages(model_name=model_name)[0].content
+            tools=fstools,
+            system_prompt=system_nano_prompt_template.format_messages(model_name=model_name)[0].content
         )
 
         token_collector = TokenCollector(context)
@@ -133,7 +149,9 @@ class MiniAgent:
                 "part1_run_code_errors": context.part1_run_code_errors,
                 "part2_run_code_errors": context.part2_run_code_errors,
                 "part1_run_code_success": context.part1_run_code_success,
-                "part2_run_code_success": context.part2_run_code_success
+                "part2_run_code_success": context.part2_run_code_success,
+                "final_report_path": context.final_report_path,
+                "final_report_images": context.final_report_images
             }
 
             with open(os.path.join(run_dir, "metadata.json"), "w") as f:
@@ -142,7 +160,3 @@ class MiniAgent:
             return
         except Exception as e:
             print(f"[red]Unexpected error running agent. Ignore metadata!:\n{e}[/red]")
-
-
-
-

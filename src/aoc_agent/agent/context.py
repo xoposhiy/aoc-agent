@@ -1,13 +1,19 @@
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 
 @dataclass
 class AgentContext:
     run_id: str
     start_time: float
+    year: int
+    day: int
+    language: str
+    model_name: str
+    working_dir: str
     output_tokens: int = 0
     
     # Part 1 stats
@@ -27,7 +33,11 @@ class AgentContext:
     part2_run_code_errors: int = 0
     part1_run_code_success: int = 0
     part2_run_code_success: int = 0
+    
+    # Report
     final_report_written: bool = False
+    final_report_path: Optional[str] = None
+    final_report_images: List[str] = field(default_factory=list)
     
     def record_success(self, part: int):
         if part == 1:

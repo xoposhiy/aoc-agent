@@ -198,3 +198,33 @@
     "NEW INSTRUCTION": "WHEN pytest collection shows missing input errors THEN stop tests and validate via --help"
 }
 
+[2025-12-07 11:40] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "scan project, update make_tools, update prompts, run lint/build",
+    "BOTTLENECK": "Refactoring tools without updating prompt and tool exposure caused inconsistencies.",
+    "PROJECT NOTE": "miniagent.py now reassigns run_dir twice; remove the second assignment and ensure mkdir is called once.",
+    "NEW INSTRUCTION": "WHEN refactoring tool APIs THEN search and update all references, prompts, and tool registries"
+}
+
+[2025-12-07 19:06] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "validate doc, fix lints",
+    "BOTTLENECK": "Markdown pseudo-code triggered IDE semantic errors that were left unresolved.",
+    "PROJECT NOTE": "The IDE statically analyzes markdown code blocks; pseudo-code should be fenced as text to avoid unresolved references.",
+    "NEW INSTRUCTION": "WHEN IDE flags semantic errors in created markdown THEN reopen file and fence code as text or rewrite"
+}
+
+[2025-12-07 23:57] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "check mkdocs config",
+    "MISSING STEPS": "run build",
+    "BOTTLENECK": "No verification run after code changes to confirm unique names.",
+    "PROJECT NOTE": "Unique slugs already existed; only display names needed adjustment.",
+    "NEW INSTRUCTION": "WHEN modifying site generation output THEN run generation script and verify unique names in index and pages"
+}
+

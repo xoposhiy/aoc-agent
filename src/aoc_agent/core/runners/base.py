@@ -4,15 +4,14 @@ from typing import Any
 
 class CodeRunner(ABC):
     @abstractmethod
-    def run(self, working_dir: str, code_filename: str, solution_code: str) -> subprocess.CompletedProcess:
+    def run(self, working_dir: str, code_filename: str) -> subprocess.CompletedProcess:
         """
         Runs the solution code in the specified working directory.
         
         Args:
             working_dir: The directory where the code should be executed.
-            code_filename: The name of the file to save the code to.
-            solution_code: The actual code content.
-            
+            code_filename: The name of the source code file to execute (must exist in working_dir).
+
         Returns:
             subprocess.CompletedProcess: The result of the execution.
         """

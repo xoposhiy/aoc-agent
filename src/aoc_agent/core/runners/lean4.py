@@ -13,11 +13,7 @@ class Lean4Runner(CodeRunner):
         except Exception as e:
             return f"Error getting Lean version: {e}"
 
-    def run(self, working_dir: str, code_filename: str, solution_code: str) -> subprocess.CompletedProcess:
-        file_path = os.path.join(working_dir, code_filename)
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(solution_code)
-
+    def run(self, working_dir: str, code_filename: str) -> subprocess.CompletedProcess:
         return subprocess.run(
             ["lean", "--run", code_filename],
             cwd=working_dir,

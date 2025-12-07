@@ -14,11 +14,7 @@ class CSharpRunner(CodeRunner):
         except Exception:
             return "Unknown Dotnet version"
 
-    def run(self, working_dir: str, code_filename: str, solution_code: str) -> subprocess.CompletedProcess:
-        file_path = os.path.join(working_dir, code_filename)
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(solution_code)
-
+    def run(self, working_dir: str, code_filename: str) -> subprocess.CompletedProcess:
         project_filename = Path(code_filename).stem + ".csproj"
         project_path = os.path.join(working_dir, project_filename)
 

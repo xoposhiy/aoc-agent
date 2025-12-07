@@ -106,3 +106,14 @@
       'param': None, 
       'code': 'invalid_prompt'}}
    ```
+
+## 07 December
+
+* Radically simplify prompt.
+* Switch to fs tools + simplify run_code.
+* A simple hint for the agent to generate images or animations helps.
+```
+The report must be very visual: has at least one png, svg or gif animations demonstrating the solution / task or input. 
+To do so, you can use a set of provided tools.
+```
+* Remove specific instructions on what tools in which order to use. 

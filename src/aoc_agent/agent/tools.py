@@ -65,19 +65,10 @@ class AocToolbox:
         self.client = client
         self.context = context
 
-        # Append environment info to run_code docstring so LLM knows versions
-        lang_tools = {
-            "python": AocToolbox.run_python,
-            "kotlin": AocToolbox.run_kotlin,
-            "csharp": AocToolbox.run_csharp,
-            "lean4": AocToolbox.run_lean4
-        }
-
-        for lang, tool_method in lang_tools.items():
-            runner = get_runner(lang)
-            if runner and tool_method.__doc__ and "Environment version" not in tool_method.__doc__:
-                 version_info = runner.get_version_info()
-                 tool_method.__doc__ += f"\n\n        Environment version: {version_info}"
+        runner = get_runner(self.context.language)
+        if runner and self.run_code.__doc__ and "Environment version" not in self.run_code.__doc__:
+             version_info = runner.get_version_info()
+             self.run_code.__func__.__doc__ += f"\n\n        Environment version: {version_info}"
 
     def get_task_statement(self, year: int, day: int, part: int) -> str:
         """
@@ -139,7 +130,7 @@ class AocToolbox:
     def download_puzzle_input(self, year: int, day: int) -> str:
         """
         Downloads the puzzle input for the specified year and day.
-        The input is saved to `input.txt` in the task's working directory.
+        The input is saved to `input.txt` in your working directory.
 
         Args:
             year: The year of the puzzle.
@@ -149,77 +140,81 @@ class AocToolbox:
             A log message indicating whether the download was successful or if the file already existed.
         """
         file_path = data_path(year, day, "input.txt")
-        if os.path.exists(file_path):
-            return log_info(f"puzzle input is in input.txt")
-
-        try:
-            text = self.client.get_input(year, day)
-        except Exception as e:
-            return log_error(f"Error downloading input: {e}")
         
-        with open(file_path, "w") as f:
-            f.write(text)
+        if not os.path.exists(file_path):
+            try:
+                text = self.client.get_input(year, day)
+                with open(file_path, "w") as f:
+                    f.write(text)
+            except Exception as e:
+                return log_error(f"Error downloading input: {e}")
+        
+        # Copy to working directory
+        working_dir = self.context.working_dir
+        dest_path = os.path.join(working_dir, "input.txt")
+        shutil.copy(file_path, dest_path)
+
         return log_info(f"puzzle input is downloaded to input.txt.")
 
-    def _run_code(self, year: int, day: int, language: Lang, code_filename: str, solution_code: str) -> str:
-        """
-        Executes the provided solution code.
+    def _save_run_info(self, working_dir: str, code_filename: str, 
+                       stdout: str, stderr: str, duration: float, 
+                       exit_code: int | str, error: Optional[str] = None):
+        
+        timestamp = int(time.time() * 1000)
+        run_info_fn = f"{code_filename}.{timestamp}.json"
+        
+        run_info = {
+            "error": error,
+            "stdout": stdout,
+            "stderr": stderr,
+            "duration": duration,
+            "timestamp": datetime.now().isoformat(),
+            "exit_code": exit_code
+        }
+        
+        with open(os.path.join(working_dir, run_info_fn), "w") as f:
+            json.dump(run_info, f, indent=2)
 
-        The code runs without command-line arguments or stdin input.
-        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
+    def run_code(self, code_filename: str) -> str:
+        """
+        Executes the provided source code file.
+
+        code_filename.out.txt — full output of the execution.
+        code_filename.err.txt — full error output of the execution.
 
         Constraints:
             - Execution time limit: 60 seconds.
             - No network access.
             - Output (stdout/stderr) is truncated to 3000 characters.
+            - No command line arguments provided to your program
 
         Args:
-            year: The year of the puzzle.
-            day: The day of the puzzle.
-            language: The programming language ('python', 'kotlin', 'csharp', 'lean4').
-            code_filename: A descriptive name for the code file (e.g., 'solve_part2_bfs.py'). Avoid generic names.
-            solution_code: The actual source code to execute.
+            code_filename: Filename in the working directory to execute. Executor will be determined by file extension.
 
         Returns:
-            The standard output (stdout) if execution is successful (exit code 0).
-            The standard error (stderr) if execution fails (non-zero exit code).
+            The truncated standard output (stdout) if execution is successful (exit code 0).
+            The truncated standard error (stderr) if execution fails (non-zero exit code).
         """
         print(f"Run code: {code_filename}")
 
-        run_id = self.context.run_id
-        run_dir = os.path.join("data", "run", run_id)
-        os.makedirs(run_dir, exist_ok=True)
-        timestamp = int(time.time() * 1000)
-        fn = Path(code_filename)
-        run_code_path = f"{fn.stem}_{timestamp}{fn.suffix}"
-        input_src = data_path(year, day, "input.txt")
-        if os.path.exists(input_src):
-            shutil.copy(input_src, run_dir)
+        working_dir = self.context.working_dir
+        language = self.context.language
 
-        working_dir = run_dir
         try:
             runner = get_runner(language)
             if not runner:
                 return log_error(f"Error: Unsupported language {language}")
 
             start_time = time.time()
-            result = runner.run(working_dir, run_code_path, solution_code)
+            result = runner.run(working_dir, code_filename)
+            duration = time.time() - start_time
 
             if result.returncode != 0:
                 self.context.record_run_code_error()
                 stderr = truncate_output(result.stderr)
                 stdout = truncate_output(result.stdout)
                 
-                run_info = {
-                    "error": "Non-zero exit code",
-                    "stdout": result.stdout,
-                    "stderr": result.stderr,
-                    "duration": time.time() - start_time,
-                    "timestamp": datetime.now().isoformat(),
-                    "exit_code": result.returncode
-                }
-                with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
-                    json.dump(run_info, f, indent=2)
+                self._save_run_info(working_dir, code_filename, result.stdout, result.stderr, duration, result.returncode, "Non-zero exit code")
 
                 return log_error(f"stderr:\n{stderr}\nstdout:\n{stdout}\n\nEnvironment:\n{runner.get_version_info()}")
             
@@ -227,16 +222,7 @@ class AocToolbox:
             log_output = f"stdout: {truncate_output(result.stdout)}"
             
             # Save run info
-            run_info = {
-                "error": None,
-                "stdout": result.stdout,
-                "stderr": result.stderr,
-                "duration": time.time() - start_time,
-                "timestamp": datetime.now().isoformat(),
-                "exit_code": result.returncode
-            }
-            with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
-                json.dump(run_info, f, indent=2)
+            self._save_run_info(working_dir, code_filename, result.stdout, result.stderr, duration, result.returncode)
                 
             return log_info(log_output)
 
@@ -244,126 +230,12 @@ class AocToolbox:
             self.context.record_run_code_error()
             stdout = truncate_output(e.stdout) if e.stdout else ""
             
-            run_info = {
-                "error": "TimeoutExpired",
-                "stdout": e.stdout if e.stdout else "",
-                "stderr": e.stderr if e.stderr else "",
-                "duration": 60.0, # Timeout limit
-                "timestamp": datetime.now().isoformat(),
-                "exit_code": "timeout"
-            }
-            with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
-                json.dump(run_info, f, indent=2)
+            self._save_run_info(working_dir, code_filename, e.stdout if e.stdout else "", e.stderr if e.stderr else "", 60.0, "timeout", "TimeoutExpired")
 
             return log_error(f"Error: Execution was interrupted because it ran longer than 60 seconds. stdout:\n{stdout}")
         except Exception as e:
-            run_info = {
-                "error": str(e),
-                "stdout": "",
-                "stderr": "",
-                "duration": 0.0,
-                "timestamp": datetime.now().isoformat(),
-                "exit_code": "exception"
-            }
-            with open(os.path.join(working_dir, f"{run_code_path}.run_info.json"), "w") as f:
-                json.dump(run_info, f, indent=2)
+            self._save_run_info(working_dir, code_filename, "", "", 0.0, "exception", str(e))
             return log_error(f"Exception: {str(e)}")
-
-    def run_python(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
-        """
-        Executes the provided Python solution code.
-
-        The code runs without command-line arguments or stdin input.
-        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
-
-        Constraints:
-            - Execution time limit: 60 seconds.
-            - No network access.
-            - Output (stdout/stderr) is truncated to 3000 characters.
-
-        Args:
-            year: The year of the puzzle.
-            day: The day of the puzzle.
-            code_filename: A descriptive name for the code file (e.g., 'solve_part2_bfs.py'). Avoid generic names.
-            solution_code: The actual source code to execute.
-
-        Returns:
-            The standard output (stdout) if execution is successful (exit code 0).
-            The standard error (stderr) if execution fails (non-zero exit code).
-        """
-        return self._run_code(year, day, "python", code_filename, solution_code)
-
-    def run_kotlin(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
-        """
-        Executes the provided Kotlin solution code.
-
-        The code runs without command-line arguments or stdin input.
-        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
-
-        Constraints:
-            - Execution time limit: 60 seconds.
-            - No network access.
-            - Output (stdout/stderr) is truncated to 3000 characters.
-
-        Args:
-            year: The year of the puzzle.
-            day: The day of the puzzle.
-            code_filename: A descriptive name for the code file (e.g., 'Solution.kt'). Avoid generic names.
-            solution_code: The actual source code to execute.
-
-        Returns:
-            The standard output (stdout) if execution is successful (exit code 0).
-            The standard error (stderr) if execution fails (non-zero exit code).
-        """
-        return self._run_code(year, day, "kotlin", code_filename, solution_code)
-
-    def run_csharp(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
-        """
-        Executes the provided C# solution code.
-
-        The code runs without command-line arguments or stdin input.
-        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
-
-        Constraints:
-            - Execution time limit: 60 seconds.
-            - No network access.
-            - Output (stdout/stderr) is truncated to 3000 characters.
-
-        Args:
-            year: The year of the puzzle.
-            day: The day of the puzzle.
-            code_filename: A descriptive name for the code file (e.g., 'Solution.cs'). Avoid generic names.
-            solution_code: The actual source code to execute.
-
-        Returns:
-            The standard output (stdout) if execution is successful (exit code 0).
-            The standard error (stderr) if execution fails (non-zero exit code).
-        """
-        return self._run_code(year, day, "csharp", code_filename, solution_code)
-
-    def run_lean4(self, year: int, day: int, code_filename: str, solution_code: str) -> str:
-        """
-        Executes the provided Lean 4 solution code.
-
-        The code runs without command-line arguments or stdin input.
-        It should read the puzzle input from `./input.txt` (ensure `download_puzzle_input` is called first).
-
-        Constraints:
-            - Execution time limit: 60 seconds.
-            - No network access.
-            - Output (stdout/stderr) is truncated to 3000 characters.
-
-        Args:
-            year: The year of the puzzle.
-            day: The day of the puzzle.
-            code_filename: A descriptive name for the code file (e.g., 'Solution.lean'). Avoid generic names.
-            solution_code: The actual source code to execute.
-
-        Returns:
-            The standard output (stdout) if execution is successful (exit code 0).
-            The standard error (stderr) if execution fails (non-zero exit code).
-        """
-        return self._run_code(year, day, "lean4", code_filename, solution_code)
 
     def complain(self, what_is_wrong: str) -> None:
         """
@@ -435,48 +307,43 @@ class AocToolbox:
 
         return log_error(f"  Error: Could not parse response. raw: {response_text}")
 
-    def write_final_report(self, content: str) -> str:
+    def submit_report(self, report_md_file: str, image_files: List[str]) -> str:
         """
-        Writes a final educational report about the task and solution.
-        
-        The report should be written in Markdown and include:
-        - A summary of the problem.
-        - The algorithmic approach used for Part 1 and Part 2.
-        - Key insights or "gotchas" encountered.
-        - Why this solution is efficient/interesting.
-        """
-        run_id = self.context.run_id
-        run_dir = os.path.join("data", "run", run_id)
-        os.makedirs(run_dir, exist_ok=True)
-        
-        report_path = os.path.join(run_dir, "final_report.md")
-        with open(report_path, "w", encoding="utf-8") as f:
-            f.write(content)
-            
-        self.context.final_report_written = True
-        return log_success(f"Final report saved to {report_path}")
+        Signals the completion of the report preparation.
 
-    def make_tools(self, language: Optional[Lang]) -> List[Callable]:
+        The agent MUST create the report file and any image files using filesystem tools BEFORE calling this tool.
+
+        Args:
+            report_md_file: The filename of the Markdown report (must exist in working directory).
+            image_files: A list of filenames for images included in the report.
+
+        Returns:
+            A success message if the report file exists.
+        """
+        working_dir = self.context.working_dir
+        report_path = os.path.join(working_dir, report_md_file)
+        
+        if not os.path.exists(report_path):
+             return log_error(f"Error: Report file '{report_md_file}' not found. Please create it first using write_file.")
+        
+        for img in image_files:
+             img_path = os.path.join(working_dir, img)
+             if not os.path.exists(img_path):
+                 log_error(f"Warning: Image file '{img}' not found.")
+
+        self.context.final_report_path = report_md_file
+        self.context.final_report_images = image_files
+        self.context.final_report_written = True
+        
+        return log_success(f"Report submitted: {report_md_file}. Agent loop will be finished.")
+
+    def make_tools(self, language: Optional[Lang] = None) -> List[Callable]:
         tools = [
             self.get_task_statement,
             self.download_puzzle_input,
+            self.run_code,
             self.submit_result,
             self.complain,
-            self.report_progress,
-            self.write_final_report
+            self.submit_report
         ]
-
-        run_tool = None
-        if language == "python":
-            run_tool = self.run_python
-        elif language == "kotlin":
-            run_tool = self.run_kotlin
-        elif language == "csharp":
-            run_tool = self.run_csharp
-        elif language == "lean4":
-            run_tool = self.run_lean4
-        
-        if run_tool:
-            tools.append(run_tool)
-            
         return tools

@@ -150,6 +150,11 @@ def generate_site():
             
         used_slugs[day_key].add(slug)
         run["slug"] = slug
+
+        if slug == base_slug:
+            run["display_model"] = model
+        else:
+            run["display_model"] = f"{model} ({counter-1})"
         
         # Create target directory
         # Structure: docs/YYYY/day_DD/MODEL_SLUG/
@@ -181,9 +186,9 @@ def generate_site():
         
         # Create a geeky header using standard markdown list
         header = f"""
-# {meta.get('year')} Day {meta.get('day')} - {meta.get('lang')}
+# {meta.get('year')} Day {meta.get('day')} - {run['display_model']}
 
--   :robot: **Agent**: {meta.get('agent_name')} ({meta.get('model')})
+-   :robot: **Agent**: {meta.get('agent_name')} ({run['display_model']})
 -   :flag_ru: **Language**: {meta.get('lang')}
 -   :stopwatch: **Duration**: {format_duration(meta.get('part12_duration', 0))}
 -   :star: **Stars**: P1: {p1_solved} | P2: {p2_solved}
@@ -191,7 +196,16 @@ def generate_site():
 """     
         # Append code execution info
         code_report = ""
-        run_infos = list(run["path"].glob("*.run_info.json"))
+        
+        # Find run info files matching pattern: filename.timestamp.json
+        run_info_pattern = re.compile(r"^(.+)\.(\d+)\.json$")
+        run_infos = []
+        
+        for f in run["path"].glob("*.json"):
+            if f.name in ["metadata.json", "history.json"]:
+                continue
+            if run_info_pattern.match(f.name):
+                run_infos.append(f)
         
         loaded_infos = []
         for info_file in run_infos:
@@ -209,7 +223,10 @@ def generate_site():
             code_report += "\n\n# Code Executions\n"
             for info_file, info in loaded_infos:
                 try:
-                    code_file_name = info_file.name[:-len(".run_info.json")]
+                    match = run_info_pattern.match(info_file.name)
+                    if not match:
+                        continue
+                    code_file_name = match.group(1)
                     code_file = info_file.parent / code_file_name
                     
                     if not code_file.exists():
@@ -298,7 +315,7 @@ Overview of all agent operations.
         
         duration = format_duration(meta.get('part12_duration', 0))
         
-        link_text = f"{year} Day {day} - {agent}"
+        link_text = f"{year} Day {day} - {run['display_model']}"
         link_url = f"{year}/day_{day:02d}/{slug}/"
         
         index_content += f"- [{link_text}]({link_url}) | Lang: {lang} | Stars: {solved} | Time: {duration}\n"

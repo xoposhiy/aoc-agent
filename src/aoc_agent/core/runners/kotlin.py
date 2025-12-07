@@ -16,11 +16,8 @@ class KotlinRunner(CodeRunner):
         except Exception:
             return "Unknown Kotlin version"
 
-    def run(self, working_dir: str, code_filename: str, solution_code: str) -> subprocess.CompletedProcess:
+    def run(self, working_dir: str, code_filename: str) -> subprocess.CompletedProcess:
         jar_filename = os.path.splitext(code_filename)[0] + ".jar"
-        file_path = os.path.join(working_dir, code_filename)
-        with open(file_path, "w", encoding="utf-8") as f:
-             f.write(solution_code)
 
         try:
             # Compile
