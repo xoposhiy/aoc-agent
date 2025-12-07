@@ -686,7 +686,7 @@ class ReportBuilder:
         """
         Generates a pairwise comparison matrix for models based on overlapping tasks (Same Year, Day, Lang).
         """
-        target_models = ['gpt-5', 'gemini-3-pro-preview', 'claude-opus-4-5']
+        target_models = ['gpt-5', 'gemini-3-pro-preview', 'claude-opus-4-5', 'gpt-5-mini', 'gemini-2.5-flash']
         
         # 1. Aggregate data by (Year, Day, Lang) -> {model: stats}
         grouped_data = defaultdict(lambda: defaultdict(list))

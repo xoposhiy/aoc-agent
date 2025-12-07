@@ -168,3 +168,33 @@
     "NEW INSTRUCTION": "WHEN aggregating by model THEN normalize model names to a canonical mapping first"
 }
 
+[2025-12-03 10:26] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "scan project",
+    "BOTTLENECK": "No holistic scan for other run_id-based path references that may break links.",
+    "PROJECT NOTE": "-",
+    "NEW INSTRUCTION": "WHEN output path structure is changed THEN search project for old path usages and update links accordingly"
+}
+
+[2025-12-05 09:33] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "-",
+    "MISSING STEPS": "run build, verify output",
+    "BOTTLENECK": "No verification to confirm the new sorting behavior.",
+    "PROJECT NOTE": "-",
+    "NEW INSTRUCTION": "WHEN changing sort criteria in report generator THEN run build and manually verify report order by timestamp"
+}
+
+[2025-12-06 01:14] - Updated by Junie - Trajectory analysis
+{
+    "PLAN QUALITY": "near-optimal",
+    "REDUNDANT STEPS": "run full test suite",
+    "MISSING STEPS": "-",
+    "BOTTLENECK": "Running pytest triggered unrelated data-driven tests and wasted time.",
+    "PROJECT NOTE": "Repo includes many data-* tests that fail without inputs; avoid blanket pytest for CLI flag changes.",
+    "NEW INSTRUCTION": "WHEN pytest collection shows missing input errors THEN stop tests and validate via --help"
+}
+

@@ -5,6 +5,8 @@ import datetime
 import os
 import sys
 import time
+import subprocess
+from pathlib import Path
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -61,6 +63,12 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
         required=False,
         help="Time to start the agent, format HH:MM (24h)",
     )
+    parser.add_argument(
+        "--publish",
+        action="store_true",
+        default=False,
+        help="Publish the website after the run is finished",
+    )
     return parser.parse_args(argv)
 
 
@@ -100,6 +108,16 @@ def main(argv: list[str] | None = None) -> int:
         )
         runner.run()
     ReportBuilder().build_report()
+
+    if ns.publish:
+        root_dir = Path(__file__).parent.parent.parent
+        publish_script = root_dir / "tools" / "publish_site.py"
+        if publish_script.exists():
+            print(f"Publishing site via {publish_script}...")
+            subprocess.run([sys.executable, str(publish_script)], check=True)
+        else:
+            print(f"Error: Publish script not found at {publish_script}")
+
     return 0
 
 

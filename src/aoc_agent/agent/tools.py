@@ -456,7 +456,7 @@ class AocToolbox:
         self.context.final_report_written = True
         return log_success(f"Final report saved to {report_path}")
 
-    def make_tools(self, language: Optional[Lang] = None) -> List[Callable]:
+    def make_tools(self, language: Optional[Lang]) -> List[Callable]:
         tools = [
             self.get_task_statement,
             self.download_puzzle_input,

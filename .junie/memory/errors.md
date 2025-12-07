@@ -58,3 +58,13 @@
     "NEW INSTRUCTION": "WHEN adding new module references in code THEN add necessary import statements at file top"
 }
 
+[2025-12-06 01:14] - Updated by Junie - Error analysis
+{
+    "TYPE": "env/setup",
+    "TOOL": "bash",
+    "ERROR": "pytest failed: missing input.txt during collection",
+    "ROOT CAUSE": "Ran repo-wide pytest which includes data-driven tests requiring absent input files.",
+    "PROJECT NOTE": "Directory data-november-2025 contains tests that expect input.txt in CWD; avoid running repo-wide pytest from root for simple CLI changes.",
+    "NEW INSTRUCTION": "WHEN verifying CLI option behavior THEN run python -m aoc_agent.cli --help instead of pytest"
+}
+

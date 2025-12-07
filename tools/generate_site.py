@@ -5,6 +5,12 @@ from pathlib import Path
 import glob
 import re
 
+def sanitize_filename(name):
+    # Replace invalid characters with underscores
+    # Allow alphanumeric, underscores, hyphens, dots
+    s = re.sub(r'[^\w\-\.]', '_', str(name))
+    return s.strip('_')
+
 def preprocess_markdown(content):
     lines = content.splitlines()
     processed = []
@@ -30,7 +36,7 @@ def preprocess_markdown(content):
 
 # Configuration
 # We look for any directory starting with 'data' to include all runs
-DATA_DIRS_PATTERN = "data*" 
+DATA_DIRS_PATTERN = "data"
 OUTPUT_DIR = Path("report_site")
 SITE_NAME = "AoC Agent Reports"
 
@@ -117,16 +123,37 @@ def generate_site():
     
     print(f"Found {len(runs)} runs. Generating site...")
 
+    # Track used slugs per day to ensure uniqueness
+    # Key: (year, day), Value: set of used slugs
+    used_slugs = {}
+
     # 2. Generate pages
     for run in runs:
         meta = run["meta"]
         year = meta.get("year", "Unknown")
         day = meta.get("day", "Unknown")
         run_id = meta.get("run_id", "unknown_run")
+        model = meta.get("model", "unknown_model")
+
+        # Determine directory name (slug)
+        base_slug = sanitize_filename(model)
+        slug = base_slug
+        counter = 1
+        
+        day_key = (year, day)
+        if day_key not in used_slugs:
+            used_slugs[day_key] = set()
+            
+        while slug in used_slugs[day_key]:
+            slug = f"{base_slug}_{counter}"
+            counter += 1
+            
+        used_slugs[day_key].add(slug)
+        run["slug"] = slug
         
         # Create target directory
-        # Structure: docs/YYYY/day_DD/run_ID/
-        target_dir = docs_dir / str(year) / f"day_{day:02d}" / run_id
+        # Structure: docs/YYYY/day_DD/MODEL_SLUG/
+        target_dir = docs_dir / str(year) / f"day_{day:02d}" / slug
         target_dir.mkdir(parents=True, exist_ok=True)
         
         # Copy assets (images, gifs)
@@ -165,16 +192,23 @@ def generate_site():
         # Append code execution info
         code_report = ""
         run_infos = list(run["path"].glob("*.run_info.json"))
-        # Sort by filename which contains timestamp
-        run_infos.sort(key=lambda p: p.name)
         
-        if run_infos:
+        loaded_infos = []
+        for info_file in run_infos:
+            try:
+                with open(info_file, "r", encoding="utf-8") as f:
+                    info = json.load(f)
+                loaded_infos.append((info_file, info))
+            except Exception as e:
+                print(f"Error reading run info {info_file}: {e}")
+
+        # Sort by timestamp
+        loaded_infos.sort(key=lambda x: x[1].get('timestamp', ''))
+        
+        if loaded_infos:
             code_report += "\n\n# Code Executions\n"
-            for info_file in run_infos:
+            for info_file, info in loaded_infos:
                 try:
-                    with open(info_file, "r", encoding="utf-8") as f:
-                        info = json.load(f)
-                    
                     code_file_name = info_file.name[:-len(".run_info.json")]
                     code_file = info_file.parent / code_file_name
                     
@@ -254,7 +288,7 @@ Overview of all agent operations.
         meta = run["meta"]
         year = meta.get("year", 0)
         day = meta.get("day", 0)
-        run_id = meta.get("run_id", "")
+        slug = run.get("slug", meta.get("run_id"))
         agent = f"{meta.get('model')}"
         lang = meta.get('lang')
         
@@ -265,7 +299,7 @@ Overview of all agent operations.
         duration = format_duration(meta.get('part12_duration', 0))
         
         link_text = f"{year} Day {day} - {agent}"
-        link_url = f"{year}/day_{day:02d}/{run_id}/"
+        link_url = f"{year}/day_{day:02d}/{slug}/"
         
         index_content += f"- [{link_text}]({link_url}) | Lang: {lang} | Stars: {solved} | Time: {duration}\n"
 
