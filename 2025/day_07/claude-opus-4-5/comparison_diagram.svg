@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="400" viewBox="0 0 900 400">
+  <defs>
+    <linearGradient id="part1Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88" />
+      <stop offset="100%" style="stop-color:#00aa55" />
+    </linearGradient>
+    <linearGradient id="part2Grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b" />
+      <stop offset="100%" style="stop-color:#ff9999" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="900" height="400" fill="#0d1b2a"/>
+  
+  <!-- Part 1 Section -->
+  <rect x="30" y="60" width="400" height="300" rx="15" fill="#1a3a5c" stroke="#00ff88" stroke-width="2"/>
+  <text x="230" y="50" text-anchor="middle" fill="#00ff88" font-size="20" font-weight="bold">Part 1: Classical Beams</text>
+  
+  <!-- Part 1 diagram - beams merge -->
+  <circle cx="230" cy="110" r="15" fill="#ffd700"/>
+  <text x="230" y="115" text-anchor="middle" fill="#000" font-size="12" font-weight="bold">S</text>
+  
+  <!-- Splitter 1 -->
+  <polygon points="230,170 220,180 240,180" fill="url(#part1Grad)"/>
+  <line x1="230" y1="125" x2="230" y2="170" stroke="#00ff88" stroke-width="3"/>
+  
+  <!-- Two beams diverge -->
+  <line x1="220" y1="180" x2="180" y2="220" stroke="#00ff88" stroke-width="3"/>
+  <line x1="240" y1="180" x2="280" y2="220" stroke="#00ff88" stroke-width="3"/>
+  
+  <!-- Two splitters -->
+  <polygon points="180,230 170,240 190,240" fill="url(#part1Grad)"/>
+  <polygon points="280,230 270,240 290,240" fill="url(#part1Grad)"/>
+  
+  <!-- Three beams (merged) -->
+  <line x1="170" y1="240" x2="140" y2="280" stroke="#00ff88" stroke-width="3"/>
+  <line x1="190" y1="240" x2="230" y2="280" stroke="#00ff88" stroke-width="3"/>
+  <line x1="270" y1="240" x2="230" y2="280" stroke="#00ff88" stroke-width="3" stroke-dasharray="5,5"/>
+  <line x1="290" y1="240" x2="320" y2="280" stroke="#00ff88" stroke-width="3"/>
+  
+  <!-- Counts -->
+  <text x="140" y="310" text-anchor="middle" fill="#fff" font-size="12">Beam 1</text>
+  <text x="230" y="310" text-anchor="middle" fill="#fff" font-size="12">Beam 2</text>
+  <text x="320" y="310" text-anchor="middle" fill="#fff" font-size="12">Beam 3</text>
+  
+  <text x="230" y="350" text-anchor="middle" fill="#00ff88" font-size="16">Beams merge together</text>
+  
+  <!-- Part 2 Section -->
+  <rect x="470" y="60" width="400" height="300" rx="15" fill="#1a3a5c" stroke="#ff6b6b" stroke-width="2"/>
+  <text x="670" y="50" text-anchor="middle" fill="#ff6b6b" font-size="20" font-weight="bold">Part 2: Quantum Timelines</text>
+  
+  <!-- Part 2 diagram - timelines count separately -->
+  <circle cx="670" cy="110" r="15" fill="#ffd700"/>
+  <text x="670" y="115" text-anchor="middle" fill="#000" font-size="12" font-weight="bold">S</text>
+  
+  <!-- Splitter 1 -->
+  <polygon points="670,170 660,180 680,180" fill="url(#part2Grad)"/>
+  <line x1="670" y1="125" x2="670" y2="170" stroke="#ff6b6b" stroke-width="3"/>
+  
+  <!-- Two timelines -->
+  <line x1="660" y1="180" x2="620" y2="220" stroke="#ff6b6b" stroke-width="3"/>
+  <line x1="680" y1="180" x2="720" y2="220" stroke="#4a9fff" stroke-width="3"/>
+  
+  <!-- Two splitters -->
+  <polygon points="620,230 610,240 630,240" fill="url(#part2Grad)"/>
+  <polygon points="720,230 710,240 730,240" fill="url(#part2Grad)"/>
+  
+  <!-- Four timelines -->
+  <line x1="610" y1="240" x2="580" y2="280" stroke="#ff6b6b" stroke-width="3"/>
+  <line x1="630" y1="240" x2="660" y2="280" stroke="#ff9999" stroke-width="3"/>
+  <line x1="710" y1="240" x2="680" y2="280" stroke="#4a9fff" stroke-width="3"/>
+  <line x1="730" y1="240" x2="760" y2="280" stroke="#6bb8ff" stroke-width="3"/>
+  
+  <!-- Counts -->
+  <text x="580" y="310" text-anchor="middle" fill="#fff" font-size="11">TL1</text>
+  <text x="660" y="310" text-anchor="middle" fill="#fff" font-size="11">TL2</text>
+  <text x="680" y="310" text-anchor="middle" fill="#fff" font-size="11">TL3</text>
+  <text x="760" y="310" text-anchor="middle" fill="#fff" font-size="11">TL4</text>
+  
+  <text x="670" y="350" text-anchor="middle" fill="#ff6b6b" font-size="16">Each path is unique</text>
+  
+</svg>

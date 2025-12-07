@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+  <defs>
+    <linearGradient id="beamGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00aa55;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="240" height="240" fill="#1a1a2e"/>
+  
+  <!-- Grid lines -->
+  <line x1="0" y1="0" x2="240" y2="0" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="30" x2="240" y2="30" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="60" x2="240" y2="60" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="90" x2="240" y2="90" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="120" x2="240" y2="120" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="150" x2="240" y2="150" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="180" x2="240" y2="180" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="210" x2="240" y2="210" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="240" x2="240" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="0" y1="0" x2="0" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="30" y1="0" x2="30" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="60" y1="0" x2="60" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="90" y1="0" x2="90" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="120" y1="0" x2="120" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="150" y1="0" x2="150" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="180" y1="0" x2="180" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="210" y1="0" x2="210" y2="240" stroke="#333" stroke-width="1"/>
+  <line x1="240" y1="0" x2="240" y2="240" stroke="#333" stroke-width="1"/>
+  <circle cx="225" cy="15" r="10" fill="#ffd700" filter="url(#glow)"/>
+  <text x="225" y="20" text-anchor="middle" fill="#000" font-size="14" font-weight="bold">S</text>
+  <polygon points="225,65 215,83 235,83" fill="#ff6b6b" stroke="#ff9999" stroke-width="2"/>
+  <polygon points="195,125 185,143 205,143" fill="#ff6b6b" stroke="#ff9999" stroke-width="2"/>
+  <polygon points="165,185 155,203 175,203" fill="#ff6b6b" stroke="#ff9999" stroke-width="2"/>
+  <polygon points="225,185 215,203 235,203" fill="#ff6b6b" stroke="#ff9999" stroke-width="2"/>
+  <line x1="225" y1="15" x2="225" y2="45" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="225" y1="45" x2="225" y2="75" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="225" y1="75" x2="195" y2="75" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="195" y1="75" x2="195" y2="105" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="195" y1="105" x2="195" y2="135" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="195" y1="135" x2="165" y2="135" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="195" y1="135" x2="225" y2="135" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="165" y1="135" x2="165" y2="165" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="225" y1="135" x2="225" y2="165" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="165" y1="165" x2="165" y2="195" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="165" y1="195" x2="135" y2="195" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="165" y1="195" x2="195" y2="195" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="225" y1="165" x2="225" y2="195" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="225" y1="195" x2="195" y2="195" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="135" y1="195" x2="135" y2="225" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+  <line x1="195" y1="195" x2="195" y2="225" stroke="url(#beamGrad)" stroke-width="4" stroke-linecap="round" filter="url(#glow)"/>
+</svg>

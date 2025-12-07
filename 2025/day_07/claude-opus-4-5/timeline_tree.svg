@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="treeGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b" />
+      <stop offset="100%" style="stop-color:#ff9999" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="800" height="500" fill="#0d1b2a"/>
+  
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" fill="#ffd700" font-size="24" font-weight="bold">Quantum Timeline Branching</text>
+  <text x="400" y="60" text-anchor="middle" fill="#aaa" font-size="14">Each splitter doubles the number of timelines</text>
+  
+  <line x1="400" y1="105" x2="100" y2="145" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="400" y1="105" x2="700" y2="145" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="100" y1="175" x2="-50" y2="215" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="100" y1="175" x2="250" y2="215" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="700" y1="175" x2="550" y2="215" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="700" y1="175" x2="850" y2="215" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="-50" y1="245" x2="-125" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="-50" y1="245" x2="25" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="250" y1="245" x2="175" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="250" y1="245" x2="325" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="550" y1="245" x2="475" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="550" y1="245" x2="625" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="850" y1="245" x2="775" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="850" y1="245" x2="925" y2="285" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="-125" y1="315" x2="-162" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="-125" y1="315" x2="-88" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="25" y1="315" x2="-12" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="25" y1="315" x2="62" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="175" y1="315" x2="138" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="175" y1="315" x2="212" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="325" y1="315" x2="288" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="325" y1="315" x2="362" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="475" y1="315" x2="438" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="475" y1="315" x2="512" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="625" y1="315" x2="588" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="625" y1="315" x2="662" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="775" y1="315" x2="738" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="775" y1="315" x2="812" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="925" y1="315" x2="888" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <line x1="925" y1="315" x2="962" y2="355" stroke="#4a9fff" stroke-width="2" opacity="0.7"/>
+  <circle cx="400" cy="90" r="15" fill="#ff6b6b" filter="url(#shadow)"/>
+  <circle cx="100" cy="160" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="700" cy="160" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="-50" cy="230" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="250" cy="230" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="550" cy="230" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="850" cy="230" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="-125" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="25" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="175" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="325" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="475" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="625" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="775" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="925" cy="300" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="-162" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="-88" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="-12" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="62" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="138" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="212" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="288" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="362" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="438" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="512" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="588" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="662" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="738" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="812" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="888" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <circle cx="962" cy="370" r="15" fill="#4a9fff" filter="url(#shadow)"/>
+  <text x="60" y="95" fill="#aaa" font-size="14">1 particle</text>
+  <text x="60" y="165" fill="#aaa" font-size="14">2 timelines</text>
+  <text x="60" y="235" fill="#aaa" font-size="14">4 timelines</text>
+  <text x="60" y="305" fill="#aaa" font-size="14">8 timelines</text>
+  <text x="60" y="375" fill="#aaa" font-size="14">16 timelines</text>
+
+  <rect x="250" y="430" width="300" height="50" rx="10" fill="#1a3a5c"/>
+  <text x="400" y="460" text-anchor="middle" fill="#ffd700" font-size="18">Timelines = 2^(num_splitters)</text>
+</svg>
