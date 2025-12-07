@@ -12,7 +12,7 @@
         <link rel="prev" href="../claude-opus-4-5/">
       
       
-        <link rel="next" href="../gpt-5/">
+        <link rel="next" href="../gemini-3-pro-preview_1/">
       
       
         
@@ -2396,6 +2396,8 @@
       
         
       
+        
+      
     
     
     
@@ -2593,14 +2595,14 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../gpt-5/" class="md-nav__link ">
+            <a href="../gemini-3-pro-preview_1/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    Gpt 5
+    Gemini 3 pro preview 1
   
 
     
@@ -2617,7 +2619,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Gpt 5
+    Gemini 3 pro preview 1
   
 
           </label>
@@ -2658,14 +2660,14 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../gpt-5-mini/" class="md-nav__link ">
+            <a href="../gpt-5/" class="md-nav__link ">
               
   
   
   <span class="md-ellipsis">
     
   
-    Gpt 5 mini
+    Gpt 5
   
 
     
@@ -2682,7 +2684,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Gpt 5 mini
+    Gpt 5
   
 
           </label>
@@ -2723,6 +2725,71 @@
         
           
           <div class="md-nav__link md-nav__container">
+            <a href="../gpt-5-mini/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gpt 5 mini
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gpt 5 mini
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_7_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
             <a href="../gpt-5_1/" class="md-nav__link ">
               
   
@@ -2742,8 +2809,8 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_5_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_7_5">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_7_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_7_6">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -2817,234 +2884,76 @@
 <ul>
 <li><img alt="🤖" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f916.svg" title=":robot:" /> <strong>Agent</strong>: MiniAgent (gemini-3-pro-preview)</li>
 <li><img alt="🇷🇺" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/1f1f7-1f1fa.svg" title=":flag_ru:" /> <strong>Language</strong>: python</li>
-<li><img alt="⏱" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/23f1.svg" title=":stopwatch:" /> <strong>Duration</strong>: 126.78s</li>
+<li><img alt="⏱" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/23f1.svg" title=":stopwatch:" /> <strong>Duration</strong>: 115.16s</li>
 <li><img alt="⭐" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/2b50.svg" title=":star:" /> <strong>Stars</strong>: P1: ✅ | P2: ✅</li>
 </ul>
-<h1 id="day-7-the-quantum-teleporter">Day 7: The Quantum Teleporter 🌀</h1>
-<p>The cephalopods have led us to a research wing, and naturally, we stepped into a teleporter. Now we are fixing a <strong>Quantum Tachyon Manifold</strong>! This puzzle had us tracing beams through a grid of splitters, evolving from a simple simulation to a multiverse path-counting problem.</p>
-<h2 id="part-1-the-leaking-manifold">Part 1: The Leaking Manifold 💥</h2>
-<p>We are given a grid with a start point <code>S</code>, empty space <code>.</code>, and splitters <code>^</code>.</p>
-<ul>
-<li><strong>Physics</strong>: Beams fall downward.</li>
-<li><strong>Splitters</strong>: When a beam hits <code>^</code>, it stops and produces two new beams falling from the left and right.</li>
-</ul>
-<p>We need to count how many splitters are <em>ever</em> hit by a beam.</p>
-<h3 id="the-simulation-approach">The Simulation Approach</h3>
-<p>Since beams always move <em>downward</em>, we don't need a complex queue or graph traversal. We can process the grid <strong>row by row</strong>.</p>
-<p>Imagine scanning the grid from top to bottom. We maintain a set of <strong>active columns</strong>—the columns where a beam is currently falling.</p>
+<h1 id="7">День 7: Лаборатории квантовой телепортации</h1>
+<p>Сегодня мы оказались в лаборатории Северного Полюса, где занимаются телепортацией. Как это обычно бывает, оборудование неисправно: телепорт "протекает", и нам нужно проанализировать поведение тахионных пучков в ускорителе частиц (manifold).</p>
+<p>Задача представляет собой интересное упражнение на моделирование процессов распространения и комбинаторику.</p>
+<h2 id="1">Часть 1: Анализ расщепления</h2>
+<p>В первой части нам дается карта устройства, содержащая пустое пространство <code>.</code> и расщепители <code>^</code>. Пучок входит в точке <code>S</code> и движется вниз. При попадании на расщепитель пучок раздваивается влево и вправо (сохраняя движение вниз).</p>
+<p>Нам нужно подсчитать, сколько <em>уникальных</em> расщепителей будет активировано.</p>
+<h3 id="_1">Решение</h3>
+<p>Поскольку размеры сетки невелики (около 140x140), мы можем просто смоделировать процесс. Однако, если бы мы отслеживали каждый отдельный пучок, их количество могло бы расти экспоненциально (каждый сплиттер удваивает число пучков).</p>
+<p>Ключевой момент: нас интересует только <em>факт</em> прохождения пучка через сплиттер. Если два пучка попадают в одну и ту же точку, они сливаются. Поэтому достаточно хранить <strong>множество активных колонок</strong> для текущей строки.</p>
+<div class="highlight"><pre><span></span><code><span class="n">active_beams</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">}</span>
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+    <span class="n">next_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">active_beams</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+            <span class="n">split_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="n">next_beams</span>
+</code></pre></div>
+<p>Этот подход работает очень быстро, так как в каждой строке мы обрабатываем не более <code>cols</code> (ширины сетки) элементов.</p>
+<p><strong>Ответ:</strong> 1628</p>
+<h2 id="2">Часть 2: Квантовая интерпретация</h2>
+<p>Во второй части выясняется, что манифолд — квантовый. Согласно "многомировой интерпретации", каждый раз, когда частица встречает сплиттер, временная линия расщепляется. Нам нужно подсчитать <strong>общее количество временных линий</strong>, в которых оказывается частица после прохождения всего пути.</p>
+<p>По сути, это задача подсчета количества путей в ориентированном графе от источника <code>S</code> до любого выхода (нижней границы или боковых границ).</p>
+<h3 id="_2">Проблема экспоненциального роста</h3>
+<p>Если в Части 1 мы просто объединяли пучки (<code>set</code>), то здесь каждый путь уникален. Слияние пучков в пространстве не означает слияние временных линий.
+Если в точку <code>X</code> приходят 1000 линий слева и 2000 линий справа, и в точке <code>X</code> стоит сплиттер, то он породит 3000 линий влево и 3000 линий вправо.</p>
+<p>Количество линий растет очень быстро. Мой ответ составил более 27 триллионов (<code>27,055,852,018,812</code>). Очевидно, что хранить каждый путь в памяти невозможно.</p>
+<h3 id="_3">Динамическое программирование</h3>
+<p>Мы можем использовать тот же подход построчного сканирования, но вместо <em>наличия</em> пучка (<code>set</code>) мы будем хранить <em>количество</em> путей, пришедших в данную колонку (<code>dictionary</code> или <code>array</code>).</p>
+<p>Пусть <code>counts[c]</code> — количество временных линий, находящихся в колонке <code>c</code> на текущей строке.
+При переходе к следующей строке:</p>
 <ol>
-<li><strong>Start</strong>: Initialize <code>active_columns</code> with the column of <code>S</code>.</li>
-<li><strong>Scan</strong>: For each row <code>r</code>:</li>
-<li>Identify which columns in the current row have beams.</li>
-<li>If a beam hits <code>.</code>, it continues to row <code>r+1</code> (same column).</li>
-<li>If a beam hits <code>^</code>, it stops. We count it! Then, we add columns <code>c-1</code> and <code>c+1</code> to the set for row <code>r+1</code>.</li>
-<li><strong>Repeat</strong>: Continue until the bottom.</li>
+<li>Если в <code>grid[r][c]</code> пусто (<code>.</code>): все линии переходят в ту же колонку <code>c</code>.</li>
+<li>Если в <code>grid[r][c]</code> сплиттер (<code>^</code>): все линии расщепляются. <code>counts[c]</code> добавляется к <code>next_counts[c-1]</code> и к <code>next_counts[c+1]</code>.</li>
 </ol>
-<p>This approach is efficient because we only process each cell once.</p>
-<p><strong>Key Insight</strong>: Merging!
-If two splitters send beams to the same spot (e.g., <code>^.^</code>), the beams merge. By using a <code>Set</code> data structure for our active columns, this merging happens automatically.</p>
-<hr />
-<h2 id="part-2-into-the-multiverse">Part 2: Into the Multiverse 🌌</h2>
-<p>The manifold turns out to be quantum! Instead of one beam splitting, the <em>timeline</em> splits. We need to find the total number of timelines (paths) a single particle could take to reach the bottom.</p>
-<h3 id="from-simulation-to-dynamic-programming">From Simulation to Dynamic Programming</h3>
-<p>In Part 1, we only cared <em>if</em> a beam existed at <code>(r, c)</code>.
-In Part 2, we care <em>how many ways</em> a particle can arrive at <code>(r, c)</code>.</p>
-<p>This transforms the problem into <strong>path counting</strong>, similar to calculating coefficients in <strong>Pascal's Triangle</strong> or a game of <strong>Plinko</strong>.</p>
-<p>We use <strong>Dynamic Programming (DP)</strong>.
-Let <code>DP[c]</code> be the number of timelines where the particle is at column <code>c</code> in the current row.</p>
-<ol>
-<li><strong>Initialize</strong>: <code>DP</code> array of zeros, with <code>DP[start_col] = 1</code>.</li>
-<li><strong>Propagate</strong>: For each row, calculate <code>next_DP</code>:</li>
-<li>If <code>grid[r][c]</code> is <code>.</code>: The count flows down. <code>next_DP[c] += DP[c]</code>.</li>
-<li>If <code>grid[r][c]</code> is <code>^</code>: The universe splits!<ul>
-<li><code>next_DP[c-1] += DP[c]</code> (Left timeline)</li>
-<li><code>next_DP[c+1] += DP[c]</code> (Right timeline)</li>
-</ul>
-</li>
-<li><strong>Result</strong>: Sum all values in <code>DP</code> after the last row.</li>
-</ol>
-<h3 id="visualization-the-cascade">Visualization: The Cascade</h3>
-<p>Imagine the numbers flowing down like water:</p>
-<div class="highlight"><pre><span></span><code>Row 0:       1
-            / \
-Row 1:     1   1    (Split!)
-          / \ / \
-Row 2:   1   2   1  (Merge!)
+<div class="highlight"><pre><span></span><code><span class="n">active_counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span> <span class="c1"># Начинаем с 1 линии</span>
+
+<span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+    <span class="n">next_active_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">active_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+            <span class="c1"># Расщепление</span>
+            <span class="k">if</span> <span class="n">inside_grid</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span> <span class="n">next_active_counts</span><span class="p">[</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">total_exited</span> <span class="o">+=</span> <span class="n">count</span>
+
+            <span class="k">if</span> <span class="n">inside_grid</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span> <span class="n">next_active_counts</span><span class="p">[</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">total_exited</span> <span class="o">+=</span> <span class="n">count</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Проход прямо</span>
+            <span class="n">next_active_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+    <span class="n">active_counts</span> <span class="o">=</span> <span class="n">next_active_counts</span>
 </code></pre></div>
-<p>At <code>^</code>, the value <code>N</code> becomes <code>N</code> to the left and <code>N</code> to the right.
-At <code>.</code> , the value <code>N</code> stays <code>N</code>.
-When paths converge, we <strong>add</strong> the numbers.</p>
-<p>This explains why the answer gets so huge (<code>27,055,852,018,812</code>). The number of paths grows exponentially with the number of splitters!</p>
-<h3 id="why-is-this-cool">Why is this cool?</h3>
-<p>This is a classic example of how a slight change in rules (counting <em>beams</em> vs counting <em>paths</em>) shifts a problem from simple set tracking to counting combinations. The DP approach solves it in <strong>O(Rows × Cols)</strong> time, which is instantaneous even for trillions of paths!</p>
-<hr />
-<p><strong>Final Thoughts</strong>: Always check your quantum manifolds for leaks before teleporting. Safety first! 🚀</p>
-<h1 id="code-executions">Code Executions</h1>
-<h2 id="solve_part1_1765087509827py">✅ solve_part1_1765087509827.py</h2>
+<p>Этот алгоритм также линеен относительно размера сетки, но оперирует огромными числами (Python справляется с длинной арифметикой автоматически).</p>
+<p><strong>Ответ:</strong> 27 055 852 018 812</p>
+<h2 id="_4">Визуализация: Квантовая интерференция</h2>
+<p>Интересно посмотреть, как распределяется плотность вероятности (количество временных линий) по сетке. Это напоминает треугольник Паскаля, искаженный препятствиями.</p>
+<p>На изображении ниже показана "тепловая карта" прохождения частиц.</p>
 <ul>
-<li><strong>Timestamp</strong>: 2025-12-07T07:05:09.939737</li>
-<li><strong>Duration</strong>: 0.11s</li>
-<li><strong>Exit Code</strong>: 0</li>
+<li><strong>Цвет</strong> кодирует логарифм числа путей, проходящих через точку (Синий — мало, Красный — много).</li>
+<li>Белые точки — это сплиттеры.</li>
 </ul>
-<h3 id="stdout">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 1 Solution: 1628
-</code></pre></div>
-<h3 id="code">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-
-    <span class="n">height</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-    <span class="n">width</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="n">active_cols</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-
-    <span class="c1"># Find start</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
-                <span class="n">active_cols</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-                <span class="k">break</span>
-        <span class="k">if</span> <span class="n">active_cols</span><span class="p">:</span>
-            <span class="k">break</span>
-
-    <span class="c1"># We should start processing from the row of S. </span>
-    <span class="c1"># Actually, S is likely at the top, but the loop logic naturally handles it.</span>
-    <span class="c1"># Wait, if S is at row 0, we process row 0.</span>
-    <span class="c1"># grid[0][c] is &#39;S&#39;. It treats it as &#39;.&#39;, passes to next row. Correct.</span>
-
-    <span class="c1"># But we need to ensure we start the loop from the row where S is found?</span>
-    <span class="c1"># Or just iterate all rows?</span>
-    <span class="c1"># If S is at row 0, active_cols is set. We iterate r from 0 to height-1.</span>
-    <span class="c1"># At r=0, we see S. S acts like &#39;.&#39;. Beam passes to r=1 (via next_active).</span>
-    <span class="c1"># Correct.</span>
-
-    <span class="c1"># What if S is not at row 0?</span>
-    <span class="c1"># Then active_cols is empty until we hit row S?</span>
-    <span class="c1"># No, we initialize active_cols with S&#39;s position.</span>
-    <span class="c1"># Then we should iterate starting from S&#39;s row.</span>
-    <span class="c1"># Rows before S don&#39;t matter.</span>
-
-    <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;S&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">r</span><span class="p">]:</span>
-            <span class="n">start_row</span> <span class="o">=</span> <span class="n">r</span>
-            <span class="k">break</span>
-
-    <span class="n">total_splits</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-        <span class="n">next_active</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-        <span class="c1"># Sort to ensure deterministic processing order if needed (sets are unordered)</span>
-        <span class="c1"># but order doesn&#39;t matter for logic.</span>
-
-        <span class="n">current_cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">active_cols</span><span class="p">)</span>
-
-        <span class="c1"># Optimization: If no active beams, we can stop?</span>
-        <span class="c1"># Yes.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_cols</span><span class="p">:</span>
-            <span class="k">break</span>
-
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">current_cols</span><span class="p">:</span>
-            <span class="c1"># Check bounds? S logic guarantees c is valid initially.</span>
-            <span class="c1"># Splits check bounds.</span>
-
-            <span class="n">char</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span> <span class="ow">or</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
-                <span class="n">next_active</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
-                <span class="n">total_splits</span> <span class="o">+=</span> <span class="mi">1</span>
-                <span class="k">if</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">next_active</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">:</span>
-                    <span class="n">next_active</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="c1"># What if other chars? Assume only ., S, ^ based on problem.</span>
-
-        <span class="n">active_cols</span> <span class="o">=</span> <span class="n">next_active</span>
-
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 1 Solution: </span><span class="si">{</span><span class="n">total_splits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">solve</span><span class="p">()</span>
-</code></pre></div>
-<h2 id="solve_part2_1765087559358py">✅ solve_part2_1765087559358.py</h2>
-<ul>
-<li><strong>Timestamp</strong>: 2025-12-07T07:05:59.469064</li>
-<li><strong>Duration</strong>: 0.11s</li>
-<li><strong>Exit Code</strong>: 0</li>
-</ul>
-<h3 id="stdout_1">Stdout</h3>
-<div class="highlight"><pre><span></span><code>Part 2 Solution: 27055852018812
-</code></pre></div>
-<h3 id="code_1">Code</h3>
-<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-
-    <span class="n">height</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-    <span class="n">width</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-    <span class="c1"># dp[c] stores the number of paths reaching column c at the current row</span>
-    <span class="c1"># We can use a dictionary or list. List is faster.</span>
-    <span class="n">dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">width</span>
-
-    <span class="c1"># Find start</span>
-    <span class="n">start_found</span> <span class="o">=</span> <span class="kc">False</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">lines</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
-                <span class="n">dp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
-                <span class="n">start_found</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">break</span>
-        <span class="k">if</span> <span class="n">start_found</span><span class="p">:</span>
-            <span class="k">break</span>
-
-    <span class="c1"># Process row by row</span>
-    <span class="c1"># We iterate from the start row to the end</span>
-    <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
-        <span class="k">if</span> <span class="s1">&#39;S&#39;</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">[</span><span class="n">r</span><span class="p">]:</span>
-            <span class="n">start_row</span> <span class="o">=</span> <span class="n">r</span>
-            <span class="k">break</span>
-
-    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
-        <span class="n">next_dp</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">width</span>
-
-        <span class="c1"># Optimization: if all dp are 0, we can stop (though unlikely)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">dp</span><span class="p">):</span>
-            <span class="k">break</span>
-
-        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">dp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="k">continue</span>
-
-            <span class="n">char</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
-            <span class="n">count</span> <span class="o">=</span> <span class="n">dp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
-
-            <span class="k">if</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span> <span class="ow">or</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
-                <span class="c1"># Beam continues straight down</span>
-                <span class="c1"># Effectively to next_dp[c]</span>
-                <span class="n">next_dp</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
-            <span class="k">elif</span> <span class="n">char</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
-                <span class="c1"># Beam splits</span>
-                <span class="n">left</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span>
-                <span class="n">right</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span>
-
-                <span class="k">if</span> <span class="n">left</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">next_dp</span><span class="p">[</span><span class="n">left</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
-                <span class="c1"># else: side exit</span>
-
-                <span class="k">if</span> <span class="n">right</span> <span class="o">&lt;</span> <span class="n">width</span><span class="p">:</span>
-                    <span class="n">next_dp</span><span class="p">[</span><span class="n">right</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
-                <span class="c1"># else: side exit</span>
-
-        <span class="n">dp</span> <span class="o">=</span> <span class="n">next_dp</span>
-
-    <span class="n">total_timelines</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Part 2 Solution: </span><span class="si">{</span><span class="n">total_timelines</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">solve</span><span class="p">()</span>
-</code></pre></div>
+<p><img alt="Визуализация потоков" src="visualization.svg" /></p>
+<p>Можно заметить характерные конусы ("световые конусы"), расходящиеся от каждого сплиттера. В местах перекрытия конусов количество вариантов путей резко возрастает, создавая "горячие" зоны.</p>
+<p>Это отличная иллюстрация того, как простые локальные правила (расщепление на 2) приводят к сложной глобальной структуре и экспоненциальному росту сложности системы.</p>
 
 
 
