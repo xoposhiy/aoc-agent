@@ -2753,6 +2753,420 @@
 <p><img alt="Визуализация потоков" src="visualization.svg" /></p>
 <p>Можно заметить характерные конусы ("световые конусы"), расходящиеся от каждого сплиттера. В местах перекрытия конусов количество вариантов путей резко возрастает, создавая "горячие" зоны.</p>
 <p>Это отличная иллюстрация того, как простые локальные правила (расщепление на 2) приводят к сложной глобальной структуре и экспоненциальному росту сложности системы.</p>
+<h1 id="code-executions">Code Executions</h1>
+<h2 id="solve_part1py">❌ solve_part1.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T17:19:01.329309</li>
+<li><strong>Duration</strong>: 0.05s</li>
+<li><strong>Exit Code</strong>: 2</li>
+<li><strong>Error</strong>: Non-zero exit code</li>
+</ul>
+<h3 id="stderr">Stderr</h3>
+<div class="highlight"><pre><span></span><code>C:\work\aoc\aoc-agent\.venv\Scripts\python.exe: can&#39;t open file &#39;C:\\work\\aoc\\aoc-agent\\data\\run\\2025-12-07_17-18-17_2025_7_python_gemini-3-pro-preview_9e4bb045\\solve_part1.py&#39;: [Errno 2] No such file or directory
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">lines</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Find S</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">found_start</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                <span class="n">active_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">start_row</span> <span class="o">=</span> <span class="n">r</span>
+                <span class="n">found_start</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">found_start</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">split_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Simulation</span>
+    <span class="c1"># We process row by row, starting from start_row.</span>
+    <span class="c1"># Actually, the beam starts at S and moves downward.</span>
+    <span class="c1"># At start_row, we have a beam at S_col.</span>
+    <span class="c1"># We check interaction at the *current* row.</span>
+    <span class="c1"># If it hits a splitter, it splits and produces beams for the *next* row?</span>
+    <span class="c1"># Or does it hit the splitter at start_row?</span>
+    <span class="c1"># S is not a splitter. So at start_row, beam is just at S.</span>
+    <span class="c1"># It moves down to start_row + 1.</span>
+
+    <span class="c1"># Correct logic:</span>
+    <span class="c1"># Initialize beams at start_row.</span>
+    <span class="c1"># Loop r from start_row + 1 to rows - 1:</span>
+    <span class="c1">#   next_beams = set()</span>
+    <span class="c1">#   For c in current_beams:</span>
+    <span class="c1">#     cell = grid[r][c]</span>
+    <span class="c1">#     if cell == &#39;^&#39;:</span>
+    <span class="c1">#       split_count += 1</span>
+    <span class="c1">#       next_beams.add(c - 1)</span>
+    <span class="c1">#       next_beams.add(c + 1)</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#       next_beams.add(c)</span>
+    <span class="c1">#   current_beams = next_beams</span>
+
+    <span class="c1"># Wait, the problem says:</span>
+    <span class="c1"># &quot;The incoming tachyon beam extends downward from S until it reaches the first splitter&quot;</span>
+    <span class="c1"># So if S is at (0, 7), and splitter is at (2, 7).</span>
+    <span class="c1"># Row 0: S. Beam at 7.</span>
+    <span class="c1"># Row 1: &#39;.&#39;. Beam at 7.</span>
+    <span class="c1"># Row 2: &#39;^&#39;. Beam hits splitter. Split count++. Beams at 6, 8 created.</span>
+    <span class="c1"># Row 3: Beams at 6, 8 interact with grid[3][6] and grid[3][8].</span>
+
+    <span class="c1"># But wait, what if S is ON a splitter? (Unlikely).</span>
+    <span class="c1"># S is just a starting point.</span>
+
+    <span class="c1"># So the loop should be:</span>
+    <span class="c1"># current_beams = {s_col}</span>
+    <span class="c1"># for r from start_row + 1 to rows - 1:</span>
+    <span class="c1">#    ...</span>
+
+    <span class="c1"># Let&#39;s verify &quot;S&quot; row behavior.</span>
+    <span class="c1"># &quot;A tachyon beam enters the manifold at the location marked S; tachyon beams always move downward.&quot;</span>
+    <span class="c1"># So at row `start_row`, the beam is formed. It immediately starts moving down?</span>
+    <span class="c1"># Or does it interact with `start_row` content?</span>
+    <span class="c1"># S is likely just &#39;S&#39;. But if the input had &#39;S&#39; on top of &#39;^&#39;?</span>
+    <span class="c1"># The input has &#39;S&#39; surrounded by &#39;.&#39;.</span>
+    <span class="c1"># So we can safely start processing from start_row + 1.</span>
+
+    <span class="c1"># Wait, does the beam at &#39;S&#39; count as a beam?</span>
+    <span class="c1"># &quot;How many times will the beam be split?&quot;</span>
+    <span class="c1"># We only count when we hit &#39;^&#39;.</span>
+
+    <span class="n">current_beams</span> <span class="o">=</span> <span class="n">active_beams</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">next_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">current_beams</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">cols</span><span class="p">:</span>
+                <span class="c1"># Beam exits manifold?</span>
+                <span class="c1"># &quot;until all of the tachyon beams reach a splitter or exit the manifold&quot;</span>
+                <span class="c1"># If c is out of bounds, it&#39;s gone.</span>
+                <span class="k">continue</span>
+
+            <span class="n">cell</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="n">split_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># &#39;.&#39; or any other char (should be just empty space)</span>
+                <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="n">current_beams</span> <span class="o">=</span> <span class="n">next_beams</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_beams</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total splits: </span><span class="si">{</span><span class="n">split_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part1py_1">✅ solve_part1.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T17:19:21.190401</li>
+<li><strong>Duration</strong>: 0.07s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Total splits: 1628
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">lines</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Find S</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">found_start</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                <span class="n">active_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">start_row</span> <span class="o">=</span> <span class="n">r</span>
+                <span class="n">found_start</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">found_start</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">split_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Simulation</span>
+    <span class="c1"># We process row by row, starting from start_row.</span>
+    <span class="c1"># Actually, the beam starts at S and moves downward.</span>
+    <span class="c1"># At start_row, we have a beam at S_col.</span>
+    <span class="c1"># We check interaction at the *current* row.</span>
+    <span class="c1"># If it hits a splitter, it splits and produces beams for the *next* row?</span>
+    <span class="c1"># Or does it hit the splitter at start_row?</span>
+    <span class="c1"># S is not a splitter. So at start_row, beam is just at S.</span>
+    <span class="c1"># It moves down to start_row + 1.</span>
+
+    <span class="c1"># Correct logic:</span>
+    <span class="c1"># Initialize beams at start_row.</span>
+    <span class="c1"># Loop r from start_row + 1 to rows - 1:</span>
+    <span class="c1">#   next_beams = set()</span>
+    <span class="c1">#   For c in current_beams:</span>
+    <span class="c1">#     cell = grid[r][c]</span>
+    <span class="c1">#     if cell == &#39;^&#39;:</span>
+    <span class="c1">#       split_count += 1</span>
+    <span class="c1">#       next_beams.add(c - 1)</span>
+    <span class="c1">#       next_beams.add(c + 1)</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#       next_beams.add(c)</span>
+    <span class="c1">#   current_beams = next_beams</span>
+
+    <span class="c1"># Wait, the problem says:</span>
+    <span class="c1"># &quot;The incoming tachyon beam extends downward from S until it reaches the first splitter&quot;</span>
+    <span class="c1"># So if S is at (0, 7), and splitter is at (2, 7).</span>
+    <span class="c1"># Row 0: S. Beam at 7.</span>
+    <span class="c1"># Row 1: &#39;.&#39;. Beam at 7.</span>
+    <span class="c1"># Row 2: &#39;^&#39;. Beam hits splitter. Split count++. Beams at 6, 8 created.</span>
+    <span class="c1"># Row 3: Beams at 6, 8 interact with grid[3][6] and grid[3][8].</span>
+
+    <span class="c1"># But wait, what if S is ON a splitter? (Unlikely).</span>
+    <span class="c1"># S is just a starting point.</span>
+
+    <span class="c1"># So the loop should be:</span>
+    <span class="c1"># current_beams = {s_col}</span>
+    <span class="c1"># for r from start_row + 1 to rows - 1:</span>
+    <span class="c1">#    ...</span>
+
+    <span class="c1"># Let&#39;s verify &quot;S&quot; row behavior.</span>
+    <span class="c1"># &quot;A tachyon beam enters the manifold at the location marked S; tachyon beams always move downward.&quot;</span>
+    <span class="c1"># So at row `start_row`, the beam is formed. It immediately starts moving down?</span>
+    <span class="c1"># Or does it interact with `start_row` content?</span>
+    <span class="c1"># S is likely just &#39;S&#39;. But if the input had &#39;S&#39; on top of &#39;^&#39;?</span>
+    <span class="c1"># The input has &#39;S&#39; surrounded by &#39;.&#39;.</span>
+    <span class="c1"># So we can safely start processing from start_row + 1.</span>
+
+    <span class="c1"># Wait, does the beam at &#39;S&#39; count as a beam?</span>
+    <span class="c1"># &quot;How many times will the beam be split?&quot;</span>
+    <span class="c1"># We only count when we hit &#39;^&#39;.</span>
+
+    <span class="n">current_beams</span> <span class="o">=</span> <span class="n">active_beams</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">next_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">current_beams</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">c</span> <span class="o">&gt;=</span> <span class="n">cols</span><span class="p">:</span>
+                <span class="c1"># Beam exits manifold?</span>
+                <span class="c1"># &quot;until all of the tachyon beams reach a splitter or exit the manifold&quot;</span>
+                <span class="c1"># If c is out of bounds, it&#39;s gone.</span>
+                <span class="k">continue</span>
+
+            <span class="n">cell</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="n">split_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># &#39;.&#39; or any other char (should be just empty space)</span>
+                <span class="n">next_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+        <span class="n">current_beams</span> <span class="o">=</span> <span class="n">next_beams</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">current_beams</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total splits: </span><span class="si">{</span><span class="n">split_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="solve_part2py">✅ solve_part2.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T17:20:08.891710</li>
+<li><strong>Duration</strong>: 0.07s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Total timelines: 27055852018812
+</code></pre></div>
+<h3 id="code_2">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">lines</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">active_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">found_start</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                <span class="n">active_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">start_row</span> <span class="o">=</span> <span class="n">r</span>
+                <span class="n">found_start</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">found_start</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="n">total_exited_timelines</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">next_active_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1"># Determine all columns that have active beams</span>
+        <span class="c1"># We only iterate over columns present in active_counts</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">active_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">cell</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Split</span>
+                <span class="c1"># Left</span>
+                <span class="n">left_c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left_c</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">next_active_counts</span><span class="p">[</span><span class="n">left_c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">total_exited_timelines</span> <span class="o">+=</span> <span class="n">count</span>
+
+                <span class="c1"># Right</span>
+                <span class="n">right_c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">right_c</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">next_active_counts</span><span class="p">[</span><span class="n">right_c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">total_exited_timelines</span> <span class="o">+=</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Continue</span>
+                <span class="n">next_active_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+
+        <span class="n">active_counts</span> <span class="o">=</span> <span class="n">next_active_counts</span>
+
+    <span class="c1"># Add remaining active beams that reached the bottom</span>
+    <span class="n">total_exited_timelines</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">active_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total timelines: </span><span class="si">{</span><span class="n">total_exited_timelines</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">solve</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="generate_vispy">✅ generate_vis.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T17:20:42.761689</li>
+<li><strong>Duration</strong>: 0.16s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="code_3">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve_and_visualize</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;input.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">lines</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">active_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">start_row</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Track counts for visualization: history[(r, c)] = count</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">found_start</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                <span class="n">active_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">history</span><span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">start_row</span> <span class="o">=</span> <span class="n">r</span>
+                <span class="n">found_start</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">found_start</span><span class="p">:</span>
+            <span class="k">break</span>
+
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">next_active_counts</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">active_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Record history for visualization</span>
+            <span class="n">history</span><span class="p">[(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">)]</span> <span class="o">+=</span> <span class="n">count</span>
+
+            <span class="n">cell</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="n">left_c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left_c</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">next_active_counts</span><span class="p">[</span><span class="n">left_c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+
+                <span class="n">right_c</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">right_c</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">next_active_counts</span><span class="p">[</span><span class="n">right_c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">next_active_counts</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">+=</span> <span class="n">count</span>
+
+        <span class="n">active_counts</span> <span class="o">=</span> <span class="n">next_active_counts</span>
+
+    <span class="c1"># Generate SVG</span>
+    <span class="n">cell_size</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">cell_size</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span>
+
+    <span class="n">svg_content</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; style=&quot;background-color: #1a1a2e;&quot;&gt;&#39;</span><span class="p">]</span>
+
+    <span class="n">max_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">history</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> <span class="k">if</span> <span class="n">history</span> <span class="k">else</span> <span class="mi">1</span>
+    <span class="n">log_max</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">max_count</span><span class="p">)</span> <span class="k">if</span> <span class="n">max_count</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">1</span>
+
+    <span class="c1"># Draw cells</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">history</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">continue</span>
+
+        <span class="c1"># Logarithmic scaling for color</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">normalized</span> <span class="o">=</span> <span class="n">val</span> <span class="o">/</span> <span class="n">log_max</span>
+
+        <span class="c1"># Heatmap color: Blue (low) -&gt; Cyan -&gt; Green -&gt; Yellow -&gt; Red (high)</span>
+        <span class="c1"># Hue: 240 (blue) -&gt; 0 (red)</span>
+        <span class="n">hue</span> <span class="o">=</span> <span class="mi">240</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">normalized</span><span class="p">)</span>
+
+        <span class="n">color</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;hsl(</span><span class="si">{</span><span class="n">hue</span><span class="si">}</span><span class="s1">, 100%, 50%)&#39;</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cell_size</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cell_size</span>
+        <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;rect x=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; width=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot; shape-rendering=&quot;crispEdges&quot; /&gt;&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Draw splitters (overlay)</span>
+    <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span><span class="o">/</span><span class="mi">2</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span><span class="o">/</span><span class="mi">2</span>
+                <span class="c1"># Small white dot or triangle</span>
+                <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;circle cx=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; r=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">/</span><span class="mi">4</span><span class="si">}</span><span class="s1">&quot; fill=&quot;white&quot; opacity=&quot;0.5&quot; /&gt;&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">grid</span><span class="p">[</span><span class="n">r</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                 <span class="n">x</span> <span class="o">=</span> <span class="n">c</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span><span class="o">/</span><span class="mi">2</span>
+                 <span class="n">y</span> <span class="o">=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span><span class="o">/</span><span class="mi">2</span>
+                 <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;&lt;text x=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">cell_size</span><span class="o">/</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; font-size=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; fill=&quot;white&quot; text-anchor=&quot;middle&quot;&gt;S&lt;/text&gt;&#39;</span><span class="p">)</span>
+
+    <span class="n">svg_content</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&lt;/svg&gt;&#39;</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;visualization.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">svg_content</span><span class="p">))</span>
+
+<span class="n">solve_and_visualize</span><span class="p">()</span>
+</code></pre></div>
 
 
 

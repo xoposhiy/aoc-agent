@@ -2831,6 +2831,948 @@
 <li><code>timeline_tree.svg</code> — дерево таймлайнов</li>
 <li><code>comparison_diagram.svg</code> — сравнение подходов</li>
 </ul>
+<h1 id="code-executions">Code Executions</h1>
+<h2 id="solutionpy">✅ solution.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T16:51:41.300659</li>
+<li><strong>Duration</strong>: 0.10s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Total splits: 1628
+</code></pre></div>
+<h3 id="code">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Advent of Code 2025 - Day 7: Laboratories</span>
+<span class="sd">Tachyon beam splitting simulation</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">input_file</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Find starting position S</span>
+    <span class="n">start_col</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="n">start_col</span> <span class="o">=</span> <span class="n">c</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">start_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: No starting position &#39;S&#39; found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Beams are tracked by their column positions</span>
+    <span class="c1"># Each beam moves downward from its current position</span>
+    <span class="c1"># Initially, one beam starts at column start_col, row 0</span>
+
+    <span class="c1"># We&#39;ll track active beams as a set of column positions</span>
+    <span class="c1"># When a beam hits a splitter, it produces two beams (left and right)</span>
+
+    <span class="c1"># Track beams: set of column positions for current row</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">}</span>
+
+    <span class="n">split_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Process row by row starting from row 1</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="c1"># New beams for next row</span>
+        <span class="n">new_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">active_beams</span><span class="p">:</span>
+            <span class="c1"># Check if there&#39;s a splitter at this position</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Splitter: beam splits into left and right</span>
+                <span class="c1"># Left beam goes to col-1, right beam goes to col+1</span>
+                <span class="n">split_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">left_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">right_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">left_col</span><span class="p">)</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">right_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">right_col</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Empty space or &#39;.&#39;: beam continues downward</span>
+                <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+        <span class="n">active_beams</span> <span class="o">=</span> <span class="n">new_beams</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total splits: </span><span class="si">{</span><span class="n">split_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">split_count</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="test_examplepy">✅ test_example.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T16:51:53.253748</li>
+<li><strong>Duration</strong>: 0.08s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_1">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Total splits: 21
+Expected: 21, Got: 21
+</code></pre></div>
+<h3 id="code_1">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Test with the example from the problem</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.......S.......</span>
+<span class="s2">...............</span>
+<span class="s2">.......^.......</span>
+<span class="s2">...............</span>
+<span class="s2">......^.^......</span>
+<span class="s2">...............</span>
+<span class="s2">.....^.^.^.....</span>
+<span class="s2">...............</span>
+<span class="s2">....^.^...^....</span>
+<span class="s2">...............</span>
+<span class="s2">...^.^...^.^...</span>
+<span class="s2">...............</span>
+<span class="s2">..^...^.....^..</span>
+<span class="s2">...............</span>
+<span class="s2">.^.^.^.^.^...^.</span>
+<span class="s2">...............&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">input_text</span><span class="p">):</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">input_text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Find starting position S</span>
+    <span class="n">start_col</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="n">start_col</span> <span class="o">=</span> <span class="n">c</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">start_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: No starting position &#39;S&#39; found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Track beams: set of column positions for current row</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">}</span>
+
+    <span class="n">split_count</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Process row by row starting from row 1</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="c1"># New beams for next row</span>
+        <span class="n">new_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">active_beams</span><span class="p">:</span>
+            <span class="c1"># Check if there&#39;s a splitter at this position</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Splitter: beam splits into left and right</span>
+                <span class="n">split_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">left_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">right_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">left_col</span><span class="p">)</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">right_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">right_col</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Empty space or &#39;.&#39;: beam continues downward</span>
+                <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+
+        <span class="n">active_beams</span> <span class="o">=</span> <span class="n">new_beams</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total splits: </span><span class="si">{</span><span class="n">split_count</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">split_count</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected: 21, Got: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="test_example2py">✅ test_example2.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T16:53:21.681040</li>
+<li><strong>Duration</strong>: 0.06s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_2">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Total timelines: 40
+Expected: 40, Got: 40
+</code></pre></div>
+<h3 id="code_2">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Test Part 2 with the example from the problem</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">example</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.......S.......</span>
+<span class="s2">...............</span>
+<span class="s2">.......^.......</span>
+<span class="s2">...............</span>
+<span class="s2">......^.^......</span>
+<span class="s2">...............</span>
+<span class="s2">.....^.^.^.....</span>
+<span class="s2">...............</span>
+<span class="s2">....^.^...^....</span>
+<span class="s2">...............</span>
+<span class="s2">...^.^...^.^...</span>
+<span class="s2">...............</span>
+<span class="s2">..^...^.....^..</span>
+<span class="s2">...............</span>
+<span class="s2">.^.^.^.^.^...^.</span>
+<span class="s2">...............&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">input_text</span><span class="p">):</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">input_text</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Find starting position S</span>
+    <span class="n">start_col</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="n">start_col</span> <span class="o">=</span> <span class="n">c</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">start_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: No starting position &#39;S&#39; found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Track number of timelines at each column position</span>
+    <span class="n">timeline_counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+    <span class="c1"># Process row by row starting from row 1</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">new_counts</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">timeline_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Splitter: each timeline splits into two</span>
+                <span class="n">left_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">right_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_counts</span><span class="p">[</span><span class="n">left_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">left_col</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">right_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_counts</span><span class="p">[</span><span class="n">right_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">right_col</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Empty space: particle continues downward</span>
+                <span class="n">new_counts</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span>
+
+        <span class="n">timeline_counts</span> <span class="o">=</span> <span class="n">new_counts</span>
+
+    <span class="n">total_timelines</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">timeline_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total timelines: </span><span class="si">{</span><span class="n">total_timelines</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_timelines</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected: 40, Got: </span><span class="si">{</span><span class="n">result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="solution_part2py">✅ solution_part2.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T16:53:43.436927</li>
+<li><strong>Duration</strong>: 0.06s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_3">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Total timelines: 27055852018812
+</code></pre></div>
+<h3 id="code_3">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Advent of Code 2025 - Day 7: Laboratories - Part 2</span>
+<span class="sd">Quantum tachyon particle - counting timelines (paths)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">solve</span><span class="p">(</span><span class="n">input_file</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">input_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
+
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">if</span> <span class="n">rows</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+
+    <span class="c1"># Find starting position S</span>
+    <span class="n">start_col</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">c</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+            <span class="n">start_col</span> <span class="o">=</span> <span class="n">c</span>
+            <span class="k">break</span>
+
+    <span class="k">if</span> <span class="n">start_col</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error: No starting position &#39;S&#39; found!&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Now, instead of tracking unique positions, we track the number of particles/timelines</span>
+    <span class="c1"># at each column position</span>
+    <span class="c1"># Key: column position, Value: number of timelines at that position</span>
+    <span class="n">timeline_counts</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+
+    <span class="c1"># Process row by row starting from row 1</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">new_counts</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">timeline_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># Check if there&#39;s a splitter at this position</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Splitter: each timeline splits into two</span>
+                <span class="n">left_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="n">right_col</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">left_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_counts</span><span class="p">[</span><span class="n">left_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">left_col</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">right_col</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_counts</span><span class="p">[</span><span class="n">right_col</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">right_col</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># Empty space or &#39;.&#39;: particle continues downward</span>
+                <span class="n">new_counts</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_counts</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">count</span>
+
+        <span class="n">timeline_counts</span> <span class="o">=</span> <span class="n">new_counts</span>
+
+    <span class="n">total_timelines</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">timeline_counts</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total timelines: </span><span class="si">{</span><span class="n">total_timelines</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total_timelines</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="s2">&quot;input.txt&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="visualizepy">❌ visualize.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T16:55:22.012589</li>
+<li><strong>Duration</strong>: 0.15s</li>
+<li><strong>Exit Code</strong>: 1</li>
+<li><strong>Error</strong>: Non-zero exit code</li>
+</ul>
+<h3 id="stdout_4">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Created beam_visualization.svg
+</code></pre></div>
+<h3 id="stderr">Stderr</h3>
+<div class="highlight"><pre><span></span><code>Traceback (most recent call last):
+  File &quot;C:\work\aoc\aoc-agent\data\run\2025-12-07_16-51-16_2025_7_python_claude-opus-4-5_681c8f7f\visualize.py&quot;, line 299, in &lt;module&gt;
+    create_timeline_tree_svg()
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File &quot;C:\work\aoc\aoc-agent\data\run\2025-12-07_16-51-16_2025_7_python_claude-opus-4-5_681c8f7f\visualize.py&quot;, line 195, in create_timeline_tree_svg
+    f.write(svg)
+    ~~~~~~~^^^^^
+  File &quot;C:\Users\Pavel.Egorov\AppData\Local\Programs\Python\Python313\Lib\encodings\cp1252.py&quot;, line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: &#39;charmap&#39; codec can&#39;t encode characters in position 663-671: character maps to &lt;undefined&gt;
+</code></pre></div>
+<h3 id="code_4">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Create visualizations for the report</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_svg_beam_visualization</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create SVG showing beam splitting in the example&quot;&quot;&quot;</span>
+
+    <span class="n">example</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.......S.......</span>
+<span class="s2">...............</span>
+<span class="s2">.......^.......</span>
+<span class="s2">...............</span>
+<span class="s2">......^.^......</span>
+<span class="s2">...............</span>
+<span class="s2">.....^.^.^.....</span>
+<span class="s2">...............&quot;&quot;&quot;</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+    <span class="n">cell_size</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">cell_size</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span>
+
+    <span class="n">svg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;defs&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;beamGrad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;0%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#00ff88;stop-opacity:1&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#00aa55;stop-opacity:1&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">    &lt;filter id=&quot;glow&quot;&gt;</span>
+<span class="s1">      &lt;feGaussianBlur stdDeviation=&quot;2&quot; result=&quot;coloredBlur&quot;/&gt;</span>
+<span class="s1">      &lt;feMerge&gt;</span>
+<span class="s1">        &lt;feMergeNode in=&quot;coloredBlur&quot;/&gt;</span>
+<span class="s1">        &lt;feMergeNode in=&quot;SourceGraphic&quot;/&gt;</span>
+<span class="s1">      &lt;/feMerge&gt;</span>
+<span class="s1">    &lt;/filter&gt;</span>
+<span class="s1">  &lt;/defs&gt;</span>
+
+<span class="s1">  &lt;!-- Background --&gt;</span>
+<span class="s1">  &lt;rect width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#1a1a2e&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Grid lines --&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="c1"># Grid lines</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;0&quot; y1=&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; x2=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#333&quot; stroke-width=&quot;1&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">j</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; y1=&quot;0&quot; x2=&quot;</span><span class="si">{</span><span class="n">j</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#333&quot; stroke-width=&quot;1&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Draw splitters and start</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">cell</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span>
+            <span class="n">cx</span> <span class="o">=</span> <span class="n">col</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">cy</span> <span class="o">=</span> <span class="n">row</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;circle cx=&quot;</span><span class="si">{</span><span class="n">cx</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">cy</span><span class="si">}</span><span class="s1">&quot; r=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">//</span><span class="mi">3</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#ffd700&quot; filter=&quot;url(#glow)&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">cx</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">cy</span><span class="o">+</span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; fill=&quot;#000&quot; font-size=&quot;14&quot; font-weight=&quot;bold&quot;&gt;S&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="k">elif</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Draw splitter as a triangle</span>
+                <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;polygon points=&quot;</span><span class="si">{</span><span class="n">cx</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">cy</span><span class="o">-</span><span class="mi">10</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cx</span><span class="o">-</span><span class="mi">10</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">cy</span><span class="o">+</span><span class="mi">8</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cx</span><span class="o">+</span><span class="mi">10</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">cy</span><span class="o">+</span><span class="mi">8</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#ff6b6b&quot; stroke=&quot;#ff9999&quot; stroke-width=&quot;2&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Draw beams simulation</span>
+    <span class="c1"># Start position</span>
+    <span class="n">start_col</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">}</span>
+
+    <span class="n">beam_paths</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">new_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">active_beams</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Draw beam from previous row to splitter</span>
+                <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+                <span class="c1"># Split</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+                <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        <span class="n">active_beams</span> <span class="o">=</span> <span class="n">new_beams</span>
+
+    <span class="c1"># Draw beam paths</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">beam_paths</span><span class="p">:</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y1</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y2</span> <span class="o">=</span> <span class="n">r2</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">x1</span><span class="si">}</span><span class="s1">&quot; y1=&quot;</span><span class="si">{</span><span class="n">y1</span><span class="si">}</span><span class="s1">&quot; x2=&quot;</span><span class="si">{</span><span class="n">x2</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">y2</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;url(#beamGrad)&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; filter=&quot;url(#glow)&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">svg</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/svg&gt;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;beam_visualization.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created beam_visualization.svg&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_timeline_tree_svg</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create SVG showing how timelines multiply&quot;&quot;&quot;</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">800</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span>
+
+    <span class="n">svg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;defs&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;treeGrad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;0%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#ff6b6b&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#ff9999&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">    &lt;filter id=&quot;shadow&quot;&gt;</span>
+<span class="s1">      &lt;feDropShadow dx=&quot;2&quot; dy=&quot;2&quot; stdDeviation=&quot;3&quot; flood-opacity=&quot;0.3&quot;/&gt;</span>
+<span class="s1">    &lt;/filter&gt;</span>
+<span class="s1">  &lt;/defs&gt;</span>
+
+<span class="s1">  &lt;!-- Background --&gt;</span>
+<span class="s1">  &lt;rect width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#0d1b2a&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Title --&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;35&quot; text-anchor=&quot;middle&quot; fill=&quot;#ffd700&quot; font-size=&quot;24&quot; font-weight=&quot;bold&quot;&gt;Quantum Timeline Branching&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;60&quot; text-anchor=&quot;middle&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;Each splitter doubles the number of timelines&lt;/text&gt;</span>
+
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="c1"># Draw tree structure</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">start_y</span> <span class="o">=</span> <span class="mi">90</span>
+    <span class="n">level_height</span> <span class="o">=</span> <span class="mi">70</span>
+
+    <span class="c1"># Positions: list of (x, y) for each node</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Level 0: single node</span>
+    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">start_y</span><span class="p">)])</span>
+
+    <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">levels</span><span class="p">):</span>
+        <span class="n">prev_nodes</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">curr_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">spread</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">//</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="ow">in</span> <span class="n">prev_nodes</span><span class="p">:</span>
+            <span class="c1"># Left child</span>
+            <span class="n">lx</span> <span class="o">=</span> <span class="n">px</span> <span class="o">-</span> <span class="n">spread</span>
+            <span class="n">ly</span> <span class="o">=</span> <span class="n">py</span> <span class="o">+</span> <span class="n">level_height</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">))</span>
+            <span class="n">curr_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">))</span>
+
+            <span class="c1"># Right child</span>
+            <span class="n">rx</span> <span class="o">=</span> <span class="n">px</span> <span class="o">+</span> <span class="n">spread</span>
+            <span class="n">ry</span> <span class="o">=</span> <span class="n">py</span> <span class="o">+</span> <span class="n">level_height</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">))</span>
+            <span class="n">curr_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">))</span>
+
+        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_nodes</span><span class="p">)</span>
+
+    <span class="c1"># Draw edges first</span>
+    <span class="k">for</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">x1</span><span class="si">}</span><span class="s1">&quot; y1=&quot;</span><span class="si">{</span><span class="n">y1</span><span class="o">+</span><span class="mi">15</span><span class="si">}</span><span class="s1">&quot; x2=&quot;</span><span class="si">{</span><span class="n">x2</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">y2</span><span class="o">-</span><span class="mi">15</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#4a9fff&quot; stroke-width=&quot;2&quot; opacity=&quot;0.7&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Draw nodes</span>
+    <span class="k">for</span> <span class="n">level_idx</span><span class="p">,</span> <span class="n">level_nodes</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">level_nodes</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#ff6b6b&quot;</span> <span class="k">if</span> <span class="n">level_idx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#4a9fff&quot;</span>
+            <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;circle cx=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; r=&quot;15&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot; filter=&quot;url(#shadow)&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Add labels</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;1 particle&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;2 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;4 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;8 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;16 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Formula at bottom</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">  &lt;rect x=&quot;250&quot; y=&quot;430&quot; width=&quot;300&quot; height=&quot;50&quot; rx=&quot;10&quot; fill=&quot;#1a3a5c&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;460&quot; text-anchor=&quot;middle&quot; fill=&quot;#ffd700&quot; font-size=&quot;18&quot;&gt;Timelines = 2^(num_splitters)&lt;/text&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="n">svg</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/svg&gt;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;timeline_tree.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created timeline_tree.svg&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_comparison_diagram</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create diagram comparing Part 1 and Part 2 approaches&quot;&quot;&quot;</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">900</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">400</span>
+
+    <span class="n">svg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;defs&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;part1Grad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;100%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#00ff88&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#00aa55&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;part2Grad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;100%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#ff6b6b&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#ff9999&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">  &lt;/defs&gt;</span>
+
+<span class="s1">  &lt;!-- Background --&gt;</span>
+<span class="s1">  &lt;rect width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#0d1b2a&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Part 1 Section --&gt;</span>
+<span class="s1">  &lt;rect x=&quot;30&quot; y=&quot;60&quot; width=&quot;400&quot; height=&quot;300&quot; rx=&quot;15&quot; fill=&quot;#1a3a5c&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;2&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot; fill=&quot;#00ff88&quot; font-size=&quot;20&quot; font-weight=&quot;bold&quot;&gt;Part 1: Classical Beams&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Part 1 diagram - beams merge --&gt;</span>
+<span class="s1">  &lt;circle cx=&quot;230&quot; cy=&quot;110&quot; r=&quot;15&quot; fill=&quot;#ffd700&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;115&quot; text-anchor=&quot;middle&quot; fill=&quot;#000&quot; font-size=&quot;12&quot; font-weight=&quot;bold&quot;&gt;S&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Splitter 1 --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;230,170 220,180 240,180&quot; fill=&quot;url(#part1Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;230&quot; y1=&quot;125&quot; x2=&quot;230&quot; y2=&quot;170&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two beams diverge --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;220&quot; y1=&quot;180&quot; x2=&quot;180&quot; y2=&quot;220&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;240&quot; y1=&quot;180&quot; x2=&quot;280&quot; y2=&quot;220&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two splitters --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;180,230 170,240 190,240&quot; fill=&quot;url(#part1Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;280,230 270,240 290,240&quot; fill=&quot;url(#part1Grad)&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Three beams (merged) --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;170&quot; y1=&quot;240&quot; x2=&quot;140&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;190&quot; y1=&quot;240&quot; x2=&quot;230&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;270&quot; y1=&quot;240&quot; x2=&quot;230&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot; stroke-dasharray=&quot;5,5&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;290&quot; y1=&quot;240&quot; x2=&quot;320&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Counts --&gt;</span>
+<span class="s1">  &lt;text x=&quot;140&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;12&quot;&gt;Beam 1&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;12&quot;&gt;Beam 2&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;320&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;12&quot;&gt;Beam 3&lt;/text&gt;</span>
+
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;350&quot; text-anchor=&quot;middle&quot; fill=&quot;#00ff88&quot; font-size=&quot;16&quot;&gt;Beams merge together&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Part 2 Section --&gt;</span>
+<span class="s1">  &lt;rect x=&quot;470&quot; y=&quot;60&quot; width=&quot;400&quot; height=&quot;300&quot; rx=&quot;15&quot; fill=&quot;#1a3a5c&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;2&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;670&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot; fill=&quot;#ff6b6b&quot; font-size=&quot;20&quot; font-weight=&quot;bold&quot;&gt;Part 2: Quantum Timelines&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Part 2 diagram - timelines count separately --&gt;</span>
+<span class="s1">  &lt;circle cx=&quot;670&quot; cy=&quot;110&quot; r=&quot;15&quot; fill=&quot;#ffd700&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;670&quot; y=&quot;115&quot; text-anchor=&quot;middle&quot; fill=&quot;#000&quot; font-size=&quot;12&quot; font-weight=&quot;bold&quot;&gt;S&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Splitter 1 --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;670,170 660,180 680,180&quot; fill=&quot;url(#part2Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;670&quot; y1=&quot;125&quot; x2=&quot;670&quot; y2=&quot;170&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two timelines --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;660&quot; y1=&quot;180&quot; x2=&quot;620&quot; y2=&quot;220&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;680&quot; y1=&quot;180&quot; x2=&quot;720&quot; y2=&quot;220&quot; stroke=&quot;#4a9fff&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two splitters --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;620,230 610,240 630,240&quot; fill=&quot;url(#part2Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;720,230 710,240 730,240&quot; fill=&quot;url(#part2Grad)&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Four timelines --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;610&quot; y1=&quot;240&quot; x2=&quot;580&quot; y2=&quot;280&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;630&quot; y1=&quot;240&quot; x2=&quot;660&quot; y2=&quot;280&quot; stroke=&quot;#ff9999&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;710&quot; y1=&quot;240&quot; x2=&quot;680&quot; y2=&quot;280&quot; stroke=&quot;#4a9fff&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;730&quot; y1=&quot;240&quot; x2=&quot;760&quot; y2=&quot;280&quot; stroke=&quot;#6bb8ff&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Counts --&gt;</span>
+<span class="s1">  &lt;text x=&quot;580&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL1&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;660&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL2&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;680&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL3&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;760&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL4&lt;/text&gt;</span>
+
+<span class="s1">  &lt;text x=&quot;670&quot; y=&quot;350&quot; text-anchor=&quot;middle&quot; fill=&quot;#ff6b6b&quot; font-size=&quot;16&quot;&gt;Each path is unique&lt;/text&gt;</span>
+
+<span class="s1">&lt;/svg&gt;&#39;&#39;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;comparison_diagram.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created comparison_diagram.svg&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_svg_beam_visualization</span><span class="p">()</span>
+    <span class="n">create_timeline_tree_svg</span><span class="p">()</span>
+    <span class="n">create_comparison_diagram</span><span class="p">()</span>
+</code></pre></div>
+<h2 id="visualizepy_1">✅ visualize.py</h2>
+<ul>
+<li><strong>Timestamp</strong>: 2025-12-07T16:56:20.984293</li>
+<li><strong>Duration</strong>: 0.08s</li>
+<li><strong>Exit Code</strong>: 0</li>
+</ul>
+<h3 id="stdout_5">Stdout</h3>
+<div class="highlight"><pre><span></span><code>Created beam_visualization.svg
+Created timeline_tree.svg
+Created comparison_diagram.svg
+</code></pre></div>
+<h3 id="code_5">Code</h3>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Create visualizations for the report</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_svg_beam_visualization</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create SVG showing beam splitting in the example&quot;&quot;&quot;</span>
+
+    <span class="n">example</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;.......S.......</span>
+<span class="s2">...............</span>
+<span class="s2">.......^.......</span>
+<span class="s2">...............</span>
+<span class="s2">......^.^......</span>
+<span class="s2">...............</span>
+<span class="s2">.....^.^.^.....</span>
+<span class="s2">...............&quot;&quot;&quot;</span>
+
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">example</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)]</span>
+    <span class="n">rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+    <span class="n">cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+    <span class="n">cell_size</span> <span class="o">=</span> <span class="mi">30</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">cols</span> <span class="o">*</span> <span class="n">cell_size</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cell_size</span>
+
+    <span class="n">svg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;defs&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;beamGrad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;0%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#00ff88;stop-opacity:1&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#00aa55;stop-opacity:1&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">    &lt;filter id=&quot;glow&quot;&gt;</span>
+<span class="s1">      &lt;feGaussianBlur stdDeviation=&quot;2&quot; result=&quot;coloredBlur&quot;/&gt;</span>
+<span class="s1">      &lt;feMerge&gt;</span>
+<span class="s1">        &lt;feMergeNode in=&quot;coloredBlur&quot;/&gt;</span>
+<span class="s1">        &lt;feMergeNode in=&quot;SourceGraphic&quot;/&gt;</span>
+<span class="s1">      &lt;/feMerge&gt;</span>
+<span class="s1">    &lt;/filter&gt;</span>
+<span class="s1">  &lt;/defs&gt;</span>
+
+<span class="s1">  &lt;!-- Background --&gt;</span>
+<span class="s1">  &lt;rect width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#1a1a2e&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Grid lines --&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="c1"># Grid lines</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;0&quot; y1=&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; x2=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">i</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#333&quot; stroke-width=&quot;1&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">j</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; y1=&quot;0&quot; x2=&quot;</span><span class="si">{</span><span class="n">j</span><span class="o">*</span><span class="n">cell_size</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#333&quot; stroke-width=&quot;1&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Draw splitters and start</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">cell</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span>
+            <span class="n">cx</span> <span class="o">=</span> <span class="n">col</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+            <span class="n">cy</span> <span class="o">=</span> <span class="n">row</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+
+            <span class="k">if</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;S&#39;</span><span class="p">:</span>
+                <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;circle cx=&quot;</span><span class="si">{</span><span class="n">cx</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">cy</span><span class="si">}</span><span class="s1">&quot; r=&quot;</span><span class="si">{</span><span class="n">cell_size</span><span class="o">//</span><span class="mi">3</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#ffd700&quot; filter=&quot;url(#glow)&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;</span><span class="si">{</span><span class="n">cx</span><span class="si">}</span><span class="s1">&quot; y=&quot;</span><span class="si">{</span><span class="n">cy</span><span class="o">+</span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; text-anchor=&quot;middle&quot; fill=&quot;#000&quot; font-size=&quot;14&quot; font-weight=&quot;bold&quot;&gt;S&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="k">elif</span> <span class="n">cell</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Draw splitter as a triangle</span>
+                <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;polygon points=&quot;</span><span class="si">{</span><span class="n">cx</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">cy</span><span class="o">-</span><span class="mi">10</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cx</span><span class="o">-</span><span class="mi">10</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">cy</span><span class="o">+</span><span class="mi">8</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">cx</span><span class="o">+</span><span class="mi">10</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">cy</span><span class="o">+</span><span class="mi">8</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#ff6b6b&quot; stroke=&quot;#ff9999&quot; stroke-width=&quot;2&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Draw beams simulation</span>
+    <span class="c1"># Start position</span>
+    <span class="n">start_col</span> <span class="o">=</span> <span class="mi">7</span>
+    <span class="n">active_beams</span> <span class="o">=</span> <span class="p">{</span><span class="n">start_col</span><span class="p">}</span>
+
+    <span class="n">beam_paths</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">rows</span><span class="p">):</span>
+        <span class="n">new_beams</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">active_beams</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;^&#39;</span><span class="p">:</span>
+                <span class="c1"># Draw beam from previous row to splitter</span>
+                <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+                <span class="c1"># Split</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="n">cols</span><span class="p">:</span>
+                    <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+                    <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">beam_paths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">col</span><span class="p">,</span> <span class="n">row</span><span class="p">))</span>
+                <span class="n">new_beams</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+        <span class="n">active_beams</span> <span class="o">=</span> <span class="n">new_beams</span>
+
+    <span class="c1"># Draw beam paths</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">c1</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">c2</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">beam_paths</span><span class="p">:</span>
+        <span class="n">x1</span> <span class="o">=</span> <span class="n">c1</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y1</span> <span class="o">=</span> <span class="n">r1</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="n">c2</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">y2</span> <span class="o">=</span> <span class="n">r2</span> <span class="o">*</span> <span class="n">cell_size</span> <span class="o">+</span> <span class="n">cell_size</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">x1</span><span class="si">}</span><span class="s1">&quot; y1=&quot;</span><span class="si">{</span><span class="n">y1</span><span class="si">}</span><span class="s1">&quot; x2=&quot;</span><span class="si">{</span><span class="n">x2</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">y2</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;url(#beamGrad)&quot; stroke-width=&quot;4&quot; stroke-linecap=&quot;round&quot; filter=&quot;url(#glow)&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="n">svg</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/svg&gt;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;beam_visualization.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created beam_visualization.svg&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_timeline_tree_svg</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create SVG showing how timelines multiply&quot;&quot;&quot;</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">800</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">500</span>
+
+    <span class="n">svg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;defs&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;treeGrad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;0%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#ff6b6b&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#ff9999&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">    &lt;filter id=&quot;shadow&quot;&gt;</span>
+<span class="s1">      &lt;feDropShadow dx=&quot;2&quot; dy=&quot;2&quot; stdDeviation=&quot;3&quot; flood-opacity=&quot;0.3&quot;/&gt;</span>
+<span class="s1">    &lt;/filter&gt;</span>
+<span class="s1">  &lt;/defs&gt;</span>
+
+<span class="s1">  &lt;!-- Background --&gt;</span>
+<span class="s1">  &lt;rect width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#0d1b2a&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Title --&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;35&quot; text-anchor=&quot;middle&quot; fill=&quot;#ffd700&quot; font-size=&quot;24&quot; font-weight=&quot;bold&quot;&gt;Quantum Timeline Branching&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;60&quot; text-anchor=&quot;middle&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;Each splitter doubles the number of timelines&lt;/text&gt;</span>
+
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="c1"># Draw tree structure</span>
+    <span class="n">levels</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">start_y</span> <span class="o">=</span> <span class="mi">90</span>
+    <span class="n">level_height</span> <span class="o">=</span> <span class="mi">70</span>
+
+    <span class="c1"># Positions: list of (x, y) for each node</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">edges</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Level 0: single node</span>
+    <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">([(</span><span class="n">width</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">start_y</span><span class="p">)])</span>
+
+    <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">levels</span><span class="p">):</span>
+        <span class="n">prev_nodes</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">curr_nodes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">spread</span> <span class="o">=</span> <span class="mi">300</span> <span class="o">//</span> <span class="p">(</span><span class="mi">2</span> <span class="o">**</span> <span class="p">(</span><span class="n">level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">px</span><span class="p">,</span> <span class="n">py</span> <span class="ow">in</span> <span class="n">prev_nodes</span><span class="p">:</span>
+            <span class="c1"># Left child</span>
+            <span class="n">lx</span> <span class="o">=</span> <span class="n">px</span> <span class="o">-</span> <span class="n">spread</span>
+            <span class="n">ly</span> <span class="o">=</span> <span class="n">py</span> <span class="o">+</span> <span class="n">level_height</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">))</span>
+            <span class="n">curr_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">))</span>
+
+            <span class="c1"># Right child</span>
+            <span class="n">rx</span> <span class="o">=</span> <span class="n">px</span> <span class="o">+</span> <span class="n">spread</span>
+            <span class="n">ry</span> <span class="o">=</span> <span class="n">py</span> <span class="o">+</span> <span class="n">level_height</span>
+            <span class="n">edges</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">px</span><span class="p">,</span> <span class="n">py</span><span class="p">,</span> <span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">))</span>
+            <span class="n">curr_nodes</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">))</span>
+
+        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_nodes</span><span class="p">)</span>
+
+    <span class="c1"># Draw edges first</span>
+    <span class="k">for</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+        <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;line x1=&quot;</span><span class="si">{</span><span class="n">x1</span><span class="si">}</span><span class="s1">&quot; y1=&quot;</span><span class="si">{</span><span class="n">y1</span><span class="o">+</span><span class="mi">15</span><span class="si">}</span><span class="s1">&quot; x2=&quot;</span><span class="si">{</span><span class="n">x2</span><span class="si">}</span><span class="s1">&quot; y2=&quot;</span><span class="si">{</span><span class="n">y2</span><span class="o">-</span><span class="mi">15</span><span class="si">}</span><span class="s1">&quot; stroke=&quot;#4a9fff&quot; stroke-width=&quot;2&quot; opacity=&quot;0.7&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Draw nodes</span>
+    <span class="k">for</span> <span class="n">level_idx</span><span class="p">,</span> <span class="n">level_nodes</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">level_nodes</span><span class="p">:</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;#ff6b6b&quot;</span> <span class="k">if</span> <span class="n">level_idx</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;#4a9fff&quot;</span>
+            <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;circle cx=&quot;</span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">&quot; cy=&quot;</span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s1">&quot; r=&quot;15&quot; fill=&quot;</span><span class="si">{</span><span class="n">color</span><span class="si">}</span><span class="s1">&quot; filter=&quot;url(#shadow)&quot;/&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Add labels</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;1 particle&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;2 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="o">*</span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;4 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">3</span><span class="o">*</span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;8 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;  &lt;text x=&quot;60&quot; y=&quot;</span><span class="si">{</span><span class="n">start_y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">4</span><span class="o">*</span><span class="n">level_height</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#aaa&quot; font-size=&quot;14&quot;&gt;16 timelines&lt;/text&gt;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+    <span class="c1"># Formula at bottom</span>
+    <span class="n">svg</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">  &lt;rect x=&quot;250&quot; y=&quot;430&quot; width=&quot;300&quot; height=&quot;50&quot; rx=&quot;10&quot; fill=&quot;#1a3a5c&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;</span><span class="si">{</span><span class="n">width</span><span class="o">//</span><span class="mi">2</span><span class="si">}</span><span class="s1">&quot; y=&quot;460&quot; text-anchor=&quot;middle&quot; fill=&quot;#ffd700&quot; font-size=&quot;18&quot;&gt;Timelines = 2^(num_splitters)&lt;/text&gt;</span>
+<span class="s1">&#39;&#39;&#39;</span>
+
+    <span class="n">svg</span> <span class="o">+=</span> <span class="s1">&#39;&lt;/svg&gt;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;timeline_tree.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created timeline_tree.svg&quot;</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">create_comparison_diagram</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create diagram comparing Part 1 and Part 2 approaches&quot;&quot;&quot;</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="mi">900</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="mi">400</span>
+
+    <span class="n">svg</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;&#39;&#39;&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="s1">&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; viewBox=&quot;0 0 </span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot;&gt;</span>
+<span class="s1">  &lt;defs&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;part1Grad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;100%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#00ff88&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#00aa55&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">    &lt;linearGradient id=&quot;part2Grad&quot; x1=&quot;0%&quot; y1=&quot;0%&quot; x2=&quot;100%&quot; y2=&quot;100%&quot;&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;0%&quot; style=&quot;stop-color:#ff6b6b&quot; /&gt;</span>
+<span class="s1">      &lt;stop offset=&quot;100%&quot; style=&quot;stop-color:#ff9999&quot; /&gt;</span>
+<span class="s1">    &lt;/linearGradient&gt;</span>
+<span class="s1">  &lt;/defs&gt;</span>
+
+<span class="s1">  &lt;!-- Background --&gt;</span>
+<span class="s1">  &lt;rect width=&quot;</span><span class="si">{</span><span class="n">width</span><span class="si">}</span><span class="s1">&quot; height=&quot;</span><span class="si">{</span><span class="n">height</span><span class="si">}</span><span class="s1">&quot; fill=&quot;#0d1b2a&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Part 1 Section --&gt;</span>
+<span class="s1">  &lt;rect x=&quot;30&quot; y=&quot;60&quot; width=&quot;400&quot; height=&quot;300&quot; rx=&quot;15&quot; fill=&quot;#1a3a5c&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;2&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot; fill=&quot;#00ff88&quot; font-size=&quot;20&quot; font-weight=&quot;bold&quot;&gt;Part 1: Classical Beams&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Part 1 diagram - beams merge --&gt;</span>
+<span class="s1">  &lt;circle cx=&quot;230&quot; cy=&quot;110&quot; r=&quot;15&quot; fill=&quot;#ffd700&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;115&quot; text-anchor=&quot;middle&quot; fill=&quot;#000&quot; font-size=&quot;12&quot; font-weight=&quot;bold&quot;&gt;S&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Splitter 1 --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;230,170 220,180 240,180&quot; fill=&quot;url(#part1Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;230&quot; y1=&quot;125&quot; x2=&quot;230&quot; y2=&quot;170&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two beams diverge --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;220&quot; y1=&quot;180&quot; x2=&quot;180&quot; y2=&quot;220&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;240&quot; y1=&quot;180&quot; x2=&quot;280&quot; y2=&quot;220&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two splitters --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;180,230 170,240 190,240&quot; fill=&quot;url(#part1Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;280,230 270,240 290,240&quot; fill=&quot;url(#part1Grad)&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Three beams (merged) --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;170&quot; y1=&quot;240&quot; x2=&quot;140&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;190&quot; y1=&quot;240&quot; x2=&quot;230&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;270&quot; y1=&quot;240&quot; x2=&quot;230&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot; stroke-dasharray=&quot;5,5&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;290&quot; y1=&quot;240&quot; x2=&quot;320&quot; y2=&quot;280&quot; stroke=&quot;#00ff88&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Counts --&gt;</span>
+<span class="s1">  &lt;text x=&quot;140&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;12&quot;&gt;Beam 1&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;12&quot;&gt;Beam 2&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;320&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;12&quot;&gt;Beam 3&lt;/text&gt;</span>
+
+<span class="s1">  &lt;text x=&quot;230&quot; y=&quot;350&quot; text-anchor=&quot;middle&quot; fill=&quot;#00ff88&quot; font-size=&quot;16&quot;&gt;Beams merge together&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Part 2 Section --&gt;</span>
+<span class="s1">  &lt;rect x=&quot;470&quot; y=&quot;60&quot; width=&quot;400&quot; height=&quot;300&quot; rx=&quot;15&quot; fill=&quot;#1a3a5c&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;2&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;670&quot; y=&quot;50&quot; text-anchor=&quot;middle&quot; fill=&quot;#ff6b6b&quot; font-size=&quot;20&quot; font-weight=&quot;bold&quot;&gt;Part 2: Quantum Timelines&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Part 2 diagram - timelines count separately --&gt;</span>
+<span class="s1">  &lt;circle cx=&quot;670&quot; cy=&quot;110&quot; r=&quot;15&quot; fill=&quot;#ffd700&quot;/&gt;</span>
+<span class="s1">  &lt;text x=&quot;670&quot; y=&quot;115&quot; text-anchor=&quot;middle&quot; fill=&quot;#000&quot; font-size=&quot;12&quot; font-weight=&quot;bold&quot;&gt;S&lt;/text&gt;</span>
+
+<span class="s1">  &lt;!-- Splitter 1 --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;670,170 660,180 680,180&quot; fill=&quot;url(#part2Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;670&quot; y1=&quot;125&quot; x2=&quot;670&quot; y2=&quot;170&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two timelines --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;660&quot; y1=&quot;180&quot; x2=&quot;620&quot; y2=&quot;220&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;680&quot; y1=&quot;180&quot; x2=&quot;720&quot; y2=&quot;220&quot; stroke=&quot;#4a9fff&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Two splitters --&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;620,230 610,240 630,240&quot; fill=&quot;url(#part2Grad)&quot;/&gt;</span>
+<span class="s1">  &lt;polygon points=&quot;720,230 710,240 730,240&quot; fill=&quot;url(#part2Grad)&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Four timelines --&gt;</span>
+<span class="s1">  &lt;line x1=&quot;610&quot; y1=&quot;240&quot; x2=&quot;580&quot; y2=&quot;280&quot; stroke=&quot;#ff6b6b&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;630&quot; y1=&quot;240&quot; x2=&quot;660&quot; y2=&quot;280&quot; stroke=&quot;#ff9999&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;710&quot; y1=&quot;240&quot; x2=&quot;680&quot; y2=&quot;280&quot; stroke=&quot;#4a9fff&quot; stroke-width=&quot;3&quot;/&gt;</span>
+<span class="s1">  &lt;line x1=&quot;730&quot; y1=&quot;240&quot; x2=&quot;760&quot; y2=&quot;280&quot; stroke=&quot;#6bb8ff&quot; stroke-width=&quot;3&quot;/&gt;</span>
+
+<span class="s1">  &lt;!-- Counts --&gt;</span>
+<span class="s1">  &lt;text x=&quot;580&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL1&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;660&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL2&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;680&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL3&lt;/text&gt;</span>
+<span class="s1">  &lt;text x=&quot;760&quot; y=&quot;310&quot; text-anchor=&quot;middle&quot; fill=&quot;#fff&quot; font-size=&quot;11&quot;&gt;TL4&lt;/text&gt;</span>
+
+<span class="s1">  &lt;text x=&quot;670&quot; y=&quot;350&quot; text-anchor=&quot;middle&quot; fill=&quot;#ff6b6b&quot; font-size=&quot;16&quot;&gt;Each path is unique&lt;/text&gt;</span>
+
+<span class="s1">&lt;/svg&gt;&#39;&#39;&#39;</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;comparison_diagram.svg&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;utf-8&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Created comparison_diagram.svg&quot;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">create_svg_beam_visualization</span><span class="p">()</span>
+    <span class="n">create_timeline_tree_svg</span><span class="p">()</span>
+    <span class="n">create_comparison_diagram</span><span class="p">()</span>
+</code></pre></div>
 
 
 
