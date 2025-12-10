@@ -156,12 +156,33 @@ class AocToolbox:
 
         return log_info(f"puzzle input is downloaded to input.txt.")
 
+    def _get_next_run_number(self, working_dir: str) -> int:
+        """Finds the next available run number."""
+        if not os.path.exists(working_dir):
+            return 1
+            
+        existing = [d for d in os.listdir(working_dir) if os.path.isdir(os.path.join(working_dir, d)) and d.startswith("coderun-")]
+        if not existing:
+            return 1
+        
+        numbers = []
+        for d in existing:
+            try:
+                num = int(d.split("-")[1])
+                numbers.append(num)
+            except (IndexError, ValueError):
+                continue
+        
+        return max(numbers) + 1 if numbers else 1
+
     def _save_run_info(self, working_dir: str, code_filename: str, 
                        stdout: str, stderr: str, duration: float, 
                        exit_code: int | str, error: Optional[str] = None):
         
-        timestamp = int(time.time() * 1000)
-        run_info_fn = f"{code_filename}.{timestamp}.json"
+        run_number = self._get_next_run_number(working_dir)
+        run_dir_name = f"coderun-{run_number}"
+        run_dir_path = os.path.join(working_dir, run_dir_name)
+        os.makedirs(run_dir_path, exist_ok=True)
         
         run_info = {
             "error": error,
@@ -169,11 +190,17 @@ class AocToolbox:
             "stderr": stderr,
             "duration": duration,
             "timestamp": datetime.now().isoformat(),
-            "exit_code": exit_code
+            "exit_code": exit_code,
+            "original_filename": code_filename
         }
         
-        with open(os.path.join(working_dir, run_info_fn), "w") as f:
+        with open(os.path.join(run_dir_path, "result.json"), "w") as f:
             json.dump(run_info, f, indent=2)
+
+        # Copy code file
+        src_code_path = os.path.join(working_dir, code_filename)
+        if os.path.exists(src_code_path):
+             shutil.copy(src_code_path, os.path.join(run_dir_path, code_filename))
 
     def run_code(self, code_filename: str) -> str:
         """

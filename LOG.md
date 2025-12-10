@@ -117,3 +117,14 @@ The report must be very visual: has at least one png, svg or gif animations demo
 To do so, you can use a set of provided tools.
 ```
 * Remove specific instructions on what tools in which order to use. 
+
+## 09 December
+
+After switching to fs tools: more friction during problem-solving due to attempts to run unexistent files in fs. 
+Previous run_code(...code) was better.
+But now it is a more robust visualization generation.
+
+## 10 December
+
+Ask to write ideas.md before solving the task to force it think about approaches before implementing them. 
+But gpt5 start with solving and running the code and only after that created ideas.md files for both parts. 

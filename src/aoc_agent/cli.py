@@ -22,6 +22,14 @@ os.environ["LANGSMITH_TRACING"] = "true"
 os.environ["LANGSMITH_ENDPOINT"] = "https://api.smith.langchain.com"
 os.environ["LANGSMITH_PROJECT"] = "aoc-agent"
 
+MODEL_ALIASES = {
+    "gpt5": "gpt-5",
+    "gpt5m": "gpt-5-mini",
+    "g3": "gemini-3-pro-preview",
+    "g25f": "gemini-2.5-flash",
+    "co45": "claude-opus-4-5",
+}
+
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="aoc-agent",
@@ -98,11 +106,12 @@ def main(argv: list[str] | None = None) -> int:
         wait_for_start_time(ns.start_time)
 
     if ns.days:
+        models = [MODEL_ALIASES.get(m, m) for m in ns.models]
         runner = AgentRunner(
             year=ns.year,
             days_region=ns.days,
             languages=ns.langs,
-            models=ns.models,
+            models=models,
             n_repeats=ns.repeats,
             no_report=ns.no_report,
         )

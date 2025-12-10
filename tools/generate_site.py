@@ -197,44 +197,91 @@ def generate_site():
         # Append code execution info
         code_report = ""
         
-        # Find run info files matching pattern: filename.timestamp.json
-        run_info_pattern = re.compile(r"^(.+)\.(\d+)\.json$")
+        # Find run info files matching pattern: filename.timestamp.json (LEGACY) or coderun-{n}/result.json (NEW)
         run_infos = []
-        
+
+        # 1. New format: coderun-{n} directories
+        for d in run["path"].glob("coderun-*"):
+            if d.is_dir():
+                result_file = d / "result.json"
+                if result_file.exists():
+                    try:
+                        with open(result_file, "r", encoding="utf-8") as f:
+                            info = json.load(f)
+                        # Store as (timestamp, info, directory_path, "new")
+                        run_infos.append({
+                            "timestamp": info.get('timestamp', ''),
+                            "info": info,
+                            "path": d,
+                            "type": "new"
+                        })
+                    except Exception as e:
+                        print(f"Error reading result.json in {d}: {e}")
+
+        # 2. Legacy format: filename.timestamp.json
+        run_info_pattern = re.compile(r"^(.+)\.(\d+)\.json$")
         for f in run["path"].glob("*.json"):
             if f.name in ["metadata.json", "history.json"]:
                 continue
             if run_info_pattern.match(f.name):
-                run_infos.append(f)
-        
-        loaded_infos = []
-        for info_file in run_infos:
-            try:
-                with open(info_file, "r", encoding="utf-8") as f:
-                    info = json.load(f)
-                loaded_infos.append((info_file, info))
-            except Exception as e:
-                print(f"Error reading run info {info_file}: {e}")
+                try:
+                    with open(f, "r", encoding="utf-8") as json_f:
+                        info = json.load(json_f)
+                    run_infos.append({
+                        "timestamp": info.get('timestamp', ''),
+                        "info": info,
+                        "path": f,
+                        "type": "legacy"
+                    })
+                except Exception as e:
+                    print(f"Error reading legacy run info {f}: {e}")
 
         # Sort by timestamp
-        loaded_infos.sort(key=lambda x: x[1].get('timestamp', ''))
+        run_infos.sort(key=lambda x: x['timestamp'])
         
-        if loaded_infos:
+        if run_infos:
             code_report += "\n\n# Code Executions\n"
-            for info_file, info in loaded_infos:
+            for item in run_infos:
+                info = item["info"]
+                path = item["path"]
+                
                 try:
-                    match = run_info_pattern.match(info_file.name)
-                    if not match:
-                        continue
-                    code_file_name = match.group(1)
-                    code_file = info_file.parent / code_file_name
+                    code_content = ""
+                    code_file_name = "unknown"
                     
-                    if not code_file.exists():
-                        continue
+                    if item["type"] == "new":
+                        # Look for code in the coderun directory
+                        code_file_name = info.get("original_filename")
+                        code_file = None
                         
-                    with open(code_file, "r", encoding="utf-8") as f:
-                        code_content = f.read()
+                        if code_file_name:
+                             code_file = path / code_file_name
                         
+                        # Fallback: find any code file in the dir
+                        if not code_file or not code_file.exists():
+                             for f in path.iterdir():
+                                 if f.suffix in ['.py', '.kt', '.cs', '.js', '.rs', '.go'] and f.name != "result.json":
+                                     code_file = f
+                                     code_file_name = f.name
+                                     break
+                        
+                        if code_file and code_file.exists():
+                            with open(code_file, "r", encoding="utf-8") as f:
+                                code_content = f.read()
+                        else:
+                            code_content = "Code file not found in run directory."
+
+                    else: # legacy
+                        match = run_info_pattern.match(path.name)
+                        if match:
+                            code_file_name = match.group(1)
+                            code_file = path.parent / code_file_name
+                            if code_file.exists():
+                                with open(code_file, "r", encoding="utf-8") as f:
+                                    code_content = f.read()
+                            else:
+                                code_content = "Code file not found."
+
                     duration = f"{info.get('duration', 0):.2f}s"
                     exit_code = info.get('exit_code', 'N/A')
                     error = info.get('error')
@@ -243,7 +290,7 @@ def generate_site():
                     status_icon = "✅" if str(exit_code) == "0" else "❌"
                     
                     # Infer language from extension
-                    ext = code_file.suffix.lower()
+                    ext = Path(code_file_name).suffix.lower()
                     lang_md = "text"
                     if ext == ".py": lang_md = "python"
                     elif ext == ".kt": lang_md = "kotlin"
@@ -271,7 +318,7 @@ def generate_site():
                     code_report += f"\n### Code\n```{lang_md}\n{code_content}\n```\n"
                     
                 except Exception as e:
-                    print(f"Error processing run info {info_file}: {e}")
+                    print(f"Error processing run info {path}: {e}")
 
         final_content = header + "\n\n" + content + code_report
         
@@ -316,7 +363,7 @@ Overview of all agent operations.
         duration = format_duration(meta.get('part12_duration', 0))
         
         link_text = f"{year} Day {day} - {run['display_model']}"
-        link_url = f"{year}/day_{day:02d}/{slug}/"
+        link_url = f"{year}/day_{day:02d}/{slug}/index.md"
         
         index_content += f"- [{link_text}]({link_url}) | Lang: {lang} | Stars: {solved} | Time: {duration}\n"
 
@@ -366,8 +413,8 @@ markdown_extensions:
   - pymdownx.superfences
   - attr_list
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.arithmatex:

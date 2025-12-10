@@ -1,162 +1,107 @@
 from __future__ import annotations
-
-import json
-import os
-import time
-import uuid
-from datetime import datetime
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional
-from rich import print
+from typing import Any, Iterator, cast
 
 from langchain.agents import create_agent
-from langchain_core.callbacks import BaseCallbackHandler
-from langchain_core.outputs import LLMResult
-from langchain.agents.middleware import ModelRetryMiddleware
-
-from .tools import Lang, AocToolbox, data_path
-from .context import AgentContext
-from ..core.aoc_client import AocClient
-from .prompts import task_prompt_template, system_nano_prompt_template
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
-from langchain_ollama import ChatOllama
+from langchain_core.runnables import RunnableConfig
 from langchain_community.agent_toolkits import FileManagementToolkit
 
-MODEL_ALIASES = {
-    "gpt5": "gpt-5",
-    "gpt5m": "gpt-5-mini",
-    "g3": "gemini-3-pro-preview",
-    "g25f": "gemini-2.5-flash",
-    "co45": "claude-opus-4-5",
-}
+from ..core.aoc_client import AocClient
+from ..core.llm import create_llm, TokenCollector
+from .context import AgentContext
+from .tools import Lang, AocToolbox
+from langchain_core.prompts import ChatPromptTemplate
 
-class TokenCollector(BaseCallbackHandler):
-    def __init__(self, context: AgentContext):
-        self.context = context
 
-    def on_llm_end(self, response: LLMResult, **kwargs: Any) -> None:
-        for generations in response.generations:
-            for gen in generations:
-                if hasattr(gen, 'message') and hasattr(gen.message, 'usage_metadata'):
-                    usage = gen.message.usage_metadata
-                    if usage:
-                        self.context.output_tokens += usage.get('output_tokens', 0)
+system_prompt = ChatPromptTemplate.from_messages(
+    [
+        (
+            "system",
+            """
+            You are an expert in algorithms and educator, who participate in Advent of Code event 
+            solving tasks just to write engaging educational reports for computer science students.
+            Try to make it entertaining, fun and educative! Jokes, smart sarcastic comments, 
+            memes and puns and are appreciated (if they are funny and unexpected!)
+            
+            ## Solving
+            
+            First of all brainstorm ideas and approaches to solve the task. 
+            Write the most viable ideas_part1.md into ideas.md and ideas_part2.md files.
+              
+            You can write small programs to analyze input data, if you need to choose between several approaches.
+                        
+            Use tools 'run_code' and 'submit_result' to solve the tasks.
+            
+            ## Report
+            
+            The report MUST be an Markdown file named 'final_report.md', in the same directory as the code files and input.txt
+            The report MUST be written in RUSSIAN language.
+            The report must be very visual: has at least one png, svg or gif animations demonstrating the solution / task or input. 
+            You may use one of the libraries: Pillow Matplotlib NetworkX imageio.
+            
+            To do so, you can use a set of provided tools.
+            
+            Review your final report after writing it and verify:
+            - Is there more than one approach to the same task?
+            - Are there any interesting insights or "gotchas" encountered?
+            - Are there any visualizations that you think are interesting and entertaining?
+            - Are there any jokes or puns or quotes that you think are funny and unexpected?
+            - Is Narrative engaging and educative?
+            - Language is clear and pleasant to read?
+            - Logical structure of the text is easy to follow and fits educative goal?
+            
+            Create a file critique.md with your critique of the report and suggestions for improvement.
+            
+            After that improve report according to your critique and write it again.
+            
+            ## Fast Code
+            
+            All tasks can be solved with efficient algorithms in less than 10 seconds. 
+            Your code should not work significantly longer than that.
+            Be sure your implementation is optimized enough to fit in 10 seconds, avoid naive brute force.
+
+            ## Complain if environment is broken
+            
+            Use tool 'complain' to report if something goes unexpectedly wrong with the environment: 
+            problem statement does not contain statement, run_code tool is not working, etc.
+            """
+        )
+    ]
+)
+
+task_prompt_template = ChatPromptTemplate.from_template(
+    "Solve the task of year {year}, day {day} with programming language {lang}. Submit answers and write a report!"
+)
+
 
 @dataclass
 class MiniAgent:
     """A minimal agent with tools."""
 
-    def run_agent(self, year: int, day: int, lang: Lang, model_name: str = "gemini-2.5-flash", no_report: bool = False):
-        model_name = MODEL_ALIASES.get(model_name, model_name)
-        start_time_friendly = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        run_id = start_time_friendly + "_" + str(year) + "_" + str(day) + "_" + str(lang) + "_" + model_name.replace(":","-") + "_" + str(uuid.uuid4())[:8]
-        run_dir = os.path.join("data", "run", run_id)
-        os.makedirs(run_dir, exist_ok=True)
-
-        print(
-            f"[bold green]AoC MiniAgent starting[/bold green]: year={year}, day={day}, lang={lang}, run_id={run_id} model={model_name}"
-        )
-
-        client = AocClient()
-        context = AgentContext(
-            run_id=run_id, 
-            start_time=(time.time()), 
-            year=year, 
-            day=day, 
-            language=lang, 
-            model_name=model_name,
-            working_dir=run_dir
-        )
+    def execute(self, client: AocClient, context: AgentContext) -> Iterator[Any]:
         toolbox = AocToolbox(client, context)
-        
-        run_dir = os.path.join("data", "run", run_id)
-
-        fs_toolkit = FileManagementToolkit(
-            root_dir=run_dir
-        )
-        # Combine filesystem tools with AoC tools
-        fstools = fs_toolkit.get_tools() + toolbox.make_tools()
-
-        if lang != "python":
-            no_report = True
-
-        if "gpt" in model_name or "o1" in model_name:
-            llm = ChatOpenAI(model=model_name).bind_tools(fstools, tool_choice="any")
-        elif "claude" in model_name:
-            llm = ChatAnthropic(model=model_name).bind_tools(fstools, tool_choice="any")
-        elif "gemini" in model_name:
-            llm = ChatGoogleGenerativeAI(model=model_name).bind_tools(fstools, tool_config={'function_calling_config': {'mode': 'ANY'}})
-        else:
-            llm = ChatOllama(model=model_name).bind_tools(fstools)
-
-        agent = create_agent(
+        fs_toolkit = FileManagementToolkit(root_dir=context.working_dir)
+        tools = fs_toolkit.get_tools() + toolbox.make_tools()
+        llm = create_llm(context.model_name, tools)
+        agent_runnable = create_agent(
             model=llm,
-            tools=fstools,
-            system_prompt=system_nano_prompt_template.format_messages(model_name=model_name)[0].content
+            tools=tools,
+            system_prompt=system_prompt.format_messages()[0].content
         )
+        lang = cast(Lang, context.language)
+        initial_state : dict[str, Any] = {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": task_prompt_template.format_messages(year=context.year, day=context.day, lang=lang)[0].content,
+                }
+            ]
+        }
 
-        token_collector = TokenCollector(context)
-
-        history_file = os.path.join(run_dir, "history.json")
-        history = []
-        try:
-            for chunk in agent.stream({ # type: ignore
-                    "messages": [
-                        {
-                            "role": "user",
-                            "content": task_prompt_template.format_messages(year=year, day=day, lang=lang)[0].content,
-                        }
-                    ]
-                },
-                config={ # type: ignore
-                    "configurable": {"run_id": run_id},
-                    "callbacks": [token_collector]
-                },
-
-            ):
-                history.append(chunk)
-                with open(history_file, "w") as f:
-                    json.dump(history, f, indent=2, default=str)
-                
-                if context.final_report_written:
-                    print("[green]Final report written. Stopping agent.[/green]")
-                    break
-
-                if no_report and (context.part2_finished or (day == 25 and context.part1_finished)):
-                    print("[green]All parts solved. Skipping final report and stopping agent.[/green]")
-                    break
-            print("Writing metadata.json...")
-
-            metadata = {
-                "run_id": run_id,
-                "year": year,
-                "day": day,
-                "lang": lang,
-                "model": model_name,
-                "agent_name": "MiniAgent",
-                "start_time": datetime.fromtimestamp(context.start_time).isoformat(),
-                "part1_duration": context.part1_duration,
-                "part1_output_tokens": context.part1_output_tokens,
-                "part1_solved": context.part1_finished,
-                "part2_solved": context.part2_finished or day == 25,
-                "part12_output_tokens": context.part2_output_tokens,
-                "part12_duration": context.part2_duration,
-                "report_output_tokens": context.output_tokens - context.part1_output_tokens,
-                "part1_incorrect": context.part1_incorrect,
-                "part2_incorrect": context.part2_incorrect,
-                "part1_run_code_errors": context.part1_run_code_errors,
-                "part2_run_code_errors": context.part2_run_code_errors,
-                "part1_run_code_success": context.part1_run_code_success,
-                "part2_run_code_success": context.part2_run_code_success,
-                "final_report_path": context.final_report_path,
-                "final_report_images": context.final_report_images
-            }
-
-            with open(os.path.join(run_dir, "metadata.json"), "w") as f:
-                json.dump(metadata, f, indent=2)
-        except GeneratorExit:
-            return
-        except Exception as e:
-            print(f"[red]Unexpected error running agent. Ignore metadata!:\n{e}[/red]")
+        return agent_runnable.stream(
+            cast(Any, initial_state),
+            config=cast(RunnableConfig, {
+                "configurable": {"run_id": context.run_id},
+                "callbacks": [TokenCollector(context)]
+            }),
+        )

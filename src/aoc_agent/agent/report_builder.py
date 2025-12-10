@@ -99,6 +99,7 @@ class ReportBuilder:
         charts_html = self._generate_charts_section(results)
         model_charts_html = self._generate_model_comparison_charts(results)
         model_pairwise_html = self._generate_model_pairwise_section(results)
+        token_comparison_html = self._generate_token_comparison_table(results)
 
         # Group by Year -> Day -> Lang -> Model
         # Structure: grouped[year][(day, lang, model)] = list of runs
@@ -149,6 +150,8 @@ class ReportBuilder:
         """ + pairwise_html + """
         
         """ + model_pairwise_html + """
+        
+        """ + token_comparison_html + """
 
         """ + charts_html + """
         
@@ -795,4 +798,77 @@ class ReportBuilder:
             html += "</tr>"
         
         html += "</tbody></table></div>"
+        return html
+
+    def _generate_token_comparison_table(self, results: List[Dict[str, Any]]) -> str:
+        by_year = defaultdict(list)
+        for r in results:
+            by_year[r.get('year', 'Unknown')].append(r)
+        
+        html = ""
+        
+        for year in sorted(by_year.keys(), reverse=True):
+            runs = by_year[year]
+            
+            # 1. Collect data and calculate model stats
+            # data structure: day -> model -> list of token counts
+            raw_data = defaultdict(lambda: defaultdict(list))
+            
+            for r in runs:
+                if r.get('part1_solved') and r.get('part2_solved') and r.get('lang') == 'python':
+                    day = r.get('day', 0)
+                    model = r.get('model', 'unknown')
+                    tokens = r.get('part12_output_tokens', 0)
+                    raw_data[day][model].append(tokens)
+
+            # Calculate averages
+            data = defaultdict(dict) # day -> model -> average tokens
+            model_values = defaultdict(list) # model -> [average tokens]
+            
+            for day, models_data in raw_data.items():
+                for model, tokens_list in models_data.items():
+                    avg_tokens = sum(tokens_list) / len(tokens_list)
+                    data[day][model] = avg_tokens
+                    model_values[model].append(avg_tokens)
+
+            # 2. Sort models: columns with more cells (values) to the left
+            # Count how many days each model has data for
+            models = sorted(model_values.keys(), key=lambda m: len(model_values[m]), reverse=True)
+            
+            # 3. Calculate min/max per model for coloring
+            model_stats = {}
+            for m in models:
+                vals = model_values[m]
+                if vals:
+                    model_stats[m] = {'min': min(vals), 'max': max(vals)}
+                else:
+                    model_stats[m] = {'min': 0, 'max': 0}
+
+            html += f"<div class='year-section'><h2>Year {year} - Token Usage Comparison (Python only, Both Parts Solved)</h2>"
+            html += "<p>Average output tokens used to solve both parts (Python runs only). Color scale is relative to each model's range (column-wise).</p>"
+            html += "<div style='overflow-x: auto;'>"
+            html += "<table style='width: auto;'><thead><tr><th>Day</th>"
+            for m in models:
+                html += f"<th>{m}</th>"
+            html += "</tr></thead><tbody>"
+            
+            for day in range(1, 26):
+                if day not in data: 
+                     continue
+                
+                html += f"<tr><td>{day}</td>"
+                
+                for model in models:
+                    val = data[day].get(model)
+                    if val is None:
+                        html += "<td>-</td>"
+                    else:
+                        # Use model-specific min/max
+                        m_min = model_stats[model]['min']
+                        m_max = model_stats[model]['max']
+                        style = self._get_color_style(val, m_min, m_max, low_is_good=True)
+                        html += f"<td {style}>{int(val)}</td>"
+                html += "</tr>"
+            html += "</tbody></table></div></div>"
+            
         return html

@@ -88,3 +88,13 @@
     "NEW INSTRUCTION": "WHEN adding pseudo-code in markdown THEN use a text fence instead of python"
 }
 
+[2025-12-10 15:53] - Updated by Junie - Error analysis
+{
+    "TYPE": "invalid args",
+    "TOOL": "create",
+    "ERROR": "File exists; create tool cannot overwrite existing file",
+    "ROOT CAUSE": "Attempted to create src/aoc_agent/agent/miniagent.py even though it already exists.",
+    "PROJECT NOTE": "miniagent.py is already part of the repo; modify it via edit-based tools instead of create.",
+    "NEW INSTRUCTION": "WHEN target file path already exists THEN open and edit the file instead of create"
+}
+
